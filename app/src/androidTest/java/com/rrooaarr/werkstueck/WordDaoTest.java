@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample;
+package com.rrooaarr.android.roomwordssample;
 
 /*
  * Copyright (C) 2017 Google Inc.
@@ -20,9 +20,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import android.content.Context;
 
-import com.example.roomwordsample.Word;
-import com.example.roomwordsample.WordDao;
-import com.example.roomwordsample.WordRoomDatabase;
+import com.rrooaarr.werkstueck.Word;
+import com.rrooaarr.werkstueck.WordDao;
+import com.rrooaarr.werkstueck.WordRoomDatabase;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
@@ -75,7 +75,7 @@ public class WordDaoTest {
     public void insertAndGetWord() throws Exception {
         Word word = new Word("word");
         mWordDao.insert(word);
-        List<Word> allWords = com.example.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
+        List<Word> allWords = com.rrooaarr.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
         assertEquals(allWords.get(0).getWord(), word.getWord());
     }
 
@@ -85,7 +85,7 @@ public class WordDaoTest {
         mWordDao.insert(word);
         Word word2 = new Word("bbb");
         mWordDao.insert(word2);
-        List<Word> allWords = com.example.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
+        List<Word> allWords = com.rrooaarr.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
         assertEquals(allWords.get(0).getWord(), word.getWord());
         assertEquals(allWords.get(1).getWord(), word2.getWord());
     }
@@ -97,7 +97,7 @@ public class WordDaoTest {
         Word word2 = new Word("word2");
         mWordDao.insert(word2);
         mWordDao.deleteAll();
-        List<Word> allWords = com.example.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
+        List<Word> allWords = com.rrooaarr.android.roomwordssample.LiveDataTestUtil.getValue(mWordDao.getAlphabetizedWords());
         assertTrue(allWords.isEmpty());
     }
 }

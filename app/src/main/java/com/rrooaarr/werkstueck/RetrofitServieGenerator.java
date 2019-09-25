@@ -1,4 +1,4 @@
-package com.example.roomwordsample;
+package com.rrooaarr.werkstueck;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

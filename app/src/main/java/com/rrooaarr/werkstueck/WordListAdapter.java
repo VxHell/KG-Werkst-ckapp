@@ -1,4 +1,4 @@
-package com.example.roomwordsample;
+package com.rrooaarr.werkstueck;
 
 import android.content.Context;
 import android.view.LayoutInflater;
