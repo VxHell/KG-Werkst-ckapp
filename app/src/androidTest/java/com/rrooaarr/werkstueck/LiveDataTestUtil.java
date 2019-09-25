@@ -1,4 +1,4 @@
-package com.rrooaarr.android.roomwordssample;
+package com.rrooaarr.werkstueck;
 /*
  * Copyright (C) 2017 The Android Open Source Project
  *
