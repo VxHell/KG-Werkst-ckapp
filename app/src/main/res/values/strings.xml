@@ -3,6 +3,7 @@
     <string name="action_settings">Einstellungen</string>
     <string name="hint_word">Wort...</string>
     <string name="button_save">Speichern</string>
+    <string name="button_end">Programmende</string>
     <string name="button_book_finishing">Buchen Veredelung</string>
     <string name="button_book_packaging">Buchen Verpackung</string>
     <string name="button_book_shipping">Buchen Versand</string>

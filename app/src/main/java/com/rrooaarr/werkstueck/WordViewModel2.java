@@ -26,6 +26,8 @@ public class WordViewModel2 extends AndroidViewModel {
     private MutableLiveData<Word> mutableLiveData;
 
     private String navtitel = "Menü";
+    private String titel = "Werkstücke";
+    private String bottomtitel = "KG Nellingen";
 
     public WordViewModel2(Application application) {
         super(application);
@@ -55,6 +57,24 @@ public class WordViewModel2 extends AndroidViewModel {
 
     public WordViewModel2 setNavtitel(String navtitel) {
         this.navtitel = navtitel;
+        return this;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public WordViewModel2 setTitel(String titel) {
+        this.titel = titel;
+        return this;
+    }
+
+    public String getBottomtitel() {
+        return bottomtitel;
+    }
+
+    public WordViewModel2 setBottomtitel(String bottomtitel) {
+        this.bottomtitel = bottomtitel;
         return this;
     }
 }

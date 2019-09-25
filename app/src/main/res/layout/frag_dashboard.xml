@@ -46,14 +46,4 @@
         android:layout_below="@+id/button_settings"
         android:textColor="@color/buttonLabel" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-
-        android:background="?attr/colorError"
-        android:minHeight="56dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="KG Nellingen" />
-
 </RelativeLayout>
