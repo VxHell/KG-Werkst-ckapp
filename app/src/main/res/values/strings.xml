@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">RoomWordSample</string>
-    <string name="action_settings">Settings</string>
-    <string name="hint_word">Word...</string>
-    <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="app_name">KG Werkstück APP</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="hint_word">Wort...</string>
+    <string name="button_save">Speichern</string>
+    <string name="button_book_finishing">Buchen Veredelung</string>
+    <string name="button_book_packaging">Buchen Verpackung</string>
+    <string name="button_book_shipping">Buchen Versand</string>
+    <string name="button_settings">Einstellungen</string>
+    <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
+    <string name="empty_not_saved">Speichern fehlgeschlagen, da leer.</string>
 </resources>

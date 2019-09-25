@@ -2,90 +2,105 @@ package com.rrooaarr.werkstueck;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
+import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
+import com.rrooaarr.werkstueck.util.Utils;
+import com.rrooaarr.werkstueck.view.BookingFragment;
+import com.rrooaarr.werkstueck.view.DashboardFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "MainActivity";
+
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-    private WordViewModel mWordViewModel;
+    private WordViewModel2 mainViewModel;
+    private long lastBackPressTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setContentView(R.layout.activity_main);
+        mainViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
+        mainViewModel.getNavtitel();
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-            }
-        });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final WordListAdapter adapter = new WordListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
 
-        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        Utils.replaceFragment(DashboardFragment.newInstance("param1", "param2"), true, getSupportFragmentManager(), R.id.content_frame);
+
+//        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+//        final WordListAdapter adapter = new WordListAdapter(this);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+//
         /**
          * Anonym Class impl
          */
-        mWordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
-            @Override
-            public void onChanged(@Nullable final List<Word> words) {
-                // Update the cached copy of the words in the adapter.
-                adapter.setWords(words);
-            }
-        });
+//        mainViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<Word> words) {
+//                // Update the cached copy of the words in the adapter.
+//                adapter.setWords(words);
+//            }
+//        });
+
         /**
          * Lambda for onChanged impl
          */
-        mWordViewModel.getNewsRepository().observe(this, word -> {
-            String fetchedWord = word.getWord();
-        });
+//        mainViewModel.getNewsRepository().observe(this, word -> {
+//            String fetchedWord = word.getWord();
+//        });
+
+        binding.setMainViewModel(mainViewModel);
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        final Fragment currentFragmentIsDashboard = Utils.getVisibleFragment(this);
+        if (currentFragmentIsDashboard != null && DashboardFragment.TAG.equals(currentFragmentIsDashboard.getTag())) {
+            finish();
+            return;
         }
-
-        return super.onOptionsItemSelected(item);
+        try {
+            if (manager.getBackStackEntryCount() > 1) {
+                manager.popBackStackImmediate();
+                for (int i = 0; i < manager.getBackStackEntryCount(); i++) {
+                    final Fragment visibleFragment = Utils.getVisibleFragment(this);
+                    if (visibleFragment != null && BookingFragment.TAG.equals(visibleFragment.getTag())) {
+                        manager.popBackStackImmediate();
+                    } else {
+                        break;
+                    }
+                }
+            } else if (manager.getBackStackEntryCount() == 1) {
+                manager.popBackStackImmediate();
+            } else {
+                Toast toast;
+                if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
+                    toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
+                    toast.show();
+                    this.lastBackPressTime = System.currentTimeMillis();
+                } else {
+                    super.onBackPressed();
+                }
+            }
+        } catch (IllegalStateException ise) {
+            Utils.doErrorHandling(R.string.errBackPressNavi, getApplicationContext());
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
-            mWordViewModel.insert(word);
+            mainViewModel.insert(word);
         } else {
             Toast.makeText(
                     getApplicationContext(),
