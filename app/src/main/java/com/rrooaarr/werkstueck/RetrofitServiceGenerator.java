@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitServieGenerator {
+public class RetrofitServiceGenerator {
 
     private static final String BASE_URL = "https://kg-entwicklung:443/rest/service/wst/";
 

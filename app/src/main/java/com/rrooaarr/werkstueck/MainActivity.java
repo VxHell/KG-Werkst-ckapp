@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
-        Toolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
+//        Toolbar tb = findViewById(R.id.toolbar);
+//        setSupportActionBar(tb);
 
 //        Utils.replaceFragment(DashboardFragment.newInstance("param1", "param2"), true, getSupportFragmentManager(), R.id.content_frame);
 

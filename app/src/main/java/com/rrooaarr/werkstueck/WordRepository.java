@@ -22,7 +22,7 @@ public class WordRepository {
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mAllWords = mWordDao.getAllWords();
-        wordWebservice = RetrofitServieGenerator.createService(WordWebservice.class);
+        wordWebservice = RetrofitServiceGenerator.createService(WordWebservice.class);
     }
 
     public MutableLiveData<Word> getWordOverAPI(String wordId){

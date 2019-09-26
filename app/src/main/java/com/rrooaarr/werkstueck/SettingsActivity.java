@@ -14,14 +14,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public static final String EXTRA_SAVE_REPLY = "com.example.android.savesql.REPLY";
     public static final String EXTRA_CANCEL_REPLY = "com.example.android.cancel.REPLY";
 
-    public static final int SETTINGS_2_MAINACTIVITY_REQUEST_CODE = 1;
-
     private EditText server;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_word);
+        setContentView(R.layout.activity_settings);
         server = findViewById(R.id.edit_word);
 
         final Button button = findViewById(R.id.button_save);

@@ -20,7 +20,7 @@ public class BookingActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_word);
+        setContentView(R.layout.activity_booking);
         number = findViewById(R.id.edit_word);
 
         final Button button = findViewById(R.id.button_save);

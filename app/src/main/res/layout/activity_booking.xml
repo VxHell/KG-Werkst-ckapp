@@ -14,13 +14,12 @@
         android:layout_marginBottom="@dimen/big_padding"
         android:layout_marginTop="@dimen/big_padding"
         android:textSize="18sp" />
-
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:text="@string/button_save"
+        android:background="@drawable/transparent_bg_border_button"
         android:textColor="@color/buttonLabel" />
 
 </LinearLayout>

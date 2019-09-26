@@ -11,6 +11,7 @@
 
     <!--    Button Text-->
     <string name="button_save">Speichern</string>
+    <string name="button_cancel">Abbrechen</string>
     <string name="button_end">Programmende</string>
     <string name="button_book_finishing">Buchen Veredelung</string>
     <string name="button_book_packaging">Buchen Verpackung</string>
