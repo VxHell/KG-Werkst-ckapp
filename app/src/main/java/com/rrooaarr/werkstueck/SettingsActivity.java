@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO consider to make viewmodel singelton
         mainViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         binding.setMainViewModel(mainViewModel);
@@ -92,7 +93,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_save:
                 onSave();
                 break;
-            case R.id.button_settings:
+            case R.id.button_cancel:
                 onCancel();
                 break;
         }
