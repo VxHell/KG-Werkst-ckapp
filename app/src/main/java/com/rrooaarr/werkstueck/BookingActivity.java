@@ -21,7 +21,7 @@ public class BookingActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
-        number = findViewById(R.id.edit_word);
+        number = findViewById(R.id.edit_server);
 
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {

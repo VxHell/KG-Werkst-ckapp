@@ -1,15 +1,25 @@
 <resources>
-    <!--    Basics -->
+    <!--    Basics  -->
     <string name="app_name">KG Werkstück APP</string>
     <string name="action_settings">Einstellungen</string>
 
-    <!--   Hints -->
-    <string name="hint_word">Word...</string>
+    <!--   labels  -->
+    <string name="txt_server">Server</string>
+    <string name="txt_port">Port</string>
+    <string name="txt_username">Benutzername</string>
+    <string name="txt_passwort">Passwort</string>
+
+    <!--   Hints  -->
+    <string name="hint_server">Server</string>
+    <string name="hint_port">Port</string>
+    <string name="hint_username">Benutzername</string>
+    <string name="hint_passwort">Passwort</string>
+
     <string name="hint_number">XXX</string>
     <string name="hint_subProjectNumber">XX</string>
     <string name="hint_plantNumber">XXXXX</string>
 
-    <!--    Button Text-->
+    <!--   Button Text  -->
     <string name="button_save">Speichern</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_end">Programmende</string>
@@ -18,7 +28,12 @@
     <string name="button_book_shipping">Buchen Versand</string>
     <string name="button_settings">Einstellungen</string>
 
-    <!-- Error Handling & error dialog messages -->
+    <!--  Error Handling & error dialog messages  -->
     <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
     <string name="empty_not_saved">Speichern fehlgeschlagen, da leer.</string>
+
+    <string name="empty_server">Bitte geben Sie einen Server an.</string>
+    <string name="empty_port">Bitte geben Sie einen Port an.</string>
+    <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
+    <string name="empty_passwort">Bitte geben Sie ein Passwort an.</string>
 </resources>

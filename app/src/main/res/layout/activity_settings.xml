@@ -1,54 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="mainViewModel"
-            type="com.rrooaarr.werkstueck.WordViewModel2"/>
+            type="com.rrooaarr.werkstueck.WordViewModel2" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity">
+
+        <include
+            android:id="@+id/navbar_container"
+            layout="@layout/navbar_componet"
+            app:navtitle="@{mainViewModel.navtitel}"
+            app:title="@{mainViewModel.titel}" />
+
+        <RelativeLayout
+            android:id="@+id/menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/frag_button_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/navbar_container">
+
+            <TextView
+                android:id="@+id/txt_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:text="@string/txt_server" />
+
+            <EditText
+                android:id="@+id/edit_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_server"
+                android:inputType="textAutoComplete"
+                android:padding="@dimen/small_padding"
+                android:layout_below="@+id/txt_server"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_port"
+                android:paddingStart="5dp"
+                android:layout_below="@+id/edit_server"
+                />
+            <EditText
+                android:id="@+id/edit_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_port"
+                android:inputType="textAutoComplete"
+                android:padding="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:layout_below="@+id/txt_port"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_username"
+                android:paddingStart="5dp"
+                android:layout_below="@+id/edit_port"
+                />
+
+            <EditText
+                android:id="@+id/edit_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_username"
+                android:inputType="textAutoComplete"
+                android:padding="@dimen/small_padding"
+                android:layout_below="@+id/txt_username"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_passwort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_passwort"
+                android:paddingStart="5dp"
+                android:layout_below="@+id/edit_username"
+                />
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_passwort"
+                android:padding="@dimen/small_padding"
+                android:layout_below="@+id/txt_passwort"
+                android:inputType="textPassword"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
         <Button
-            android:id="@+id/edit_word"
-            android:layout_width="0dp"
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            app:layout_constraintBottom_toTopOf="@+id/btn_delete"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Delete"
+            android:layout_marginEnd="292dp"
+            android:layout_marginBottom="56dp"
+            android:background="@drawable/transparent_bg_border_button"
+            android:text="@string/button_end"
+            android:textColor="@color/buttonLabel"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/btn_cancel"
-            app:layout_constraintTop_toBottomOf="@+id/edit_word" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/button_save" />
 
         <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            app:layout_constraintLeft_toRightOf="@+id/btn_delete"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_word" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="56dp"
+            android:background="@drawable/transparent_bg_border_button"
+            android:text="@string/button_settings"
+            android:textColor="@color/buttonLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/button_cancel" />
 
-        <include layout="@layout/navbar"
+        <include
             android:id="@+id/toolbar3"
+            layout="@layout/navbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:title="@{mainViewModel.bottomtitel}"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            app:title="@{mainViewModel.bottomtitel}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
