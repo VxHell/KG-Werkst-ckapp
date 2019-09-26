@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/button_book_finishing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/frag_button_margin"
+        android:layout_marginEnd="@dimen/frag_button_margin"
+        android:text="@string/button_book_finishing"
+        android:background="@drawable/transparent_bg_border_button"
+        android:textColor="@color/buttonLabel" />
+</merge>

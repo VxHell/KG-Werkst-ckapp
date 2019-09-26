@@ -1,13 +1,23 @@
 <resources>
+    <!--    Basics -->
     <string name="app_name">KG Werkstück APP</string>
     <string name="action_settings">Einstellungen</string>
-    <string name="hint_word">Wort...</string>
+
+    <!--   Hints -->
+    <string name="hint_word">Word...</string>
+    <string name="hint_number">XXX</string>
+    <string name="hint_subProjectNumber">XX</string>
+    <string name="hint_plantNumber">XXXXX</string>
+
+    <!--    Button Text-->
     <string name="button_save">Speichern</string>
     <string name="button_end">Programmende</string>
     <string name="button_book_finishing">Buchen Veredelung</string>
     <string name="button_book_packaging">Buchen Verpackung</string>
     <string name="button_book_shipping">Buchen Versand</string>
     <string name="button_settings">Einstellungen</string>
+
+    <!-- Error Handling & error dialog messages -->
     <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
     <string name="empty_not_saved">Speichern fehlgeschlagen, da leer.</string>
 </resources>

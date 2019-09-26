@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String TAG = "MainActivity";
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
+    public static final int BOOKING_ACTIVITY_REQUEST_CODE = 2;
 
     private WordViewModel2 mainViewModel;
     Button btn_book_finishing, btn_settings;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        });
 
         binding.setMainViewModel(mainViewModel);
-
+        initViews(binding.getRoot());
     }
 
     @Override
@@ -108,20 +109,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
-            mainViewModel.insert(word);
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+        if(requestCode == SETTINGS_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Word word = new Word(data.getStringExtra(SettingsActivity.EXTRA_SAVE_REPLY));
+                mainViewModel.insert(word);
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.empty_not_saved,
+                        Toast.LENGTH_LONG).show();
+            }
+        } else if(requestCode == BOOKING_ACTIVITY_REQUEST_CODE) {
+
+            if (resultCode == RESULT_OK) {
+                Word word = new Word(data.getStringExtra(BookingActivity.EXTRA_REPLY));
+                mainViewModel.insert(word);
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.empty_not_saved,
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     private void initViews(View view) {
-//        userName = (EditText) view.findViewById(R.id.user_name);
-//        userOccupation = (EditText) view.findViewById(R.id.user_occupation);
         btn_book_finishing = view.findViewById(R.id.button_book_finishing);
         btn_book_finishing.setOnClickListener(this);
         btn_settings = view.findViewById(R.id.button_settings);
@@ -130,13 +142,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.button_book_finishing) {
-            Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-        }
-        if (view.getId() == R.id.button_settings) {
-            Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+        switch (view.getId()){
+            case R.id.button_book_finishing:
+                startActivityForResult(new Intent(MainActivity.this, BookingActivity.class), BOOKING_ACTIVITY_REQUEST_CODE);
+                break;
+//                TODO
+            case R.id.button_settings:
+                startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), SETTINGS_ACTIVITY_REQUEST_CODE);
+                break;
         }
     }
 

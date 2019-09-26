@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/button_book_finishing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:text="@string/button_book_finishing"
         android:textColor="@color/buttonLabel" />
     <Button
         android:id="@+id/button_book_packaging"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:text="@string/button_book_packaging"
         android:layout_below="@+id/button_book_finishing"
         android:textColor="@color/buttonLabel" />
@@ -25,7 +24,7 @@
         android:id="@+id/button_book_shipping"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:text="@string/button_book_shipping"
         android:layout_below="@+id/button_book_packaging"
         android:textColor="@color/buttonLabel" />
@@ -33,7 +32,7 @@
         android:id="@+id/button_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:text="@string/button_save"
         android:layout_below="@+id/button_book_shipping"
         android:textColor="@color/buttonLabel" />
@@ -41,7 +40,7 @@
         android:id="@+id/button_end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:text="@string/button_save"
         android:layout_below="@+id/button_settings"
         android:textColor="@color/buttonLabel" />
