@@ -4,11 +4,20 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
 
 public class SettingsRepository {
 
     private UserSettingDao mSettingsDao;
     private LiveData<UserSetting> settingLiveData;
+    private MutableLiveData<List<UserSetting>> searchResults =
+            new MutableLiveData<>();
+
+    private void asyncFinished(List<UserSetting> results) {
+        searchResults.setValue(results);
+    }
 
     public SettingsRepository(Application application) {
         UserSettingsRoomDatabase db = UserSettingsRoomDatabase.getDatabase(application);
@@ -22,6 +31,7 @@ public class SettingsRepository {
 
     LiveData<UserSetting> loadSettings() {
         settingLiveData = mSettingsDao.getSetting();
+        loadSettings("test");
         return settingLiveData;
     }
 
@@ -75,6 +85,33 @@ public class SettingsRepository {
         @Override
         protected LiveData<UserSetting> doInBackground(final Void... params) {
             return mSettingDao.getSetting();
+        }
+    }
+
+    public void loadSettings(String name) {
+        QueryAsyncTask task = new QueryAsyncTask(mSettingsDao);
+        task.delegate = this;
+        task.execute(name);
+    }
+
+    private static class QueryAsyncTask extends
+            AsyncTask<String, Void, List<UserSetting>> {
+
+        private UserSettingDao asyncTaskDao;
+        private SettingsRepository delegate = null;
+
+        QueryAsyncTask(UserSettingDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<UserSetting> doInBackground(final String... params) {
+            return asyncTaskDao.getAllSettings2();
+        }
+
+        @Override
+        protected void onPostExecute(List<UserSetting> result) {
+            delegate.asyncFinished(result);
         }
     }
 

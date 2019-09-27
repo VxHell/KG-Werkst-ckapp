@@ -56,13 +56,14 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            UserSetting setting = new UserSetting("test", "test", "test", "test");
+            mDao.deleteAll();
+            UserSetting setting = new UserSetting("server", "port", "username", "pass");
             mDao.insert(setting);
             return null;
         }
     }
 
-    private static class InsertDbAsync extends AsyncTask<UserSetting, Void, Void> {
+    public static class InsertDbAsync extends AsyncTask<UserSetting, Void, Void> {
 
         private final UserSettingDao mSettingDao;
 

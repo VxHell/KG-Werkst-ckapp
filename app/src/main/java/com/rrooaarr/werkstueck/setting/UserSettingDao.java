@@ -32,6 +32,9 @@ public interface UserSettingDao extends BaseDao<UserSetting> {
     @Query("SELECT * from user_setting ORDER BY username ASC")
     LiveData<List<UserSetting>> getAlphabetizedSettings();
 
+    @Query("SELECT * from user_setting")
+    List<UserSetting> getAllSettings2();
+
     @Update(onConflict = REPLACE)
     void update(UserSetting setting);
 

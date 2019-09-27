@@ -6,12 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
@@ -19,8 +17,6 @@ import com.rrooaarr.werkstueck.setting.SettingsActivity;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.BookingFragment;
 import com.rrooaarr.werkstueck.view.DashboardFragment;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,23 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 //
-        /**
-         * Anonym Class impl
-         */
-        mainViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
-            @Override
-            public void onChanged(@Nullable final List<Word> words) {
-                // Update the cached copy of the words in the adapter.
-//                adapter.setWords(words);
-            }
-        });
-
-        /**
-         * Lambda for onChanged impl
-         */
-//        mainViewModel.getWordData().observe(this, word -> {
-//            String fetchedWord = word.getWord();
-//        });
 
         binding.setMainViewModel(mainViewModel);
         initViews(binding.getRoot());
