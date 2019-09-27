@@ -1,16 +1,16 @@
 package com.rrooaarr.werkstueck.experimental;
 
+import com.rrooaarr.werkstueck.MainViewModel;
 import com.rrooaarr.werkstueck.R;
-import com.rrooaarr.werkstueck.WordViewModel2;
 
 import java.util.List;
 
 public class MyAdapter extends BaseAdapter {
 
-    List<WordViewModel2> data;
+    List<MainViewModel> data;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<WordViewModel2> myDataset) {
+    public MyAdapter(List<MainViewModel> myDataset) {
         data = myDataset;
     }
 

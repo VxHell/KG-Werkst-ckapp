@@ -1,4 +1,4 @@
-package com.rrooaarr.werkstueck;
+package com.rrooaarr.werkstueck.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,35 +10,78 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.databinding.ActivitySettingsBinding;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String EXTRA_SAVE_REPLY = "com.example.android.savesql.REPLY";
 
-    private WordViewModel2 mainViewModel;
+    private UserSettingsViewModel settingsViewModel;
 
     private EditText server;
     private EditText port;
     private EditText username;
-    private EditText passwort;
+    private EditText password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // TODO consider to make viewmodel singelton for instance Dagger
-        mainViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
+        settingsViewModel = new ViewModelProvider(this).get(UserSettingsViewModel.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
-        binding.setMainViewModel(mainViewModel);
-        initViews(binding.getRoot());
+        settingsViewModel.loadSetting();
+        // Specify the current activity as the lifecycle owner.
+//        binding.setLifecycleOwner(this);
 
+        binding.setSettingsViewModel(settingsViewModel);
+        initViews(binding.getRoot());
         server = findViewById(R.id.edit_server);
         port = findViewById(R.id.edit_port);
         username = findViewById(R.id.edit_username);
-        passwort = findViewById(R.id.edit_password);
+        password = findViewById(R.id.edit_password);
+
+        settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
+            @Override
+            public void onChanged(UserSetting setting) {
+                server.setText(setting != null ? setting.getServer() : null);
+                port.setText(setting != null ? setting.getPort() : null);
+                username.setText(setting != null ? setting.getUsername() : null);
+                password.setText(setting != null ? setting.getPassword() : null);
+            }
+        });
+//
+//        settingsViewModel.getServer().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String server_value) {
+//                server.setText(server_value);
+//            }
+//        });
+//
+//        settingsViewModel.getPort().observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(Integer port_value) {
+//                port.setText(port_value);
+//            }
+//        });
+//
+//        settingsViewModel.getServer().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String username_value) {
+//                username.setText(username_value);
+//            }
+//        });
+//
+//        settingsViewModel.getServer().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String password_value) {
+//                password.setText(password_value);
+//            }
+//        });
 
     }
 
@@ -68,14 +111,20 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     getApplicationContext(),
                     R.string.empty_username,
                     Toast.LENGTH_LONG).show();
-        } else if (TextUtils.isEmpty(passwort.getText())) {
+        } else if (TextUtils.isEmpty(password.getText())) {
             Toast.makeText(
                     getApplicationContext(),
                     R.string.empty_password,
                     Toast.LENGTH_LONG).show();
         } else {
-            String word = server.getText().toString();
-            replyIntent.putExtra(EXTRA_SAVE_REPLY, word);
+            String mServer = server.getText().toString();
+            String mPort = port.getText().toString();
+            String mUsername = username.getText().toString();
+            String mPasswort = password.getText().toString();
+
+            UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
+            settingsViewModel.insert(setting);
+
             setResult(RESULT_OK, replyIntent);
             finish();
         }

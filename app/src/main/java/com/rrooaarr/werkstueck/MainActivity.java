@@ -6,16 +6,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
+import com.rrooaarr.werkstueck.setting.SettingsActivity;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.BookingFragment;
 import com.rrooaarr.werkstueck.view.DashboardFragment;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
     public static final int BOOKING_ACTIVITY_REQUEST_CODE = 2;
 
-    private WordViewModel2 mainViewModel;
+    private MainViewModel mainViewModel;
     Button btn_book_finishing, btn_settings;
     private long lastBackPressTime;
 
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
-        mainViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
@@ -50,18 +55,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /**
          * Anonym Class impl
          */
-//        mainViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<Word> words) {
-//                // Update the cached copy of the words in the adapter.
+        mainViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+            @Override
+            public void onChanged(@Nullable final List<Word> words) {
+                // Update the cached copy of the words in the adapter.
 //                adapter.setWords(words);
-//            }
-//        });
+            }
+        });
 
         /**
          * Lambda for onChanged impl
          */
-//        mainViewModel.getNewsRepository().observe(this, word -> {
+//        mainViewModel.getWordData().observe(this, word -> {
 //            String fetchedWord = word.getWord();
 //        });
 
@@ -109,20 +114,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == SETTINGS_ACTIVITY_REQUEST_CODE) {
+
+            int responseId =  R.string.empty_not_saved;
             if (resultCode == RESULT_OK) {
-                Word word = new Word(data.getStringExtra(SettingsActivity.EXTRA_SAVE_REPLY));
-                mainViewModel.insert(word);
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.empty_not_saved,
-                        Toast.LENGTH_LONG).show();
+                responseId =  R.string.settings_saved;
             }
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    responseId,
+                    Toast.LENGTH_LONG).show();
+
         } else if(requestCode == BOOKING_ACTIVITY_REQUEST_CODE) {
 
             if (resultCode == RESULT_OK) {
-                Word word = new Word(data.getStringExtra(BookingActivity.EXTRA_REPLY));
-                mainViewModel.insert(word);
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.settings_saved,
+                        Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(
                         getApplicationContext(),

@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class WordRepository {
 
-    private WordWebservice wordWebservice = null;
+    private WordWebservice wordWebservice;
     private WordDao mWordDao;
     private LiveData<List<Word>> mAllWords;
 
@@ -49,7 +49,7 @@ public class WordRepository {
     LiveData<List<Word>> getAllWords() {
         return mAllWords;
     }
-    // dont call it on the UI thread!
+
     public void insert (Word word) {
         new insertAsyncTask(mWordDao).execute(word);
     }

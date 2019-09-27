@@ -17,7 +17,7 @@ import java.util.List;
  *
  * There should be no imports of anything from theandroid.view or android.widgetpackages.
  */
-public class WordViewModel2 extends AndroidViewModel {
+public class BookingViewModel extends AndroidViewModel {
 
     private WordRepository mRepository;
 
@@ -25,11 +25,11 @@ public class WordViewModel2 extends AndroidViewModel {
 
     private MutableLiveData<Word> mutableLiveData;
 
-    private String navtitel = "Menü";
+    private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
 
-    public WordViewModel2(Application application) {
+    public BookingViewModel(Application application) {
         super(application);
         mRepository = new WordRepository(application);
         mAllWords = mRepository.getAllWords();
@@ -47,7 +47,7 @@ public class WordViewModel2 extends AndroidViewModel {
         mutableLiveData = mRepository.getWordOverAPI("33");
     }
 
-    public LiveData<Word> getNewsRepository() {
+    public LiveData<Word> getWordData() {
         return mutableLiveData;
     }
 
@@ -55,26 +55,14 @@ public class WordViewModel2 extends AndroidViewModel {
         return navtitel;
     }
 
-    public WordViewModel2 setNavtitel(String navtitel) {
-        this.navtitel = navtitel;
-        return this;
-    }
 
     public String getTitel() {
         return titel;
     }
 
-    public WordViewModel2 setTitel(String titel) {
-        this.titel = titel;
-        return this;
-    }
 
     public String getBottomtitel() {
         return bottomtitel;
     }
 
-    public WordViewModel2 setBottomtitel(String bottomtitel) {
-        this.bottomtitel = bottomtitel;
-        return this;
-    }
 }

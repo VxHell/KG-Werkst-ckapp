@@ -10,7 +10,7 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.rrooaarr.werkstueck.WordViewModel2;
+import com.rrooaarr.werkstueck.MainViewModel;
 
 public class BookingFragment extends Fragment implements FragmentBase,View.OnClickListener {
     public static final String TAG = DashboardFragment.class.getSimpleName();
@@ -23,7 +23,7 @@ public class BookingFragment extends Fragment implements FragmentBase,View.OnCli
     private String mParam1;
     private String mParam2;
     private View userInfoView = null;
-    private WordViewModel2 bookingViewModel;
+    private MainViewModel bookingViewModel;
 
     public BookingFragment() {
         // Required empty public constructor
@@ -54,7 +54,7 @@ public class BookingFragment extends Fragment implements FragmentBase,View.OnCli
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        bookingViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
+        bookingViewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 
     @Override
@@ -70,8 +70,6 @@ public class BookingFragment extends Fragment implements FragmentBase,View.OnCli
     private void initViews(View view) {
         saveUser.setOnClickListener(this);
     }
-
-
 
     @Override
     public String getFragmentTag() {

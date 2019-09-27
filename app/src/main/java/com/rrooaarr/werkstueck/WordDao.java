@@ -16,7 +16,7 @@ public interface WordDao extends BaseDao<Word> {
     // If the table has more than one column, you can use
     //@Insert(onConflict = OnConflictStrategy.REPLACE)
 
-    void insert(Word word);
+    long insert(Word word);
 
     @Query("DELETE FROM word_table")
     void deleteAll();

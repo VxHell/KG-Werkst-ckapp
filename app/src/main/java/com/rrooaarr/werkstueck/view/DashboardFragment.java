@@ -8,8 +8,8 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.rrooaarr.werkstueck.MainViewModel;
 import com.rrooaarr.werkstueck.R;
-import com.rrooaarr.werkstueck.WordViewModel2;
 
 public class DashboardFragment extends Fragment implements FragmentBase,View.OnClickListener {
     public static final String TAG = DashboardFragment.class.getSimpleName();
@@ -19,7 +19,7 @@ public class DashboardFragment extends Fragment implements FragmentBase,View.OnC
     private String mParam1;
     private String mParam2;
     private View userInfoView = null;
-    private WordViewModel2 mainViewModel;
+    private MainViewModel mainViewModel;
 
     public DashboardFragment() {
         // Required empty public constructor

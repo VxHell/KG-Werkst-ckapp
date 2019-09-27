@@ -2,7 +2,7 @@ package com.rrooaarr.werkstueck;
 
 import androidx.room.Insert;
 
-interface BaseDao<T> {
+public interface BaseDao<T> {
     @Insert
-    void insert(T obj);
+    long insert(T obj);
 }

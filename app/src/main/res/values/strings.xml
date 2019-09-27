@@ -36,4 +36,8 @@
     <string name="empty_port">Bitte geben Sie einen Port an.</string>
     <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
     <string name="empty_password">Bitte geben Sie ein Passwort an.</string>
+
+    <!--  Success messages  -->
+    <string name="settings_saved">Einstellungen wurden erfolgreich gespeichert.</string>
+
 </resources>

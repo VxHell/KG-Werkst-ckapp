@@ -6,7 +6,7 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.rrooaarr.werkstueck.WordViewModel2" />
+            type="com.rrooaarr.werkstueck.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
