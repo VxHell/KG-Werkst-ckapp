@@ -54,34 +54,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 password.setText(setting != null ? setting.getPassword() : null);
             }
         });
-//
-//        settingsViewModel.getServer().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(String server_value) {
-//                server.setText(server_value);
-//            }
-//        });
-//
-//        settingsViewModel.getPort().observe(this, new Observer<Integer>() {
-//            @Override
-//            public void onChanged(Integer port_value) {
-//                port.setText(port_value);
-//            }
-//        });
-//
-//        settingsViewModel.getServer().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(String username_value) {
-//                username.setText(username_value);
-//            }
-//        });
-//
-//        settingsViewModel.getServer().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(String password_value) {
-//                password.setText(password_value);
-//            }
-//        });
 
     }
 
