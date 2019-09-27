@@ -91,7 +91,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txt_passwort"
+                android:id="@+id/txt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_passwort"
@@ -104,9 +104,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_passwort"
+                android:hint="@string/hint_password"
                 android:padding="@dimen/small_padding"
-                android:layout_below="@+id/txt_passwort"
+                android:layout_below="@+id/txt_password"
                 android:inputType="textPassword"
                 android:layout_marginBottom="@dimen/big_padding"
                 android:layout_marginTop="@dimen/big_padding"

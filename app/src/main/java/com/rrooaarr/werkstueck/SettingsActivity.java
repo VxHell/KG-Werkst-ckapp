@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO consider to make viewmodel singelton
+        // TODO consider to make viewmodel singelton for instance Dagger
         mainViewModel = new ViewModelProvider(this).get(WordViewModel2.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         binding.setMainViewModel(mainViewModel);
@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         } else if (TextUtils.isEmpty(passwort.getText())) {
             Toast.makeText(
                     getApplicationContext(),
-                    R.string.empty_passwort,
+                    R.string.empty_password,
                     Toast.LENGTH_LONG).show();
         } else {
             String word = server.getText().toString();

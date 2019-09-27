@@ -13,7 +13,7 @@
     <string name="hint_server">Server</string>
     <string name="hint_port">Port</string>
     <string name="hint_username">Benutzername</string>
-    <string name="hint_passwort">Passwort</string>
+    <string name="hint_password">Passwort</string>
 
     <string name="hint_number">XXX</string>
     <string name="hint_subProjectNumber">XX</string>
@@ -35,5 +35,5 @@
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
     <string name="empty_port">Bitte geben Sie einen Port an.</string>
     <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
-    <string name="empty_passwort">Bitte geben Sie ein Passwort an.</string>
+    <string name="empty_password">Bitte geben Sie ein Passwort an.</string>
 </resources>
