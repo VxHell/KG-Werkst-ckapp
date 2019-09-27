@@ -38,14 +38,11 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
             @Override
             public void onOpen (@NonNull SupportSQLiteDatabase db){
                 super.onOpen(db);
-                new PopulateDbAsync(INSTANCE).execute();
+                new LoadFromDbAsync(INSTANCE).execute();
             }
         };
 
-//    public LiveData<UserSetting> loadDB(){
-//        return new LoadFromDbAsync(INSTANCE).execute();
-//    }
-
+    // Maybe for late use
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final UserSettingDao mDao;
@@ -61,22 +58,6 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
             mDao.insert(setting);
             return null;
         }
-    }
-
-    public static class InsertDbAsync extends AsyncTask<UserSetting, Void, Void> {
-
-        private final UserSettingDao mSettingDao;
-
-        InsertDbAsync(UserSettingsRoomDatabase db) {
-            mSettingDao = db.settingDao();
-        }
-
-        @Override
-        protected Void doInBackground(UserSetting... userSettings) {
-            mSettingDao.insert(userSettings[0]);
-            return null;
-        }
-
     }
 
     private static class LoadFromDbAsync extends AsyncTask<Void, Void, LiveData<UserSetting>> {

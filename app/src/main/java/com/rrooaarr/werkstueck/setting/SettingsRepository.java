@@ -30,8 +30,8 @@ public class SettingsRepository {
     }
 
     LiveData<UserSetting> loadSettings() {
-        settingLiveData = mSettingsDao.getSetting();
-        loadSettings("test");
+//        settingLiveData = mSettingsDao.getSetting();
+//        loadSettings("test");
         return settingLiveData;
     }
 
@@ -73,27 +73,13 @@ public class SettingsRepository {
             return null;
         }
     }
-
-    private static class LoadFromDbAsync extends AsyncTask<Void, Void, LiveData<UserSetting>> {
-
-        private final UserSettingDao mSettingDao;
-
-        LoadFromDbAsync(UserSettingsRoomDatabase db) {
-            mSettingDao = db.settingDao();
-        }
-
-        @Override
-        protected LiveData<UserSetting> doInBackground(final Void... params) {
-            return mSettingDao.getSetting();
-        }
-    }
-
+    // Maybe for late use
     public void loadSettings(String name) {
         QueryAsyncTask task = new QueryAsyncTask(mSettingsDao);
         task.delegate = this;
         task.execute(name);
     }
-
+    // Maybe for late use
     private static class QueryAsyncTask extends
             AsyncTask<String, Void, List<UserSetting>> {
 
