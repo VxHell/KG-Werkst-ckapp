@@ -84,9 +84,9 @@ public class SettingDaoTest {
     @Test
     public void insertAndUpdateSetting() throws Exception {
         UserSetting setting = new UserSetting("test", "test", "test", "test");
-        long primary = settingDao.insert(setting);
+        settingDao.insert(setting);
         UserSetting settingUpdate = new UserSetting("test2", "test2", "test2", "test2");
-        settingDao.update(settingUpdate, primary);
+        settingDao.update(settingUpdate);
         List<UserSetting> allsettings = LiveDataTestUtil.getValue(settingDao.getAlphabetizedSettings());
         assertEquals(allsettings.get(0).getServer(), settingUpdate.getServer());
         assertEquals(allsettings.get(0).getPassword(), settingUpdate.getPassword());
@@ -94,5 +94,17 @@ public class SettingDaoTest {
         assertEquals(allsettings.get(0).getUsername(), settingUpdate.getUsername());
     }
 
+    @Test
+    public void insertAndUpdatePropertiesSetting() throws Exception {
+        UserSetting setting = new UserSetting("test", "test", "test", "test");
+        long primary = settingDao.insert(setting);
+        UserSetting settingUpdate = new UserSetting("test2", "test2", "test2", "test2");
+        settingDao.updateProperties(primary, settingUpdate.getServer(), settingUpdate.getPort(), settingUpdate.getUsername(), settingUpdate.getPassword());
+        List<UserSetting> allsettings = LiveDataTestUtil.getValue(settingDao.getAlphabetizedSettings());
+        assertEquals(allsettings.get(0).getServer(), settingUpdate.getServer());
+        assertEquals(allsettings.get(0).getPassword(), settingUpdate.getPassword());
+        assertEquals(allsettings.get(0).getPort(), settingUpdate.getPort());
+        assertEquals(allsettings.get(0).getUsername(), settingUpdate.getUsername());
+    }
 
 }

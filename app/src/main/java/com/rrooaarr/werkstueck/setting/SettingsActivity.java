@@ -123,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             String mPasswort = password.getText().toString();
 
             UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
-            settingsViewModel.insert(setting);
+            settingsViewModel.update(setting);
 
             setResult(RESULT_OK, replyIntent);
             finish();

@@ -58,7 +58,8 @@ public class SettingsRepository {
 
         @Override
         protected Void doInBackground(final UserSetting... params) {
-            mAsyncTaskDao.update(params[0], params[0].getId());
+            UserSetting set = params[0];
+            mAsyncTaskDao.updateProperties(set.getId(), set.getServer(), set.getPort(), set.getUsername(), set.getPassword());
             return null;
         }
     }

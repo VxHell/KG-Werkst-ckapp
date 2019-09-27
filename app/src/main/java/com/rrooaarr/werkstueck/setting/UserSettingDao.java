@@ -10,12 +10,13 @@ import com.rrooaarr.werkstueck.BaseDao;
 
 import java.util.List;
 
+import static androidx.room.OnConflictStrategy.IGNORE;
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface UserSettingDao extends BaseDao<UserSetting> {
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     long insert(UserSetting setting);
 
     @Query("DELETE FROM user_setting")
@@ -32,32 +33,9 @@ public interface UserSettingDao extends BaseDao<UserSetting> {
     LiveData<List<UserSetting>> getAlphabetizedSettings();
 
     @Update(onConflict = REPLACE)
-    void update(UserSetting setting, long key);
+    void update(UserSetting setting);
 
-//    @Update
-//    void updateServer(String server);
-//
-//    @Update
-//    void updatePort(Integer port);
-//
-//    @Update
-//    void updateUsername(String username);
-//
-//    @Update
-//    void updatePassword(String password);
-//
-//
-//    @Query("SELECT server from user_setting")
-//    LiveData<String> getServer();
-//
-//    @Query("SELECT port from user_setting")
-//    LiveData<Integer> getPort();
-//
-//    @Query("SELECT username from user_setting")
-//    LiveData<String> getUsername();
-//
-//    @Query("SELECT password from user_setting")
-//    LiveData<String> getPassword();
-
+    @Query("UPDATE user_setting SET server = :server, port = :port,username = :username, password = :password WHERE id = :usid")
+    int updateProperties(long usid, String server,String port, String username, String password);
 
 }
