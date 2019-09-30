@@ -30,8 +30,6 @@ public class SettingsRepository {
     }
 
     LiveData<UserSetting> loadSettings() {
-//        settingLiveData = mSettingsDao.getSetting();
-//        loadSettings("test");
         return settingLiveData;
     }
 

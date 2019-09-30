@@ -31,19 +31,30 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setupBindings();
+    }
+
+    private void setupBindings() {
         // TODO consider to make viewmodel singelton for instance Dagger
         settingsViewModel = new ViewModelProvider(this).get(UserSettingsViewModel.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         settingsViewModel.loadSetting();
-        // Specify the current activity as the lifecycle owner.
-//        binding.setLifecycleOwner(this);
-
         binding.setSettingsViewModel(settingsViewModel);
+
         initViews(binding.getRoot());
+    }
+
+    private void initViews(View view) {
         server = findViewById(R.id.edit_server);
         port = findViewById(R.id.edit_port);
         username = findViewById(R.id.edit_username);
         password = findViewById(R.id.edit_password);
+
+        final Button button = findViewById(R.id.button_save);
+        button.setOnClickListener(this);
+
+        final Button button_cancel = findViewById(R.id.button_cancel);
+        button_cancel.setOnClickListener(this);
 
         settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
             @Override
@@ -54,15 +65,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 password.setText(setting != null ? setting.getPassword() : null);
             }
         });
-
-    }
-
-    private void initViews(View view) {
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(this);
-
-        final Button button_cancel = findViewById(R.id.button_cancel);
-        button_cancel.setOnClickListener(this);
     }
 
     private void onSave(){
