@@ -5,153 +5,224 @@
 
     <data>
         <variable
-            name="settingsViewModel"
+            name="model"
             type="com.rrooaarr.werkstueck.setting.UserSettingsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.login.LoginActivity">
 
-        <include
-            android:id="@+id/navbar_container"
-            layout="@layout/navbar_componet"
-            app:navtitle="@{settingsViewModel.navtitel}"
-            app:title="@{settingsViewModel.titel}" />
-
-        <RelativeLayout
-            android:id="@+id/menu_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/frag_button_margin_top"
-            app:layout_constraintTop_toBottomOf="@+id/navbar_container">
-
-            <TextView
-                android:id="@+id/txt_server"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="5dp"
-                android:text="@string/txt_server" />
-
-            <EditText
-                android:id="@+id/edit_server"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_server"
-                android:inputType="textAutoComplete"
-                android:padding="@dimen/small_padding"
-                android:layout_below="@+id/txt_server"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:text="@={settingsViewModel.setting.server}"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txt_port"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_port"
-                android:paddingStart="5dp"
-                android:layout_below="@+id/edit_server"
-                />
-            <EditText
-                android:id="@+id/edit_port"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_port"
-                android:inputType="textAutoComplete"
-                android:padding="@dimen/small_padding"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:layout_below="@+id/txt_port"
-                android:text="@={settingsViewModel.setting.port}"
-                android:textSize="18sp" />
-            <TextView
-                android:id="@+id/txt_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_username"
-                android:paddingStart="5dp"
-                android:layout_below="@+id/edit_port"
-                />
-
-            <EditText
-                android:id="@+id/edit_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_username"
-                android:inputType="textAutoComplete"
-                android:padding="@dimen/small_padding"
-                android:layout_below="@+id/txt_username"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:text="@={settingsViewModel.setting.username}"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_passwort"
-                android:paddingStart="5dp"
-                android:layout_below="@+id/edit_username"
-                />
-
-            <EditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_password"
-                android:padding="@dimen/small_padding"
-                android:layout_below="@+id/txt_password"
-                android:inputType="textPassword"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:text="@={settingsViewModel.setting.password}"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/button_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="292dp"
-            android:layout_marginBottom="56dp"
-            android:background="@drawable/transparent_bg_border_button"
-            android:text="@string/button_save"
-            android:textColor="@color/buttonLabel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/button_cancel" />
-
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="70dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="56dp"
-            android:background="@drawable/transparent_bg_border_button"
-            android:text="@string/button_cancel"
-            android:textColor="@color/buttonLabel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/button_save" />
+            android:text="email"
+            app:layout_constraintEnd_toStartOf="@+id/txtEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtEmail" />
 
-        <include
-            android:id="@+id/toolbar3"
-            layout="@layout/navbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentBottom="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:inputType="textNoSuggestions|textEmailAddress"
+            android:text="@={model.settings.email}"
+            app:error="@{model.settings.emailError}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:title="@{settingsViewModel.bottomtitel}" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onFocus="@{model.getEmailOnFocusChangeListener()}" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="70dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="passwort"
+            app:layout_constraintEnd_toStartOf="@+id/txtPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtPassword" />
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="@={model.settings.password}"
+            app:error="@{model.settings.passwordError}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+            app:onFocus="@{model.getPasswordOnFocusChangeListener()}" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:enabled="@{model.settings.valid}"
+            android:text="login"
+            android:onClick="@{() -> model.onButtonClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:context=".MainActivity">-->
+
+    <!--        <include-->
+    <!--            android:id="@+id/navbar_container"-->
+    <!--            layout="@layout/navbar_componet"-->
+    <!--            app:navtitle="@{model.navtitel}"-->
+    <!--            app:title="@{model.titel}" />-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/menu_container"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/frag_button_margin_top"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/navbar_container">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/txt_server"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:paddingStart="5dp"-->
+    <!--                android:text="@string/txt_server" />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edit_server"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="sans-serif-light"-->
+    <!--                android:hint="@string/hint_server"-->
+    <!--                android:inputType="textAutoComplete"-->
+    <!--                android:padding="@dimen/small_padding"-->
+    <!--                android:layout_below="@+id/txt_server"-->
+    <!--                android:layout_marginBottom="@dimen/big_padding"-->
+    <!--                android:layout_marginTop="@dimen/big_padding"-->
+    <!--                android:text="@={model.setting.server}"-->
+    <!--                android:textSize="18sp" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/txt_port"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/txt_port"-->
+    <!--                android:paddingStart="5dp"-->
+    <!--                android:layout_below="@+id/edit_server"-->
+    <!--                />-->
+    <!--            <EditText-->
+    <!--                android:id="@+id/edit_port"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="sans-serif-light"-->
+    <!--                android:hint="@string/hint_port"-->
+    <!--                android:inputType="textAutoComplete"-->
+    <!--                android:padding="@dimen/small_padding"-->
+    <!--                android:layout_marginBottom="@dimen/big_padding"-->
+    <!--                android:layout_marginTop="@dimen/big_padding"-->
+    <!--                android:layout_below="@+id/txt_port"-->
+    <!--                android:text="@={model.setting.port}"-->
+    <!--                android:textSize="18sp" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/txt_username"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/txt_username"-->
+    <!--                android:paddingStart="5dp"-->
+    <!--                android:layout_below="@+id/edit_port"-->
+    <!--                />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edit_username"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="sans-serif-light"-->
+    <!--                android:hint="@string/hint_username"-->
+    <!--                android:inputType="textAutoComplete"-->
+    <!--                android:padding="@dimen/small_padding"-->
+    <!--                android:layout_below="@+id/txt_username"-->
+    <!--                android:layout_marginBottom="@dimen/big_padding"-->
+    <!--                android:layout_marginTop="@dimen/big_padding"-->
+    <!--                android:text="@={model.setting.username}"-->
+    <!--                android:textSize="18sp" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/txt_password"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/txt_passwort"-->
+    <!--                android:paddingStart="5dp"-->
+    <!--                android:layout_below="@+id/edit_username"-->
+    <!--                />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edit_password"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="sans-serif-light"-->
+    <!--                android:hint="@string/hint_password"-->
+    <!--                android:padding="@dimen/small_padding"-->
+    <!--                android:layout_below="@+id/txt_password"-->
+    <!--                android:inputType="textPassword"-->
+    <!--                android:layout_marginBottom="@dimen/big_padding"-->
+    <!--                android:layout_marginTop="@dimen/big_padding"-->
+    <!--                android:text="@={model.setting.password}"-->
+    <!--                android:textSize="18sp" />-->
+    <!--        </RelativeLayout>-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/button_save"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="292dp"-->
+    <!--            android:layout_marginBottom="56dp"-->
+    <!--            android:background="@drawable/transparent_bg_border_button"-->
+    <!--            android:text="@string/button_save"-->
+    <!--            android:textColor="@color/buttonLabel"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintRight_toRightOf="@+id/button_cancel" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/button_cancel"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="16dp"-->
+    <!--            android:layout_marginBottom="56dp"-->
+    <!--            android:background="@drawable/transparent_bg_border_button"-->
+    <!--            android:text="@string/button_cancel"-->
+    <!--            android:textColor="@color/buttonLabel"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintLeft_toLeftOf="@+id/button_save" />-->
+
+    <!--        <include-->
+    <!--            android:id="@+id/toolbar3"-->
+    <!--            layout="@layout/navbar"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="?attr/actionBarSize"-->
+    <!--            android:layout_alignParentBottom="true"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:title="@{model.bottomtitel}" />-->
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

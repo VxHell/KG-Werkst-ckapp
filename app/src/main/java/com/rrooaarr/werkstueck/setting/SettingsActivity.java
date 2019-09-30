@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.R;
@@ -31,40 +29,43 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupBindings();
+        setupBindings(savedInstanceState);
     }
 
-    private void setupBindings() {
+    private void setupBindings(Bundle savedInstanceState) {
         // TODO consider to make viewmodel singelton for instance Dagger
         settingsViewModel = new ViewModelProvider(this).get(UserSettingsViewModel.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+        if (savedInstanceState == null) {
+            settingsViewModel.init();
+        }
         settingsViewModel.loadSetting();
-        binding.setSettingsViewModel(settingsViewModel);
+        binding.setModel(settingsViewModel);
 
-        initViews(binding.getRoot());
+//        initViews(binding.getRoot());
     }
 
     private void initViews(View view) {
-        server = findViewById(R.id.edit_server);
-        port = findViewById(R.id.edit_port);
-        username = findViewById(R.id.edit_username);
-        password = findViewById(R.id.edit_password);
-
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(this);
-
-        final Button button_cancel = findViewById(R.id.button_cancel);
-        button_cancel.setOnClickListener(this);
-
-        settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
-            @Override
-            public void onChanged(UserSetting setting) {
-                server.setText(setting != null ? setting.getServer() : null);
-                port.setText(setting != null ? setting.getPort() : null);
-                username.setText(setting != null ? setting.getUsername() : null);
-                password.setText(setting != null ? setting.getPassword() : null);
-            }
-        });
+//        server = findViewById(R.id.edit_server);
+//        port = findViewById(R.id.edit_port);
+//        username = findViewById(R.id.edit_username);
+//        password = findViewById(R.id.edit_password);
+//
+//        final Button button = findViewById(R.id.button_save);
+//        button.setOnClickListener(this);
+//
+//        final Button button_cancel = findViewById(R.id.button_cancel);
+//        button_cancel.setOnClickListener(this);
+//
+//        settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
+//            @Override
+//            public void onChanged(UserSetting setting) {
+//                server.setText(setting != null ? setting.getServer() : null);
+//                port.setText(setting != null ? setting.getPort() : null);
+//                username.setText(setting != null ? setting.getUsername() : null);
+//                password.setText(setting != null ? setting.getPassword() : null);
+//            }
+//        });
     }
 
     private void onSave(){
@@ -116,9 +117,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_save:
                 onSave();
                 break;
-            case R.id.button_cancel:
-                onCancel();
-                break;
+//            case R.id.button_cancel:
+//                onCancel();
+//                break;
         }
     }
 }
