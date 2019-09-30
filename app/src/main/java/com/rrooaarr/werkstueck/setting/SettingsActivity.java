@@ -2,17 +2,23 @@ package com.rrooaarr.werkstueck.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.databinding.ActivitySettingsBinding;
+import com.rrooaarr.werkstueck.util.StringValidationRules;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,43 +35,65 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupBindings(savedInstanceState);
+        setupBindings();
     }
 
-    private void setupBindings(Bundle savedInstanceState) {
+    private void setupBindings() {
         // TODO consider to make viewmodel singelton for instance Dagger
         settingsViewModel = new ViewModelProvider(this).get(UserSettingsViewModel.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
-        if (savedInstanceState == null) {
-            settingsViewModel.init();
-        }
         settingsViewModel.loadSetting();
         binding.setModel(settingsViewModel);
 
-//        initViews(binding.getRoot());
+        initViews(binding.getRoot());
     }
 
     private void initViews(View view) {
-//        server = findViewById(R.id.edit_server);
-//        port = findViewById(R.id.edit_port);
-//        username = findViewById(R.id.edit_username);
-//        password = findViewById(R.id.edit_password);
-//
-//        final Button button = findViewById(R.id.button_save);
-//        button.setOnClickListener(this);
-//
-//        final Button button_cancel = findViewById(R.id.button_cancel);
-//        button_cancel.setOnClickListener(this);
-//
-//        settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
-//            @Override
-//            public void onChanged(UserSetting setting) {
-//                server.setText(setting != null ? setting.getServer() : null);
-//                port.setText(setting != null ? setting.getPort() : null);
-//                username.setText(setting != null ? setting.getUsername() : null);
-//                password.setText(setting != null ? setting.getPassword() : null);
-//            }
-//        });
+        server = findViewById(R.id.edit_server);
+        port = findViewById(R.id.edit_port);
+        username = findViewById(R.id.edit_username);
+        password = findViewById(R.id.edit_password);
+
+        final Button button = findViewById(R.id.button_save);
+        button.setOnClickListener(this);
+
+        final Button button_cancel = findViewById(R.id.button_cancel);
+        button_cancel.setOnClickListener(this);
+
+        settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
+            @Override
+            public void onChanged(UserSetting setting) {
+                server.setText(setting != null ? setting.getServer() : null);
+                port.setText(setting != null ? setting.getPort() : null);
+                username.setText(setting != null ? setting.getUsername() : null);
+                password.setText(setting != null ? setting.getPassword() : null);
+            }
+        });
+
+    }
+
+    @BindingAdapter({"validation", "errorMsg"})
+    public static void setErrorEnable(EditText editText, StringValidationRules.StringRule stringRule, final String errorMsg) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (stringRule.validate(editText.getText())) {
+                    editText.setError(errorMsg);
+                } else {
+                    editText.setError(null);
+                }
+            }
+        });
     }
 
     private void onSave(){
@@ -92,15 +120,24 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     R.string.empty_password,
                     Toast.LENGTH_LONG).show();
         } else {
-            String mServer = server.getText().toString();
-            String mPort = port.getText().toString();
-            String mUsername = username.getText().toString();
-            String mPasswort = password.getText().toString();
+            boolean isValid = settingsViewModel.onSaveButtonClick();
 
-            UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
-            settingsViewModel.update(setting);
+            if(isValid) {
+                String mServer = server.getText().toString();
+                String mPort = port.getText().toString();
+                String mUsername = username.getText().toString();
+                String mPasswort = password.getText().toString();
 
-            setResult(RESULT_OK, replyIntent);
+                UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
+                settingsViewModel.update(setting);
+                setResult(RESULT_OK, replyIntent);
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.validation_failed,
+                        Toast.LENGTH_LONG).show();
+                setResult(RESULT_CANCELED, replyIntent);
+            }
             finish();
         }
     }
@@ -117,9 +154,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_save:
                 onSave();
                 break;
-//            case R.id.button_cancel:
-//                onCancel();
-//                break;
+            case R.id.button_cancel:
+                onCancel();
+                break;
         }
     }
 }
