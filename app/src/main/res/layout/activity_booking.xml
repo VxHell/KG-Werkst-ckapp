@@ -1,25 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/edit_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_number"
-        android:inputType="textAutoComplete"
-        android:padding="@dimen/small_padding"
-        android:layout_marginBottom="@dimen/big_padding"
-        android:layout_marginTop="@dimen/big_padding"
-        android:textSize="18sp" />
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_save"
-        android:background="@drawable/transparent_bg_border_button"
-        android:textColor="@color/buttonLabel" />
+    <data>
+        <variable
+            name="model"
+            type="com.rrooaarr.werkstueck.booking.BookingViewModel" />
+    </data>
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".booking.BookingActivity">
+
+        <include
+            android:id="@+id/navbar_container"
+            layout="@layout/navbar_componet"
+            app:navtitle="@{model.navtitel}"
+            app:title="@{model.titel}" />
+
+        <RelativeLayout
+            android:id="@+id/menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/frag_button_margin"
+            android:layout_marginEnd="@dimen/frag_button_margin"
+            android:layout_marginTop="@dimen/frag_button_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/navbar_container">
+
+            <EditText
+                android:id="@+id/plant_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_plantNumber"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/sub_project_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/plant_number"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_subProjectNumber"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sub_project_number"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/hint_number"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/big_padding"
+                android:layout_marginTop="@dimen/big_padding"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/button_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/number"
+                android:text="@string/button_select"
+                android:textColor="@color/buttonLabel" />
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/toolbar3"
+            layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:title="@{model.bottomtitel}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,10 +1,13 @@
-package com.rrooaarr.werkstueck;
+package com.rrooaarr.werkstueck.booking;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.rrooaarr.werkstueck.experimental.Word;
+import com.rrooaarr.werkstueck.experimental.WordRepository;
 
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class BookingViewModel extends AndroidViewModel {
     public BookingViewModel(Application application) {
         super(application);
         mRepository = new WordRepository(application);
-        mAllWords = mRepository.getAllWords();
+//        mAllWords = mRepository.getAllWords();
 //        fetchWordOverApi();
     }
 

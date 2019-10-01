@@ -23,6 +23,10 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.rrooaarr.werkstueck.experimental.Word;
+import com.rrooaarr.werkstueck.experimental.WordDao;
+import com.rrooaarr.werkstueck.experimental.WordRoomDatabase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

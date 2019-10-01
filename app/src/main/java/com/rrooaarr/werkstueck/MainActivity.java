@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.rrooaarr.werkstueck.booking.BookingActivity;
 import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
 import com.rrooaarr.werkstueck.setting.SettingsActivity;
 import com.rrooaarr.werkstueck.util.Utils;

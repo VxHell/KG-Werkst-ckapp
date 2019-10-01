@@ -26,6 +26,8 @@
                 android:id="@+id/menu_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/frag_button_margin"
+                android:layout_marginEnd="@dimen/frag_button_margin"
                 android:layout_marginTop="@dimen/frag_button_margin_top"
                 app:layout_constraintTop_toBottomOf="@+id/navbar_container">
 
@@ -131,6 +133,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/frag_button_margin"
+                android:layout_marginEnd="@dimen/frag_button_margin"
                 app:layout_constraintBottom_toTopOf="@+id/toolbar3"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_alignParentBottom="true">

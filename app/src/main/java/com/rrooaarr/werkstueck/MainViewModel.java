@@ -3,10 +3,6 @@ package com.rrooaarr.werkstueck;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import java.util.List;
 
 /**
  * Creating Instances of LiveData usually here
@@ -19,36 +15,13 @@ import java.util.List;
  */
 public class MainViewModel extends AndroidViewModel {
 
-    private WordRepository mRepository;
-
-    private LiveData<List<Word>> mAllWords;
-
-    private MutableLiveData<Word> mutableLiveData;
-
     private String navtitel = "Menü";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
 
     public MainViewModel(Application application) {
         super(application);
-        mRepository = new WordRepository(application);
-        mAllWords = mRepository.getAllWords();
 //        fetchWordOverApi();
-    }
-
-    public LiveData<List<Word>> getAllWords() { return mAllWords; }
-
-    public void insert(Word word) { mRepository.insert(word); }
-
-    private void fetchWordOverApi(){
-        if (mutableLiveData != null){
-            return;
-        }
-        mutableLiveData = mRepository.getWordOverAPI("33");
-    }
-
-    public LiveData<Word> getWordData() {
-        return mutableLiveData;
     }
 
     public String getNavtitel() {

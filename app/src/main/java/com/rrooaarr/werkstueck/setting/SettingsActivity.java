@@ -22,8 +22,6 @@ import com.rrooaarr.werkstueck.util.StringValidationRules;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String EXTRA_SAVE_REPLY = "com.example.android.savesql.REPLY";
-
     private UserSettingsViewModel settingsViewModel;
 
     private EditText server;
