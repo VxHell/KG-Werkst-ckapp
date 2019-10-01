@@ -4,4 +4,5 @@
     <dimen name="frag_button_margin">50dp</dimen>
     <dimen name="frag_button_margin_top">25dp</dimen>
     <dimen name="big_padding">16dp</dimen>
+    <dimen name="toolbar_height">40dp</dimen>
 </resources>

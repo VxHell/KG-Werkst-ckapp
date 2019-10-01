@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/toolbar1"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolbar_height"
                 android:layout_gravity="top"
                 android:background="@color/primary"
                 android:gravity="center">
@@ -35,7 +35,7 @@
             <RelativeLayout
                 android:id="@+id/toolbar2"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolbar_height"
                 android:layout_gravity="top"
                 android:layout_below="@+id/toolbar1"
                 android:background="@color/primary"
