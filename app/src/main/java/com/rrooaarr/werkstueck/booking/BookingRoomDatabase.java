@@ -1,4 +1,4 @@
-package com.rrooaarr.werkstueck.setting;
+package com.rrooaarr.werkstueck.booking;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,19 +11,22 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.rrooaarr.werkstueck.setting.UserSetting;
+import com.rrooaarr.werkstueck.setting.UserSettingDao;
+
 @Database(entities = {UserSetting.class}, version = 1)
-public abstract class UserSettingsRoomDatabase extends RoomDatabase {
+public abstract class BookingRoomDatabase extends RoomDatabase {
 
     public abstract UserSettingDao settingDao();
 
-    private static volatile UserSettingsRoomDatabase INSTANCE;
+    private static volatile BookingRoomDatabase INSTANCE;
 
-   public static UserSettingsRoomDatabase getDatabase(final Context context) {
+    static BookingRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (UserSettingsRoomDatabase.class) {
+            synchronized (BookingRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            UserSettingsRoomDatabase.class, "user_setting")
+                            BookingRoomDatabase.class, "booking")
                             .addCallback(sRoomDatabaseCallback)
 //                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
@@ -47,7 +50,7 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
 
         private final UserSettingDao mDao;
 
-        PopulateDbAsync(UserSettingsRoomDatabase db) {
+        PopulateDbAsync(BookingRoomDatabase db) {
             mDao = db.settingDao();
         }
 
@@ -64,7 +67,7 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
 
         private final UserSettingDao mSettingDao;
 
-        LoadFromDbAsync(UserSettingsRoomDatabase db) {
+        LoadFromDbAsync(BookingRoomDatabase db) {
             mSettingDao = db.settingDao();
         }
 

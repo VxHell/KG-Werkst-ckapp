@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.rrooaarr.werkstueck.RetrofitServiceGenerator;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,7 +22,7 @@ public class WordRepository {
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mAllWords = mWordDao.getAllWords();
-        wordWebservice = RetrofitServiceGenerator.createService(WordWebservice.class);
+//        wordWebservice = RetrofitServiceGenerator.createService(WordWebservice.class, null, "", "");
     }
 
     public MutableLiveData<Word> getWordOverAPI(String wordId){

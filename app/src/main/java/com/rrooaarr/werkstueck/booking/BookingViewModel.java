@@ -6,8 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.rrooaarr.werkstueck.experimental.Word;
-import com.rrooaarr.werkstueck.experimental.WordRepository;
+import com.rrooaarr.werkstueck.booking.model.Workpiece;
 
 /**
  * Creating Instances of LiveData usually here
@@ -20,9 +19,9 @@ import com.rrooaarr.werkstueck.experimental.WordRepository;
  */
 public class BookingViewModel extends AndroidViewModel {
 
-    private WordRepository mRepository;
+    private BookingRepository mRepository;
 
-    private MutableLiveData<Word> mutableLiveData;
+    private MutableLiveData<Workpiece> mutableLiveData;
 
     private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
@@ -31,21 +30,17 @@ public class BookingViewModel extends AndroidViewModel {
 
     public BookingViewModel(Application application) {
         super(application);
-        mRepository = new WordRepository(application);
-//        mAllWords = mRepository.getAllWords();
-//        fetchWordOverApi();
+        mRepository = new BookingRepository(application);
     }
 
-    public void insert(Word word) { mRepository.insert(word); }
-
-    private void fetchWordOverApi(){
+    public void getWorkpieceInfo(String workpieceNumber){
         if (mutableLiveData != null){
             return;
         }
-        mutableLiveData = mRepository.getWordOverAPI("33");
+        mutableLiveData = mRepository.getWorkpieceInfo(workpieceNumber);
     }
 
-    public LiveData<Word> getWordData() {
+    public LiveData<Workpiece> getWordData() {
         return mutableLiveData;
     }
 

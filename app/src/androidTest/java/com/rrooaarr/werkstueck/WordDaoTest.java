@@ -20,8 +20,8 @@ import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.rrooaarr.werkstueck.experimental.Word;
 import com.rrooaarr.werkstueck.experimental.WordDao;
@@ -56,7 +56,7 @@ public class WordDaoTest {
 
     @Before
     public void createDb() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
         mDb = Room.inMemoryDatabaseBuilder(context, WordRoomDatabase.class)

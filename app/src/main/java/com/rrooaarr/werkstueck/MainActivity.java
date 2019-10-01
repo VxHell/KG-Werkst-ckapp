@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
 
-            startActivityForResult(intent, BOOKING_ACTIVITY_REQUEST_CODE);
+            startActivity(intent);
         }
     }
 

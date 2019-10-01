@@ -2,7 +2,6 @@ package com.rrooaarr.werkstueck.booking;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +18,7 @@ import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.scanner.ScannerFragment;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
+import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 
 public class BookingActivity extends AppCompatActivity implements View.OnClickListener  {
 
@@ -82,32 +82,16 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     private void onSelect(){
         Intent replyIntent = new Intent();
 
-        if (TextUtils.isEmpty(plantNumber.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_server,
-                    Toast.LENGTH_LONG).show();
-        } else if (TextUtils.isEmpty(subProjectNumber.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_port,
-                    Toast.LENGTH_LONG).show();
-        } else if (TextUtils.isEmpty(number.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_username,
-                    Toast.LENGTH_LONG).show();
-        } else {
+        RequestUserPermission requestUserPermission = new RequestUserPermission(this);
+        boolean alreadyPermitted = requestUserPermission.verifyInternetPermissionsActivity();
 
-            String mServer = plantNumber.getText().toString();
-            String mPort = subProjectNumber.getText().toString();
-            String mUsername = number.getText().toString();
-
-//            UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
-//            model.update(setting);
-            setResult(RESULT_OK, replyIntent);
-            finish();
+        if(!alreadyPermitted){
+            Toast.makeText(this, R.string.no_internet_permisssion, Toast.LENGTH_SHORT).show();
         }
+
+        model.getWorkpieceInfo("17935-11-719");
+        setResult(RESULT_OK, replyIntent);
+        finish();
     }
 
     @Override
