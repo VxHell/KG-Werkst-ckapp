@@ -13,11 +13,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.booking.BookingActivity;
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
 import com.rrooaarr.werkstueck.setting.SettingsActivity;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.BookingFragment;
 import com.rrooaarr.werkstueck.view.DashboardFragment;
+
+import static com.rrooaarr.werkstueck.booking.BookingActivity.ACTION;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -130,14 +133,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.button_book_finishing:
-                startActivityForResult(new Intent(MainActivity.this, BookingActivity.class), BOOKING_ACTIVITY_REQUEST_CODE);
-                break;
-//                TODO
-            case R.id.button_settings:
-                startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), SETTINGS_ACTIVITY_REQUEST_CODE);
-                break;
+        int id = view.getId();
+        if (id == R.id.button_settings) {
+            startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), SETTINGS_ACTIVITY_REQUEST_CODE);
+        } else {
+            final Intent intent = new Intent(MainActivity.this, BookingActivity.class);
+
+            switch (id) {
+                case R.id.button_book_finishing:
+                    intent.putExtra(ACTION, Action.FINISHING);
+                    break;
+                case R.id.button_book_packaging:
+                    intent.putExtra(ACTION, Action.PACKAGING);
+                    break;
+                case R.id.button_book_shipping:
+                    intent.putExtra(ACTION, Action.SHIPPING);
+                    break;
+            }
+
+            startActivityForResult(intent, BOOKING_ACTIVITY_REQUEST_CODE);
         }
     }
 

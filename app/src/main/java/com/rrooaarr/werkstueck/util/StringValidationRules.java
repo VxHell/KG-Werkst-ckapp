@@ -36,7 +36,7 @@ public class StringValidationRules {
             int value;
             try {
                  value = Integer.valueOf(potentialNumber);
-            }catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe){
                   value = -1;
             }
             return !(value < 65535 || value > 0);

@@ -16,12 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.scanner.ScannerFragment;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 
 public class BookingActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private BookingViewModel model;
+    public static final String ACTION = "action";
 
     private EditText number;
     private EditText subProjectNumber;
@@ -33,19 +35,20 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_booking);
 
         setupBindings();
+
+        initViews();
     }
 
     private void setupBindings() {
         // TODO consider to make viewmodel singelton for instance Dagger
         model = new ViewModelProvider(this).get(BookingViewModel.class);
         ActivityBookingBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_booking);
-//        model.loadSetting();
-        binding.setModel(model);
 
-        initViews(binding.getRoot());
+        Action action = (Action) getIntent().getSerializableExtra(ACTION);
+        binding.setModel(model.setAction(action));
     }
 
-    private void initViews(View view) {
+    private void initViews() {
 
         showScannerFragment();
 

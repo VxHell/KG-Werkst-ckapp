@@ -27,6 +27,7 @@ public class BookingViewModel extends AndroidViewModel {
     private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
+    private Enum action = null;
 
     public BookingViewModel(Application application) {
         super(application);
@@ -62,4 +63,12 @@ public class BookingViewModel extends AndroidViewModel {
         return bottomtitel;
     }
 
+    public Enum getAction() {
+        return action;
+    }
+
+    public BookingViewModel setAction(Enum action) {
+        this.action = action;
+        return this;
+    }
 }
