@@ -29,6 +29,9 @@ public class StringValidationRules {
     public static StringRule PORT = new StringRule() {
         @Override
         public boolean validate(Editable s) {
+            if(TextUtils.isEmpty(s.toString())){
+                return true;
+            }
             String potentialNumber = s.toString();
             int value;
             try {

@@ -127,31 +127,33 @@
                     android:textSize="18sp" />
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/button_save"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="292dp"
-                android:layout_marginBottom="56dp"
-                android:background="@drawable/transparent_bg_border_button"
-                android:text="@string/button_save"
-                android:textColor="@color/buttonLabel"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/toolbar3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintRight_toRightOf="@+id/button_cancel" />
+                android:layout_alignParentBottom="true">
 
-            <Button
-                android:id="@+id/button_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="56dp"
-                android:background="@drawable/transparent_bg_border_button"
-                android:text="@string/button_cancel"
-                android:textColor="@color/buttonLabel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="@+id/button_save" />
+                <Button
+                    android:id="@+id/button_save"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/transparent_bg_border_button"
+                    android:text="@string/button_save"
+                    android:textColor="@color/buttonLabel" />
+
+                <Button
+                    android:id="@+id/button_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/transparent_bg_border_button"
+                    android:text="@string/button_cancel"
+                    android:textColor="@color/buttonLabel" />
+
+            </LinearLayout>
 
             <include
                 android:id="@+id/toolbar3"
