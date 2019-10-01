@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.rrooaarr.werkstueck.experimental.Word;
 import com.rrooaarr.werkstueck.experimental.WordRepository;
 
-import java.util.List;
-
 /**
  * Creating Instances of LiveData usually here
  * Views - Fragments and Activities - shouldn’t be able of updating LiveData and thus their own state because that’s the responsibility of ViewModels. Views should be able to only observe LiveData.
@@ -24,8 +22,6 @@ public class BookingViewModel extends AndroidViewModel {
 
     private WordRepository mRepository;
 
-    private LiveData<List<Word>> mAllWords;
-
     private MutableLiveData<Word> mutableLiveData;
 
     private String navtitel = "Werkstückauswahl";
@@ -38,8 +34,6 @@ public class BookingViewModel extends AndroidViewModel {
 //        mAllWords = mRepository.getAllWords();
 //        fetchWordOverApi();
     }
-
-    public LiveData<List<Word>> getAllWords() { return mAllWords; }
 
     public void insert(Word word) { mRepository.insert(word); }
 
