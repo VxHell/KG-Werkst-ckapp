@@ -11,20 +11,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.model.Action;
+import com.rrooaarr.werkstueck.booking.model.Workpiece;
 import com.rrooaarr.werkstueck.booking.scanner.ScannerFragment;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
+import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoActivity;
 
-public class BookingActivity extends AppCompatActivity implements View.OnClickListener  {
+public class BookingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private BookingViewModel model;
     public static final String ACTION = "action";
-
+    private BookingViewModel model;
     private EditText number;
     private EditText subProjectNumber;
     private EditText plantNumber;
@@ -79,19 +81,40 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         fm.beginTransaction().replace(R.id.scanner_container_fragment, ScannerFragment.newInstance()).commit();
     }
 
-    private void onSelect(){
+    private void onSelect() {
         Intent replyIntent = new Intent();
 
         RequestUserPermission requestUserPermission = new RequestUserPermission(this);
         boolean alreadyPermitted = requestUserPermission.verifyInternetPermissionsActivity();
 
-        if(!alreadyPermitted){
+        if (!alreadyPermitted) {
             Toast.makeText(this, R.string.no_internet_permisssion, Toast.LENGTH_SHORT).show();
         }
 
-        model.getWorkpieceInfo("17935-11-719");
-        setResult(RESULT_OK, replyIntent);
-        finish();
+        final String plant = plantNumber.getText().toString();
+        final String sub = subProjectNumber.getText().toString();
+        final String num = number.getText().toString();
+
+        StringBuilder sb = new StringBuilder(plant).append("-").append(sub).append("-").append(num);
+        final MutableLiveData<Workpiece> workpieceInfo = model.getWorkpieceInfo(sb.toString());
+        if(workpieceInfo != null && workpieceInfo.getValue() != null) {
+            final String projektId = workpieceInfo.getValue().getProjektId();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "ProjektId from Webservice: "+projektId,
+                    Toast.LENGTH_LONG).show();
+            setResult(RESULT_OK, replyIntent);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    " Webservice call mit null result für workpieceInfo",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        final Intent intent = new Intent(BookingActivity.this, WerkstückinfoActivity.class);
+        intent.putExtra(ACTION, model.getAction());
+
+        startActivity(intent);
     }
 
     @Override

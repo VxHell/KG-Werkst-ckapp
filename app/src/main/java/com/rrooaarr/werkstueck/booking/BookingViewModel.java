@@ -27,17 +27,16 @@ public class BookingViewModel extends AndroidViewModel {
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
     private Enum action = null;
+    private MutableLiveData<String> qrResult = null;
 
     public BookingViewModel(Application application) {
         super(application);
         mRepository = new BookingRepository(application);
     }
 
-    public void getWorkpieceInfo(String workpieceNumber){
-        if (mutableLiveData != null){
-            return;
-        }
+    public MutableLiveData<Workpiece> getWorkpieceInfo(String workpieceNumber){
         mutableLiveData = mRepository.getWorkpieceInfo(workpieceNumber);
+        return mutableLiveData;
     }
 
     public LiveData<Workpiece> getWordData() {
@@ -64,6 +63,15 @@ public class BookingViewModel extends AndroidViewModel {
 
     public BookingViewModel setAction(Enum action) {
         this.action = action;
+        return this;
+    }
+
+    public MutableLiveData<String> getQrResult() {
+        return qrResult;
+    }
+
+    public BookingViewModel setQrResult(MutableLiveData<String> qrResult) {
+        this.qrResult = qrResult;
         return this;
     }
 }
