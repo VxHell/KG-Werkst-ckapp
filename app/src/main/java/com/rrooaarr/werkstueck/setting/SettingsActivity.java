@@ -135,7 +135,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     private void onCancel(){
         Intent replyIntent = new Intent();
-        setResult(RESULT_OK, replyIntent);
+        setResult(RESULT_CANCELED, replyIntent);
         finish();
     }
 
