@@ -26,6 +26,20 @@ public class StringValidationRules {
         }
     };
 
+    public static StringRule PORT = new StringRule() {
+        @Override
+        public boolean validate(Editable s) {
+            String potentialNumber = s.toString();
+            int value;
+            try {
+                 value = Integer.valueOf(potentialNumber);
+            }catch (NumberFormatException nfe){
+                  value = -1;
+            }
+            return !(value < 65535 || value > 0);
+        }
+    };
+
     public interface StringRule {
         boolean validate(Editable s);
     }

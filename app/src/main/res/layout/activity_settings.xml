@@ -48,6 +48,8 @@
                     android:layout_marginBottom="@dimen/big_padding"
                     android:layout_marginTop="@dimen/big_padding"
                     android:text="@={model.setting.server}"
+                    app:validation="@{StringValidationRules.NOT_EMPTY}"
+                    app:errorMsg='@{@string/empty_server}'
                     android:textSize="18sp" />
 
                 <TextView
@@ -64,12 +66,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:hint="@string/hint_port"
-                    android:inputType="textAutoComplete"
+                    android:digits="0123456789"
+                    android:inputType="numberDecimal"
                     android:padding="@dimen/small_padding"
                     android:layout_marginBottom="@dimen/big_padding"
                     android:layout_marginTop="@dimen/big_padding"
                     android:layout_below="@+id/txt_port"
                     android:text="@={model.setting.port}"
+                    app:validation="@{StringValidationRules.PORT}"
+                    app:errorMsg='@{@string/error_port}'
                     android:textSize="18sp" />
                 <TextView
                     android:id="@+id/txt_username"
@@ -92,9 +97,9 @@
                     android:layout_marginBottom="@dimen/big_padding"
                     android:layout_marginTop="@dimen/big_padding"
                     android:text="@={model.setting.username}"
-                    app:validation="@{StringValidationRules.EMAIL}"
-                    app:errorMsg='@{"Email no válido"}'
-                     />
+                    app:validation="@{StringValidationRules.NOT_EMPTY}"
+                    app:errorMsg='@{@string/empty_username}'
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txt_password"
@@ -118,7 +123,8 @@
                     android:layout_marginTop="@dimen/big_padding"
                     android:text="@={model.setting.password}"
                     app:validation="@{StringValidationRules.PASSWORD}"
-                    app:errorMsg='@{"Falsches Passwort"}'/>
+                    app:errorMsg='@{@string/password_too_short}'
+                    android:textSize="18sp" />
             </RelativeLayout>
 
             <Button

@@ -120,24 +120,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     R.string.empty_password,
                     Toast.LENGTH_LONG).show();
         } else {
-            boolean isValid = settingsViewModel.onSaveButtonClick();
 
-            if(isValid) {
-                String mServer = server.getText().toString();
-                String mPort = port.getText().toString();
-                String mUsername = username.getText().toString();
-                String mPasswort = password.getText().toString();
+            String mServer = server.getText().toString();
+            String mPort = port.getText().toString();
+            String mUsername = username.getText().toString();
+            String mPasswort = password.getText().toString();
 
-                UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
-                settingsViewModel.update(setting);
-                setResult(RESULT_OK, replyIntent);
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.validation_failed,
-                        Toast.LENGTH_LONG).show();
-                setResult(RESULT_CANCELED, replyIntent);
-            }
+            UserSetting setting = new UserSetting(mServer, mPort, mUsername, mPasswort);
+            settingsViewModel.update(setting);
+            setResult(RESULT_OK, replyIntent);
             finish();
         }
     }

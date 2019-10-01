@@ -31,13 +31,6 @@ public class UserSettingsViewModel extends AndroidViewModel {
 //        fetchWordOverApi();
     }
 
-    // TODO refactor to IsSettingViewValid
-    public boolean onSaveButtonClick() {
-       boolean result = false;
-//        stringRule.validate(editText.getText())
-        return result;
-    }
-
     public void insert(UserSetting setting) { mRepository.insert(setting); }
 
     public void update(UserSetting setting) { mRepository.update(setting); }
