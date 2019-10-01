@@ -133,8 +133,6 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/frag_button_margin"
-                android:layout_marginEnd="@dimen/frag_button_margin"
                 app:layout_constraintBottom_toTopOf="@+id/toolbar3"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_alignParentBottom="true">
@@ -144,7 +142,6 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/transparent_bg_border_button"
                     android:text="@string/button_cancel"
                     android:textColor="@color/buttonLabel" />
 
@@ -153,7 +150,6 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/transparent_bg_border_button"
                     android:text="@string/button_save"
                     android:textColor="@color/buttonLabel" />
 
