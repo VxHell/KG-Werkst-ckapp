@@ -3,6 +3,7 @@ package com.rrooaarr.werkstueck.booking;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,9 +11,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.booking.scanner.ScannerFragment;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 
 public class BookingActivity extends AppCompatActivity implements View.OnClickListener  {
@@ -43,13 +47,14 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initViews(View view) {
 
+        showScannerFragment();
+
         number = findViewById(R.id.number);
         subProjectNumber = findViewById(R.id.sub_project_number);
         plantNumber = findViewById(R.id.plant_number);
 
         final Button button = findViewById(R.id.button_select);
         button.setOnClickListener(this);
-
 
 //        model.getSetting().observe(this, new Observer<UserSetting>() {
 //            @Override
@@ -61,6 +66,14 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 //            }
 //        });
 
+    }
+
+    public void showScannerFragment() {
+        if (BuildConfig.DEBUG) {
+            Log.d(getClass().getSimpleName(), "showScannerFragment");
+        }
+        FragmentManager fm = this.getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.scanner_container_fragment, ScannerFragment.newInstance()).commit();
     }
 
     private void onSelect(){

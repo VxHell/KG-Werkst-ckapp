@@ -30,10 +30,17 @@
             android:layout_marginTop="@dimen/frag_button_margin_top"
             app:layout_constraintTop_toBottomOf="@+id/navbar_container">
 
+            <LinearLayout
+                android:id="@+id/scanner_container_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
             <EditText
                 android:id="@+id/plant_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/scanner_container_fragment"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/hint_plantNumber"
                 android:inputType="numberDecimal"

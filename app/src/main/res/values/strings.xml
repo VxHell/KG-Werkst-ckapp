@@ -49,4 +49,8 @@
     <!--  Success messages  -->
     <string name="settings_saved">Einstellungen wurden erfolgreich gespeichert.</string>
 
+    <!-- Permissions -->
+    <string name="no_camera_permisssion">Keine Kamera Berechtigung.</string>
+    <string name="no_internet_permisssion">Keine Internet Berechtigung.</string>
+
 </resources>
