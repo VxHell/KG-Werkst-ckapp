@@ -18,6 +18,7 @@ import com.google.zxing.Result;
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.view.FragmentBase;
 import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoActivity;
@@ -28,6 +29,7 @@ import java.util.List;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
 public class ScannerFragment extends Fragment implements ZXingScannerView.ResultHandler, FragmentBase {
 
@@ -35,9 +37,10 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
     private ZXingScannerView scannerView;
     private BookingViewModel model;
 
-    public static ScannerFragment newInstance() {
+    public static ScannerFragment newInstance(Action action) {
         ScannerFragment fragment = new ScannerFragment();
         Bundle args = new Bundle();
+        args.putString(ACTION, action.name());
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,9 +48,9 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        final String action = getArguments().getString(ACTION);
         model = new ViewModelProvider(this).get(BookingViewModel.class);
-        model.setQrResult(new MutableLiveData<>());
+        model.setAction(Action.valueOf(action));
     }
 
     @Override
@@ -102,7 +105,7 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
 
                 final Intent intent = new Intent(ScannerFragment.this.getActivity(), WerkstückinfoActivity.class);
                 intent.putExtra(ACTION, model.getAction());
-                intent.putExtra(ACTION, strings[1]);
+                intent.putExtra(WST, strings[1]);
 
                 startActivity(intent);
             } else {

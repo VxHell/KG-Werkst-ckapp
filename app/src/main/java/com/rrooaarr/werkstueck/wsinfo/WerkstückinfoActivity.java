@@ -55,9 +55,11 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
             @Override
             public void onChanged(Workpiece workpiece) {
                 workpieceAdapter.setWorkpieces(Arrays.asList(workpiece));
+                model.setPK(workpiece.getPk());
             }
         });
 
+        // Note: ViewmodelProvider(this).get(class) gives per fragment/activity an own instance of ViewModel
         Action action = (Action) getIntent().getSerializableExtra(ACTION);
         model.setAction(action);
 

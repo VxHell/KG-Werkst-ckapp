@@ -49,7 +49,6 @@ public class BookingRepository {
         return INSTANCE;
     }
 
-
     public MutableLiveData<Workpiece> fetchWorkpieceInfo(String workpieceNumber){
         MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
 

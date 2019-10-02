@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Workpiece {
 
+    @SerializedName("_PK")
+    private long pk;
+
     @SerializedName("Werkstuecknummer")
     private String werkstuecknummer;
 
@@ -30,5 +33,13 @@ public class Workpiece {
 
     public String getLeitungMitarbeiterName() {
         return leitungMitarbeiterName;
+    }
+
+    public long getPk() {
+        return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 }

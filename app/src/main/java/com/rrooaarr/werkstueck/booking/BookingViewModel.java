@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.Workpiece;
 
 /**
@@ -26,7 +27,8 @@ public class BookingViewModel extends AndroidViewModel {
     private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
-    private Enum action = null;
+    private long pk;
+    private Action action;
     private MutableLiveData<String> qrResult = null;
 
     public BookingViewModel(Application application) {
@@ -59,21 +61,27 @@ public class BookingViewModel extends AndroidViewModel {
         return bottomtitel;
     }
 
-    public Enum getAction() {
+    public Action getAction() {
         return action;
     }
 
-    public BookingViewModel setAction(Enum action) {
+    public void setAction(Action action) {
         this.action = action;
-        return this;
+    }
+
+    public void setPK(long pk) {
+        this.pk = pk;
+    }
+
+    public long getPk() {
+        return pk;
     }
 
     public MutableLiveData<String> getQrResult() {
         return qrResult;
     }
 
-    public BookingViewModel setQrResult(MutableLiveData<String> qrResult) {
+    public void setQrResult(MutableLiveData<String> qrResult) {
         this.qrResult = qrResult;
-        return this;
     }
 }

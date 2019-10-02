@@ -43,11 +43,13 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setupBindings() {
         // TODO consider to make viewmodel singelton for instance Dagger
+        // Note: ViewmodelProvider(this).get(class) gives per fragment/activity an own instance of ViewModel
         model = new ViewModelProvider(this).get(BookingViewModel.class);
         ActivityBookingBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_booking);
 
         Action action = (Action) getIntent().getSerializableExtra(ACTION);
-        binding.setModel(model.setAction(action));
+        model.setAction(action);
+        binding.setModel(model);
     }
 
     private void initViews() {
@@ -78,7 +80,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             Log.d(getClass().getSimpleName(), "showScannerFragment");
         }
         FragmentManager fm = this.getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.scanner_container_fragment, ScannerFragment.newInstance()).commit();
+        fm.beginTransaction().replace(R.id.scanner_container_fragment, ScannerFragment.newInstance(model.getAction())).commit();
     }
 
     private void onSelect() {
