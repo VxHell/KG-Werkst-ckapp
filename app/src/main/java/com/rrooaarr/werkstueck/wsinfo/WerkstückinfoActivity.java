@@ -21,11 +21,13 @@ import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingActivity;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
 import com.rrooaarr.werkstueck.booking.model.Action;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
+import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.databinding.ActivityWsinfoBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
@@ -54,10 +56,16 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
         String wst = (String) getIntent().getSerializableExtra(WST);
         model.fetchWorkpieceInfo(wst);
 
-        model.getWorkpieceInfoData().observe(this, new Observer<Workpiece>() {
+        model.getWorkpieceInfoData().observe(this, new Observer<WorkpieceContainer>() {
             @Override
-            public void onChanged(Workpiece workpiece) {
-                workpieceAdapter.setWorkpieces(Arrays.asList(workpiece));
+            public void onChanged(WorkpieceContainer workpiece) {
+                List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
+
+                for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
+                    wst_liste.add( new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
+                }
+
+                workpieceAdapter.setWorkpieces(wst_liste);
                 model.setPK(workpiece.getPk());
             }
         });

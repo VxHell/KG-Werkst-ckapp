@@ -1,7 +1,6 @@
 package com.rrooaarr.werkstueck.booking.api;
 
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
-import com.rrooaarr.werkstueck.booking.model.Workpiece2;
+import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,10 +14,7 @@ public interface BookingWebservice {
      * replacement for the {user} placeholder in the @GET path
      */
     @GET("/rest/service/wst/{pk}")
-    Call<Workpiece> getWorkpieceInfo(@Path("pk") String workpieceNumber);
-
-    @GET("/rest/service/wst/{pk}")
-    Call<Workpiece2> getWorkpiece2Info(@Path("pk") String workpieceNumber);
+    Call<WorkpieceContainer> getWorkpieceInfo(@Path("pk") String workpieceNumber);
 
     @PUT("/rest/service/wst/{pk}/{action}")
     Call<Void> bookWorkpieceAction(@Path("pk") String pk, @Path("action") String action);

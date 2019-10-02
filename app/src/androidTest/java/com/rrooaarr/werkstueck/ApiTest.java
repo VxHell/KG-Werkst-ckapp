@@ -9,10 +9,8 @@ import com.google.gson.Gson;
 import com.rrooaarr.werkstueck.booking.api.BookingWebservice;
 import com.rrooaarr.werkstueck.booking.api.RetrofitServiceGenerator;
 import com.rrooaarr.werkstueck.booking.model.Action;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
-import com.rrooaarr.werkstueck.booking.model.Workpiece2;
+import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,26 +40,26 @@ public class ApiTest {
 
         @Test
         public void testWorkpieceNumberSync() throws Exception {
-            final Response<Workpiece> workpieceInfo = api.getWorkpieceInfo("17935-11-719").execute();
+            final Response<WorkpieceContainer> workpieceInfo = api.getWorkpieceInfo("17935-11-719").execute();
             JSONObject jsonObject = new JSONObject(new Gson().toJson(workpieceInfo.body()));
             assertTrue(workpieceInfo.isSuccessful());
         }
 
         @Test
         public void testWorkpieceNumberOverTripple() throws Exception {
-            final MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
-            Call<Workpiece> callAsync = api.getWorkpieceInfo("17935-11-719");
+            final MutableLiveData<WorkpieceContainer> workpieceMutableLiveData = new MutableLiveData<>();
+            Call<WorkpieceContainer> callAsync = api.getWorkpieceInfo("17935-11-719");
 
-            callAsync.enqueue(new Callback<Workpiece>() {
+            callAsync.enqueue(new Callback<WorkpieceContainer>() {
                 @Override
-                public void onResponse(Call<Workpiece> call, Response<Workpiece> response) {
+                public void onResponse(Call<WorkpieceContainer> call, Response<WorkpieceContainer> response) {
                     if (response.isSuccessful()) {
                         workpieceMutableLiveData.setValue(response.body());
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Workpiece> call, Throwable throwable) {
+                public void onFailure(Call<WorkpieceContainer> call, Throwable throwable) {
                     workpieceMutableLiveData.setValue(null);
                 }
             });
@@ -71,19 +69,19 @@ public class ApiTest {
 
     @Test
     public void testWorkpieceNumberOverPk() throws Exception {
-        final MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
-        Call<Workpiece> callAsync = api.getWorkpieceInfo("183565");
+        final MutableLiveData<WorkpieceContainer> workpieceMutableLiveData = new MutableLiveData<>();
+        Call<WorkpieceContainer> callAsync = api.getWorkpieceInfo("183565");
 
-        callAsync.enqueue(new Callback<Workpiece>() {
+        callAsync.enqueue(new Callback<WorkpieceContainer>() {
             @Override
-            public void onResponse(Call<Workpiece> call, Response<Workpiece> response) {
+            public void onResponse(Call<WorkpieceContainer> call, Response<WorkpieceContainer> response) {
                 if (response.isSuccessful()) {
                     workpieceMutableLiveData.setValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<Workpiece> call, Throwable throwable) {
+            public void onFailure(Call<WorkpieceContainer> call, Throwable throwable) {
                 workpieceMutableLiveData.setValue(null);
             }
         });
@@ -143,16 +141,16 @@ public class ApiTest {
     @Test
     public void testJson() throws Exception {
 
-        final Workpiece2 workpiece2 = new Workpiece2();
-        workpiece2.setPk("1898394");
+        final WorkpieceContainer workpieceContainer = new WorkpieceContainer();
+        workpieceContainer.setPk("1898394");
         List<String> wst_list = Arrays.asList("Werkstuecknummer", "017935/011/0719", "ProjektID","017935/011", "FANummer", "43203", "LeitungMitarbeiterName", "Gerd Müller" );
-        workpiece2.setWst_infos(wst_list);
-
-        try {
-            JSONObject jsonObject = new JSONObject(new Gson().toJson(workpiece2));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        workpieceContainer.setWst_infos(wst_list);
+//
+//        try {
+//            JSONObject jsonObject = new JSONObject(new Gson().toJson(workpieceContainer));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

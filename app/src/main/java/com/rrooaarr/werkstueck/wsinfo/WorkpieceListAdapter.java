@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rrooaarr.werkstueck.R;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class WorkpieceListAdapter extends RecyclerView.Adapter<WorkpieceListAdap
     }
 
     private final LayoutInflater mInflater;
-    private List<Workpiece> workpieces; // Cached copy of words
+    private List<WorkpieceListElement> workpieces; // Cached copy of words
 
     public WorkpieceListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
@@ -38,15 +37,15 @@ public class WorkpieceListAdapter extends RecyclerView.Adapter<WorkpieceListAdap
     @Override
     public void onBindViewHolder(WorkpieceHolder holder, int position) {
         if (workpieces != null) {
-            Workpiece current = workpieces.get(position);
-            holder.workpieceItemView.setText(current.getProjektId());
+            WorkpieceListElement current = workpieces.get(position);
+            holder.workpieceItemView.setText(current.getKey());
         } else {
             // Covers the case of data not being ready yet.
             holder.workpieceItemView.setText("Kein Werkstück");
         }
     }
 
-    public void setWorkpieces(List<Workpiece> workpieces){
+    public void setWorkpieces(List<WorkpieceListElement> workpieces){
         this.workpieces = workpieces;
         notifyDataSetChanged();
     }

@@ -11,7 +11,7 @@ import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.booking.api.BookingWebservice;
 import com.rrooaarr.werkstueck.booking.api.RetrofitServiceGenerator;
 import com.rrooaarr.werkstueck.booking.model.Action;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
+import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
 import com.rrooaarr.werkstueck.setting.UserSettingsRoomDatabase;
@@ -51,12 +51,12 @@ public class BookingRepository {
         return INSTANCE;
     }
 
-    public MutableLiveData<Workpiece> fetchWorkpieceInfo(String workpieceNumber){
-        MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<WorkpieceContainer> fetchWorkpieceInfo(String workpieceNumber){
+        MutableLiveData<WorkpieceContainer> workpieceMutableLiveData = new MutableLiveData<>();
 
-        api.getWorkpieceInfo(workpieceNumber).enqueue(new Callback<Workpiece>() {
+        api.getWorkpieceInfo(workpieceNumber).enqueue(new Callback<WorkpieceContainer>() {
             @Override
-            public void onResponse(Call<Workpiece> call, Response<Workpiece> response) {
+            public void onResponse(Call<WorkpieceContainer> call, Response<WorkpieceContainer> response) {
                 if (response.isSuccessful()){
                     workpieceMutableLiveData.setValue(response.body());
                 } else {
@@ -68,7 +68,7 @@ public class BookingRepository {
             }
 
             @Override
-            public void onFailure(Call<Workpiece> call, Throwable throwable) {
+            public void onFailure(Call<WorkpieceContainer> call, Throwable throwable) {
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
                 workpieceMutableLiveData.setValue(null);
             }

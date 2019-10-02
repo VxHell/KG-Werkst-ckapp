@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.rrooaarr.werkstueck.booking.model.Action;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
+import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 
 /**
  * Creating Instances of LiveData usually here
@@ -22,7 +22,7 @@ public class BookingViewModel extends AndroidViewModel {
 
     private BookingRepository mRepository;
 
-    private MutableLiveData<Workpiece> mutableLiveData;
+    private MutableLiveData<WorkpieceContainer> mutableLiveData;
 
     private MutableLiveData<Boolean> bookresult;
 
@@ -52,7 +52,7 @@ public class BookingViewModel extends AndroidViewModel {
         bookresult = mRepository.bookWorkpieceAction(pk, action);
     }
 
-    public LiveData<Workpiece> getWorkpieceInfoData(){
+    public LiveData<WorkpieceContainer> getWorkpieceInfoData(){
         return mutableLiveData;
     }
 
