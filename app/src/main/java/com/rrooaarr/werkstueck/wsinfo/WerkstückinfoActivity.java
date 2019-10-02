@@ -90,7 +90,6 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
         }
     }
 
-
     @BindingAdapter({"validation", "errorMsg"})
     public static void setErrorEnable(EditText editText, StringValidationRules.StringRule stringRule, final String errorMsg) {
         editText.addTextChangedListener(new TextWatcher() {

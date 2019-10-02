@@ -1,6 +1,7 @@
 package com.rrooaarr.werkstueck.booking.api;
 
 import com.rrooaarr.werkstueck.booking.model.Workpiece;
+import com.rrooaarr.werkstueck.booking.model.Workpiece2;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,4 +16,6 @@ public interface BookingWebservice {
     @GET("/rest/service/wst/{pk}")
     Call<Workpiece> getWorkpieceInfo(@Path("pk") String workpieceNumber);
 
+    @GET("/rest/service/wst/{pk}")
+    Call<Workpiece2> getWorkpiece2Info(@Path("pk") String workpieceNumber);
 }

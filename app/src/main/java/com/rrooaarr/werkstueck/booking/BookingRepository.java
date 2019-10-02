@@ -14,11 +14,11 @@ import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
 import com.rrooaarr.werkstueck.setting.UserSettingsRoomDatabase;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.rrooaarr.werkstueck.util.retrofitHelper.logRetrofitError;
 
 public class BookingRepository {
 
@@ -58,17 +58,13 @@ public class BookingRepository {
                 if (response.isSuccessful()){
                     workpieceMutableLiveData.setValue(response.body());
                 } else {
-                    try {
-                        Log.e(TAG, "onResponse: " + (response.errorBody() != null ? response.errorBody().string() : " empty errorBody"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    logRetrofitError(TAG, response);
                 }
             }
 
             @Override
             public void onFailure(Call<Workpiece> call, Throwable throwable) {
-                Log.e(TAG, "onResponse: " + throwable.getMessage());
+                Log.e(TAG, "onFailure: " + throwable.getMessage());
                 workpieceMutableLiveData.setValue(null);
             }
         });
