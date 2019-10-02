@@ -7,8 +7,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.booking.api.BookingWebservice;
 import com.rrooaarr.werkstueck.booking.api.RetrofitServiceGenerator;
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.Workpiece;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
@@ -58,7 +60,10 @@ public class BookingRepository {
                 if (response.isSuccessful()){
                     workpieceMutableLiveData.setValue(response.body());
                 } else {
-                    logRetrofitError(TAG, response);
+                    workpieceMutableLiveData.setValue(null);
+                    if(BuildConfig.DEBUG ) {
+                        logRetrofitError(TAG, response);
+                    }
                 }
             }
 
@@ -69,11 +74,57 @@ public class BookingRepository {
             }
         });
 
-        if(workpieceMutableLiveData.getValue()!= null){
-            Log.d("test", "fetchWorkpieceInfo: it worked!");
+        if(BuildConfig.DEBUG) {
+            if (workpieceMutableLiveData.getValue() != null) {
+                Log.d("test", "fetchWorkpieceInfo: it worked!");
+            }
         }
 
         return workpieceMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> bookWorkpieceAction(String pk, Action action){
+        String actionStr = "";
+        final MutableLiveData<Boolean> bookresult = new MutableLiveData<>();
+        switch (action){
+            case FINISHING:
+                actionStr = "veredelung";
+                break;
+            case SHIPPING:
+                actionStr = "versand";
+                break;
+            case PACKAGING:
+                actionStr = "verpackung";
+                break;
+        }
+
+        api.bookWorkpieceAction(pk, actionStr).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    bookresult.setValue(true);
+                } else {
+                    bookresult.setValue(false);
+                    if(BuildConfig.DEBUG ) {
+                        logRetrofitError(TAG, response);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Log.e(TAG, "onFailure: " + throwable.getMessage());
+                bookresult.setValue(false);
+            }
+        });
+
+        if(BuildConfig.DEBUG) {
+            if (bookresult.getValue() != null && bookresult.getValue()) {
+                Log.d("test", "fetchWorkpieceInfo: it worked!");
+            }
+        }
+
+        return bookresult;
     }
 
     LiveData<UserSetting> getSetting() {

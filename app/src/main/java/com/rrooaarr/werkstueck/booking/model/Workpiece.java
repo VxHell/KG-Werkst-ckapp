@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Workpiece {
 
     @SerializedName("_PK")
-    private long pk;
+    private String pk;
 
     @SerializedName("Werkstuecknummer")
     private String werkstuecknummer;
@@ -35,11 +35,11 @@ public class Workpiece {
         return leitungMitarbeiterName;
     }
 
-    public long getPk() {
+    public String getPk() {
         return pk;
     }
 
-    public void setPk(long pk) {
+    public void setPk(String pk) {
         this.pk = pk;
     }
 }

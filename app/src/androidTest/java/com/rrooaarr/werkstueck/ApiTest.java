@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.google.gson.Gson;
 import com.rrooaarr.werkstueck.booking.api.BookingWebservice;
 import com.rrooaarr.werkstueck.booking.api.RetrofitServiceGenerator;
+import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.Workpiece;
 import com.rrooaarr.werkstueck.booking.model.Workpiece2;
 
@@ -47,7 +48,7 @@ public class ApiTest {
         }
 
         @Test
-        public void testWorkpieceNumberOverTrippleAsync() throws Exception {
+        public void testWorkpieceNumberOverTripple() throws Exception {
             final MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
             Call<Workpiece> callAsync = api.getWorkpieceInfo("17935-11-719");
 
@@ -69,7 +70,7 @@ public class ApiTest {
         }
 
     @Test
-    public void testWorkpieceNumberOverPkAsync() throws Exception {
+    public void testWorkpieceNumberOverPk() throws Exception {
         final MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
         Call<Workpiece> callAsync = api.getWorkpieceInfo("183565");
 
@@ -88,6 +89,55 @@ public class ApiTest {
         });
         SystemClock.sleep(2000);
         assertNotNull(workpieceMutableLiveData.getValue());
+    }
+
+    @Test
+    public void testBookingOverPk() throws Exception {
+        MutableLiveData<Boolean> finishingBooking = doBookingAction("183565", Action.FINISHING);
+        SystemClock.sleep(2000);
+        assertNotNull(finishingBooking.getValue());
+
+        MutableLiveData<Boolean> shippingBooking = doBookingAction("183565", Action.SHIPPING);
+        SystemClock.sleep(2000);
+        assertNotNull(shippingBooking.getValue());
+
+        MutableLiveData<Boolean> packagingBooking = doBookingAction("183565", Action.PACKAGING);
+        SystemClock.sleep(2000);
+        assertNotNull(packagingBooking.getValue());
+    }
+
+    private MutableLiveData<Boolean> doBookingAction(String pk , Action action){
+        String actionStr = "";
+        final MutableLiveData<Boolean> bookresult = new MutableLiveData<>();
+        switch (action){
+            case FINISHING:
+                actionStr = "veredelung";
+                break;
+            case SHIPPING:
+                actionStr = "versand";
+                break;
+            case PACKAGING:
+                actionStr = "verpackung";
+                break;
+        }
+
+        api.bookWorkpieceAction(pk, actionStr).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    bookresult.setValue(true);
+                } else {
+                    bookresult.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                bookresult.setValue(false);
+            }
+        });
+
+        return bookresult;
     }
 
     @Test

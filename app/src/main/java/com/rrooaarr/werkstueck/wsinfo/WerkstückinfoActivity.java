@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.booking.BookingActivity;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.Workpiece;
@@ -27,6 +28,8 @@ import com.rrooaarr.werkstueck.util.StringValidationRules;
 import java.util.Arrays;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.PK;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
 public class WerkstückinfoActivity extends AppCompatActivity implements View.OnClickListener {
@@ -115,7 +118,13 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
     }
 
     private void onAction(){
-        Intent replyIntent = new Intent();
+
+        final Intent intent = new Intent(WerkstückinfoActivity.this, BookingActivity.class);
+        intent.putExtra(ACTION, model.getAction());
+        intent.putExtra(BOOK, true);
+        intent.putExtra(PK, model.getPk());
+
+        startActivity(intent);
     }
 
     private void onBack(){

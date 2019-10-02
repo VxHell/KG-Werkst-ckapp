@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.BuildConfig;
@@ -21,7 +22,11 @@ import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoActivity;
 
+import java.io.Serializable;
+
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.PK;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
 public class BookingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,6 +54,29 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
         Action action = (Action) getIntent().getSerializableExtra(ACTION);
         model.setAction(action);
+        Serializable booking = getIntent().getSerializableExtra(BOOK);
+
+        if (booking != null) {
+            String pk = (String) getIntent().getSerializableExtra(PK);
+            model.bookWorkpieceAction(pk, action);
+            model.getBookresult().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean bookresult) {
+                    if (bookresult) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " erfolgreich",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " nicht erfolgreich!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+
         binding.setModel(model);
     }
 
@@ -63,16 +91,6 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         final Button button = findViewById(R.id.button_select);
         button.setOnClickListener(this);
 
-//        model.getSetting().observe(this, new Observer<UserSetting>() {
-//            @Override
-//            public void onChanged(UserSetting setting) {
-//                server.setText(setting != null ? setting.getServer() : null);
-//                port.setText(setting != null ? setting.getPort() : null);
-//                username.setText(setting != null ? setting.getUsername() : null);
-//                password.setText(setting != null ? setting.getPassword() : null);
-//            }
-//        });
-
     }
 
     public void showScannerFragment() {
@@ -84,7 +102,6 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onSelect() {
-        Intent replyIntent = new Intent();
 
         RequestUserPermission requestUserPermission = new RequestUserPermission(this);
         boolean alreadyPermitted = requestUserPermission.verifyInternetPermissionsActivity();

@@ -5,6 +5,7 @@ import com.rrooaarr.werkstueck.booking.model.Workpiece2;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BookingWebservice {
@@ -18,4 +19,7 @@ public interface BookingWebservice {
 
     @GET("/rest/service/wst/{pk}")
     Call<Workpiece2> getWorkpiece2Info(@Path("pk") String workpieceNumber);
+
+    @PUT("/rest/service/wst/{pk}/{action}")
+    Call<Void> bookWorkpieceAction(@Path("pk") String pk, @Path("action") String action);
 }

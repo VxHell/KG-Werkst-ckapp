@@ -24,10 +24,12 @@ public class BookingViewModel extends AndroidViewModel {
 
     private MutableLiveData<Workpiece> mutableLiveData;
 
+    private MutableLiveData<Boolean> bookresult;
+
     private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
-    private long pk;
+    private String pk;
     private Action action;
     private MutableLiveData<String> qrResult = null;
 
@@ -41,6 +43,13 @@ public class BookingViewModel extends AndroidViewModel {
             return;
         }
         mutableLiveData = mRepository.fetchWorkpieceInfo(workpieceNumber);
+    }
+
+    public void bookWorkpieceAction(String pk, Action action){
+        if (mutableLiveData != null){
+            return;
+        }
+        bookresult = mRepository.bookWorkpieceAction(pk, action);
     }
 
     public LiveData<Workpiece> getWorkpieceInfoData(){
@@ -69,11 +78,11 @@ public class BookingViewModel extends AndroidViewModel {
         this.action = action;
     }
 
-    public void setPK(long pk) {
+    public void setPK(String pk) {
         this.pk = pk;
     }
 
-    public long getPk() {
+    public String getPk() {
         return pk;
     }
 
@@ -83,5 +92,13 @@ public class BookingViewModel extends AndroidViewModel {
 
     public void setQrResult(MutableLiveData<String> qrResult) {
         this.qrResult = qrResult;
+    }
+
+    public MutableLiveData<Boolean> getBookresult() {
+        return bookresult;
+    }
+
+    public void setBookresult(MutableLiveData<Boolean> bookresult) {
+        this.bookresult = bookresult;
     }
 }
