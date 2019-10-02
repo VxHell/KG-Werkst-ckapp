@@ -1,5 +1,6 @@
 package com.rrooaarr.werkstueck.booking.scanner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +18,16 @@ import com.google.zxing.Result;
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
-import com.rrooaarr.werkstueck.booking.model.Workpiece;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.view.FragmentBase;
+import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 
 public class ScannerFragment extends Fragment implements ZXingScannerView.ResultHandler, FragmentBase {
 
@@ -89,25 +92,32 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
     public void handleResult(Result result) {
         // TODO beispielresult ist: "https://wst.pas2.de/?wst=183565"
         this.scannerView.stopCamera();
+        if(result != null ) {
+            final String resultText = result.getText();
+            Log.d(getClass().getSimpleName(), resultText + " " + new String(result.getRawBytes()));
+            model.setQrResult(new MutableLiveData<>(resultText));
+            if(resultText.contains("wst=")) {
+                final String[] strings = resultText.split("wst=");
+                Log.d(TAG, "handleResult:" + strings[1]);
 
-        final String resultText = result.getText();
-        Log.d(getClass().getSimpleName(), resultText + " " + new String(result.getRawBytes()));
-        model.setQrResult(new MutableLiveData<>(resultText));
-        final String[] strings = resultText.split("wst=");
-        Log.d(TAG, "handleResult:" +strings[1]);
-        final MutableLiveData<Workpiece> workpieceInfo = model.getWorkpieceInfo(strings[1]);
+                final Intent intent = new Intent(ScannerFragment.this.getActivity(), WerkstückinfoActivity.class);
+                intent.putExtra(ACTION, model.getAction());
+                intent.putExtra(ACTION, strings[1]);
 
-        if(workpieceInfo != null && workpieceInfo.getValue() != null) {
-            final String projektId = workpieceInfo.getValue().getProjektId();
-            Toast.makeText(
-                    getContext(),
-                    "ProjektId from Webservice: "+projektId,
-                    Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            } else {
+                Toast.makeText(
+                        getContext(),
+                        "QR-Code beschädigt oder falsch",
+                        Toast.LENGTH_LONG).show();
+                onResume();
+            }
         } else {
             Toast.makeText(
                     getContext(),
-                   " Webservice call mit null result für workpieceInfo",
+                    "QR-Code nicht lesbar",
                     Toast.LENGTH_LONG).show();
+            onResume();
         }
     }
 

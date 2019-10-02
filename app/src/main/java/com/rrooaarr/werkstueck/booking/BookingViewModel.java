@@ -31,15 +31,17 @@ public class BookingViewModel extends AndroidViewModel {
 
     public BookingViewModel(Application application) {
         super(application);
-        mRepository = new BookingRepository(application);
+        mRepository = BookingRepository.getInstance(application);
     }
 
-    public MutableLiveData<Workpiece> getWorkpieceInfo(String workpieceNumber){
-        mutableLiveData = mRepository.getWorkpieceInfo(workpieceNumber);
-        return mutableLiveData;
+    public void fetchWorkpieceInfo(String workpieceNumber){
+        if (mutableLiveData != null){
+            return;
+        }
+        mutableLiveData = mRepository.fetchWorkpieceInfo(workpieceNumber);
     }
 
-    public LiveData<Workpiece> getWordData() {
+    public LiveData<Workpiece> getWorkpieceInfoData(){
         return mutableLiveData;
     }
 

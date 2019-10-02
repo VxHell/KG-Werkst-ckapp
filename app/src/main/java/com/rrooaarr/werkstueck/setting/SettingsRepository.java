@@ -30,7 +30,7 @@ public class SettingsRepository {
     }
 
     LiveData<UserSetting> loadSettings() {
-        return settingLiveData;
+        return  mSettingsDao.getSetting();
     }
 
     public void insert (UserSetting setting) {

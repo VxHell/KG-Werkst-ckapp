@@ -1,5 +1,8 @@
 package com.rrooaarr.werkstueck;
 
+import android.os.SystemClock;
+
+import androidx.lifecycle.MutableLiveData;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.gson.Gson;
@@ -12,8 +15,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
 
@@ -33,6 +39,29 @@ public class ApiTest {
             final Response<Workpiece> workpieceInfo = api.getWorkpieceInfo("17935-11-719").execute();
             JSONObject jsonObject = new JSONObject(new Gson().toJson(workpieceInfo.body()));
             assertTrue(workpieceInfo.isSuccessful());
+        }
+
+        @Test
+        public void testWorkpieceNumberAsync() throws Exception {
+            final MutableLiveData<Workpiece> workpieceMutableLiveData = new MutableLiveData<>();
+            Call<Workpiece> callAsync = api.getWorkpieceInfo("17935-11-719");
+
+            callAsync.enqueue(new Callback<Workpiece>() {
+                @Override
+                public void onResponse(Call<Workpiece> call, Response<Workpiece> response) {
+                    if (response.isSuccessful()) {
+                        workpieceMutableLiveData.setValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Workpiece> call, Throwable throwable) {
+    //                TODO add logging
+                    workpieceMutableLiveData.setValue(null);
+                }
+            });
+            SystemClock.sleep(2000);
+            assertNotNull(workpieceMutableLiveData.getValue());
         }
 
 }

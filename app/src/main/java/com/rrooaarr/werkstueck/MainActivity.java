@@ -17,7 +17,7 @@ import com.rrooaarr.werkstueck.databinding.ActivityMainBinding;
 import com.rrooaarr.werkstueck.setting.SettingsActivity;
 import com.rrooaarr.werkstueck.util.Utils;
 
-import static com.rrooaarr.werkstueck.booking.BookingActivity.ACTION;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        setContentView(R.layout.activity_main);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-//        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-//        final WordListAdapter adapter = new WordListAdapter(this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         binding.setMainViewModel(mainViewModel);
         initViews(binding.getRoot());

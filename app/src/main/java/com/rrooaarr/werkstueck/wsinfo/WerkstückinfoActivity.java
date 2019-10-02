@@ -11,16 +11,29 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
+import com.rrooaarr.werkstueck.booking.model.Action;
+import com.rrooaarr.werkstueck.booking.model.Workpiece;
 import com.rrooaarr.werkstueck.databinding.ActivityWsinfoBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
+
+import java.util.Arrays;
+
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
+import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
 public class WerkstückinfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private BookingViewModel model;
+    WorkpieceListAdapter workpieceAdapter;
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +48,24 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
         ActivityWsinfoBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_wsinfo);
         binding.setModel(model);
 
+        String wst = (String) getIntent().getSerializableExtra(WST);
+        model.fetchWorkpieceInfo(wst);
+
+        model.getWorkpieceInfoData().observe(this, new Observer<Workpiece>() {
+            @Override
+            public void onChanged(Workpiece workpiece) {
+                workpieceAdapter.setWorkpieces(Arrays.asList(workpiece));
+            }
+        });
+
+        Action action = (Action) getIntent().getSerializableExtra(ACTION);
+        model.setAction(action);
+
         initViews(binding.getRoot());
     }
 
     private void initViews(View view) {
+        recyclerView = findViewById(R.id.wsinfo_list);
 
         final Button button = findViewById(R.id.button_book_action);
         button.setOnClickListener(this);
@@ -46,13 +73,21 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
         final Button button_cancel = findViewById(R.id.button_back);
         button_cancel.setOnClickListener(this);
 
-//        model.getSetting().observe(this, new Observer<UserSetting>() {
-//            @Override
-//            public void onChanged(UserSetting setting) {
-//            }
-//        });
-
+        setupRecyclerView();
     }
+
+    private void setupRecyclerView() {
+        if (workpieceAdapter == null) {
+            workpieceAdapter = new WorkpieceListAdapter(this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(workpieceAdapter);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setNestedScrollingEnabled(true);
+        } else {
+            workpieceAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     @BindingAdapter({"validation", "errorMsg"})
     public static void setErrorEnable(EditText editText, StringValidationRules.StringRule stringRule, final String errorMsg) {
@@ -80,8 +115,6 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
 
     private void onAction(){
         Intent replyIntent = new Intent();
-
-
     }
 
     private void onBack(){

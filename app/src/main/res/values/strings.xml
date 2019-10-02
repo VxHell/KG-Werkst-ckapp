@@ -15,9 +15,9 @@
     <string name="hint_username">Benutzername</string>
     <string name="hint_password">Passwort</string>
 
-    <string name="hint_number">XXX</string>
-    <string name="hint_subProjectNumber">XX</string>
-    <string name="hint_plantNumber">XXXXX</string>
+    <string name="hint_number">719</string>
+    <string name="hint_subProjectNumber">11</string>
+    <string name="hint_plantNumber">17935</string>
 
     <!--   Button Text  -->
     <string name="button_save">Speichern</string>
