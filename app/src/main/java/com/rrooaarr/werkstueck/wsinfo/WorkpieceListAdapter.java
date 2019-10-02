@@ -15,11 +15,13 @@ import java.util.List;
 public class WorkpieceListAdapter extends RecyclerView.Adapter<WorkpieceListAdapter.WorkpieceHolder> {
 
     class WorkpieceHolder extends RecyclerView.ViewHolder {
-        private final TextView workpieceItemView;
+        private final TextView workpieceKeyView;
+        private final TextView workpieceValueView;
 
         private WorkpieceHolder(View itemView) {
             super(itemView);
-            workpieceItemView = itemView.findViewById(R.id.textView);
+            workpieceKeyView = itemView.findViewById(R.id.wst_key);
+            workpieceValueView = itemView.findViewById(R.id.wst_value);
         }
     }
 
@@ -38,10 +40,12 @@ public class WorkpieceListAdapter extends RecyclerView.Adapter<WorkpieceListAdap
     public void onBindViewHolder(WorkpieceHolder holder, int position) {
         if (workpieces != null) {
             WorkpieceListElement current = workpieces.get(position);
-            holder.workpieceItemView.setText(current.getKey());
+            holder.workpieceKeyView.setText(current.getKey());
+            holder.workpieceValueView.setText(current.getValue());
         } else {
             // Covers the case of data not being ready yet.
-            holder.workpieceItemView.setText("Kein Werkstück");
+            holder.workpieceKeyView.setText("Lade Werkstückdaten ");
+            holder.workpieceKeyView.setText("Lade Werkstückdaten ");
         }
     }
 
