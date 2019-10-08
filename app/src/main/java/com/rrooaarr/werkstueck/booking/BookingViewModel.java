@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
+import com.rrooaarr.werkstueck.setting.UserSetting;
 
 /**
  * Creating Instances of LiveData usually here
@@ -26,6 +27,8 @@ public class BookingViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> bookresult;
 
+    private LiveData<UserSetting> setting;
+
     private String navtitel = "Werkstückauswahl";
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
@@ -36,6 +39,7 @@ public class BookingViewModel extends AndroidViewModel {
     public BookingViewModel(Application application) {
         super(application);
         mRepository = BookingRepository.getInstance(application);
+        setting = mRepository.getSetting();
     }
 
     public void fetchWorkpieceInfo(String workpieceNumber){
@@ -98,7 +102,11 @@ public class BookingViewModel extends AndroidViewModel {
         return bookresult;
     }
 
-    public void setBookresult(MutableLiveData<Boolean> bookresult) {
-        this.bookresult = bookresult;
+    public LiveData<UserSetting> getSetting() {
+        return setting;
+    }
+
+    public void initApi(UserSetting setting){
+        mRepository.initApi(setting);
     }
 }

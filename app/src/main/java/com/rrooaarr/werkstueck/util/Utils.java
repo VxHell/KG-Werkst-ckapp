@@ -12,22 +12,51 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.view.FragmentBase;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public class Utils {
+
+    public static String sha512(String passwordPlain){
+        MessageDigest messageDigest= null;
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            if(BuildConfig.DEBUG)
+                Log.e("Utils", Log.getStackTraceString(e));
+        }
+
+        if(messageDigest== null )
+            return "NoSuchAlgorithmException";
+
+        byte[] bytes = messageDigest.digest(passwordPlain.getBytes());
+
+        return getHash(bytes);
+    }
+
+    public static String getHash(byte[] digest){
+        // Create Hex String
+        StringBuilder sb = new StringBuilder(digest.length);
+
+        for (int i = 0; i < digest.length; i++) {
+            sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
+    }
+
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static int compareLongDesc(long lhs, long rhs) {
