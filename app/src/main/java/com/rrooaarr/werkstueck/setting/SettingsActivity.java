@@ -40,7 +40,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         // TODO consider to make viewmodel singelton for instance Dagger
         settingsViewModel = new ViewModelProvider(this).get(UserSettingsViewModel.class);
         ActivitySettingsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
-        settingsViewModel.loadSetting();
         binding.setModel(settingsViewModel);
 
         initViews(binding.getRoot());
@@ -61,10 +60,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         settingsViewModel.getSetting().observe(this, new Observer<UserSetting>() {
             @Override
             public void onChanged(UserSetting setting) {
-                server.setText(setting != null ? setting.getServer() : null);
-                port.setText(setting != null ? setting.getPort() : null);
-                username.setText(setting != null ? setting.getUsername() : null);
-                password.setText(setting != null ? setting.getPassword() : null);
+                if(setting != null ){
+                    server.setText(setting.getServer());
+                    port.setText(setting.getPort());
+                    username.setText(setting.getUsername());
+                    password.setText(setting.getPassword());
+                } else {
+                    UserSetting insertDefault = new UserSetting("", "", "", "");
+                    settingsViewModel.insert(insertDefault);
+                }
             }
         });
 

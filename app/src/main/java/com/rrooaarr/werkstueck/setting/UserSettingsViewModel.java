@@ -28,7 +28,6 @@ public class UserSettingsViewModel extends AndroidViewModel {
         super(application);
         mRepository = new SettingsRepository(application);
         setting = mRepository.getSetting();
-//        fetchWordOverApi();
     }
 
     public void insert(UserSetting setting) { mRepository.insert(setting); }
@@ -56,7 +55,4 @@ public class UserSettingsViewModel extends AndroidViewModel {
         return this;
     }
 
-    public void loadSetting(){
-        setting = mRepository.loadSettings();
-    }
 }

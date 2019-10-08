@@ -20,8 +20,8 @@ import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
@@ -55,7 +55,7 @@ public class SettingDaoTest {
 
     @Before
     public void createDb() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
         mDb = Room.inMemoryDatabaseBuilder(context, UserSettingsRoomDatabase.class)
@@ -63,6 +63,8 @@ public class SettingDaoTest {
                 .allowMainThreadQueries()
                 .build();
         settingDao = mDb.settingDao();
+        // init Mockito
+//        MockitoAnnotations.initMocks(this);
     }
 
     @After
@@ -71,14 +73,20 @@ public class SettingDaoTest {
     }
 
     @Test
-    public void insertAndGetSetting() throws Exception {
-        UserSetting setting = new UserSetting("test", "test", "test", "test");
+    public void insertAndGetSetting() {
+        String server = "server";
+        String port = "port";
+        String username = "username";
+        String passwort = "passwort";
+        UserSetting setting = new UserSetting(server, port, username, passwort);
         settingDao.insert(setting);
-        List<UserSetting> allsettings = LiveDataTestUtil.getValue(settingDao.getAlphabetizedSettings());
-        assertEquals(allsettings.get(0).getServer(), setting.getServer());
-        assertEquals(allsettings.get(0).getPassword(), setting.getPassword());
-        assertEquals(allsettings.get(0).getPort(), setting.getPort());
-        assertEquals(allsettings.get(0).getUsername(), setting.getUsername());
+        UserSetting settingLoaded = settingDao.getSettingSync();
+
+        assertEquals(server, settingLoaded.getServer());
+        assertEquals(port, settingLoaded.getPort());
+        assertEquals(username, settingLoaded.getUsername());
+        assertEquals(passwort, settingLoaded.getPassword());
+
     }
 
     @Test

@@ -24,6 +24,9 @@ android {
                     files("$projectDir/schemas".toString())
         }
     }
+
+    testOptions.unitTests.includeAndroidResources = true
+
     buildTypes {
         release {
             minifyEnabled false
@@ -61,6 +64,7 @@ dependencies {
     // Testig
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation "org.robolectric:robolectric:4.2.1"
 
     // UI Testing
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

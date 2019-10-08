@@ -28,12 +28,14 @@ public interface UserSettingDao extends BaseDao<UserSetting> {
     2) When the result of the query is a POJO with @Relation fields. The fields are queries separately so running them in a single transaction will guarantee consistent results between queries.**/
     @Query("SELECT * from user_setting")
     LiveData<UserSetting> getSetting();
+    /**
+    don't return LiveData if you want the value sync.
+    LiveData is to watch the data and distribute it to the observers. It won't calculate the value until an active observer is added.*/
+    @Query("SELECT * from user_setting")
+    UserSetting getSettingSync();
 
     @Query("SELECT * from user_setting ORDER BY username ASC")
     LiveData<List<UserSetting>> getAlphabetizedSettings();
-
-    @Query("SELECT * from user_setting")
-    List<UserSetting> getAllSettings2();
 
     @Update(onConflict = REPLACE)
     void update(UserSetting setting);

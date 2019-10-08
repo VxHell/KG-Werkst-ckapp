@@ -54,7 +54,7 @@ public abstract class UserSettingsRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            UserSetting setting = new UserSetting("server", "port", "username", "pass");
+            UserSetting setting = new UserSetting("", "", "", "");
             mDao.insert(setting);
             return null;
         }
