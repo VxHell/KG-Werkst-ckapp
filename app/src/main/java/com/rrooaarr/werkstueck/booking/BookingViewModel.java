@@ -10,6 +10,8 @@ import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 
+import java.util.ArrayList;
+
 /**
  * Creating Instances of LiveData usually here
  * Views - Fragments and Activities - shouldn’t be able of updating LiveData and thus their own state because that’s the responsibility of ViewModels. Views should be able to only observe LiveData.
@@ -29,7 +31,7 @@ public class BookingViewModel extends AndroidViewModel {
 
     private LiveData<UserSetting> setting;
 
-    private String navtitel = "Werkstückauswahl";
+    private MutableLiveData<String> navtitel = new MutableLiveData<>("");
     private String titel = "Werkstücke";
     private String bottomtitel = "KG Nellingen";
     private String pk;
@@ -60,10 +62,9 @@ public class BookingViewModel extends AndroidViewModel {
         return mutableLiveData;
     }
 
-    public String getNavtitel() {
+    public MutableLiveData<String> getNavtitel() {
         return navtitel;
     }
-
 
     public String getTitel() {
         return titel;
@@ -106,7 +107,15 @@ public class BookingViewModel extends AndroidViewModel {
         return setting;
     }
 
+    public void initApi(ArrayList<String> settings){
+        mRepository.initApi(new UserSetting(settings.get(0), settings.get(1), settings.get(2), settings.get(3)));
+    }
+
     public void initApi(UserSetting setting){
         mRepository.initApi(setting);
+    }
+
+    public void setNavtitel(String navtitel) {
+        this.navtitel.setValue(navtitel);
     }
 }

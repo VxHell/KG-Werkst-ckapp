@@ -21,72 +21,13 @@
             app:navtitle="@{model.navtitel}"
             app:title="@{model.titel}" />
 
-        <RelativeLayout
-            android:id="@+id/menu_container"
+        <FrameLayout
+            android:id="@+id/master_booking_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/frag_button_margin"
-            android:layout_marginEnd="@dimen/frag_button_margin"
-            android:layout_marginTop="@dimen/frag_button_margin_top"
-            app:layout_constraintTop_toBottomOf="@+id/navbar_container">
-
-            <LinearLayout
-                android:id="@+id/scanner_container_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:orientation="vertical"/>
-
-            <EditText
-                android:id="@+id/plant_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/scanner_container_fragment"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_plantNumber"
-                android:text="@string/hint_plantNumber"
-                android:inputType="numberDecimal"
-                android:padding="@dimen/small_padding"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/sub_project_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/plant_number"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_subProjectNumber"
-                android:text="@string/hint_subProjectNumber"
-                android:inputType="numberDecimal"
-                android:padding="@dimen/small_padding"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sub_project_number"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_number"
-                android:text="@string/hint_number"
-                android:inputType="numberDecimal"
-                android:padding="@dimen/small_padding"
-                android:layout_marginBottom="@dimen/big_padding"
-                android:layout_marginTop="@dimen/big_padding"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button_select"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/number"
-                android:text="@string/button_select"
-                android:textColor="@color/buttonLabel" />
-
-        </RelativeLayout>
+            app:layout_constraintTop_toBottomOf="@+id/navbar_container"
+            >
+        </FrameLayout>
 
         <include
             android:id="@+id/toolbar3"

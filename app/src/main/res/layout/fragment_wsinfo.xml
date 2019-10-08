@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.rrooaarr.werkstueck.booking.BookingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".booking.BookingActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wsinfo_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+
+            app:layout_constraintHeight_default="spread"
+            app:layout_constraintHeight_max="800dp"
+            app:layout_constraintHeight_min="300dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navbar_container"
+
+            tools:listitem="@layout/recyclerview_item" />
+
+        <RelativeLayout
+            android:id="@+id/wsinfo_menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/frag_button_margin"
+            android:layout_marginTop="@dimen/frag_button_margin_top"
+            android:layout_marginEnd="@dimen/frag_button_margin"
+            app:layout_constraintTop_toBottomOf="@+id/wsinfo_list">
+
+            <Button
+                android:id="@+id/button_book_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{"Buchen " + model.action.name()}'
+                android:textColor="@color/buttonLabel" />
+
+            <Button
+                android:id="@+id/button_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_book_action"
+                android:text="@string/button_back"
+                android:textColor="@color/buttonLabel" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
