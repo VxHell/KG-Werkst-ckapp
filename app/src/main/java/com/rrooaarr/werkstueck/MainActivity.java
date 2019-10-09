@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
     public static final int BOOKING_ACTIVITY_REQUEST_CODE = 2;
-    Button btn_book_finishing, btn_settings;
+    Button btn_book_finishing, btn_book_packaging, btn_book_shipping, btn_settings, btn_end;
     private MainViewModel mainViewModel;
     private long lastBackPressTime;
 
@@ -95,16 +95,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initViews(View view) {
-        btn_book_finishing = view.findViewById(R.id.button_book_finishing);
-        btn_book_finishing.setOnClickListener(this);
-        btn_settings = view.findViewById(R.id.button_settings);
-        btn_settings.setOnClickListener(this);
+        btn_book_finishing = registerButton(view, R.id.button_book_finishing);
+        btn_book_packaging = registerButton(view, R.id.button_book_packaging);
+        btn_book_shipping = registerButton(view, R.id.button_book_shipping);
+        btn_settings = registerButton(view, R.id.button_settings);
+        btn_end = registerButton(view, R.id.button_end);
+    }
+
+    private Button registerButton(View view, int id){
+        Button btn = view.findViewById(id);
+        btn.setOnClickListener(this);
+        return btn;
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.button_settings) {
+        if (id == R.id.button_end) {
+            super.onBackPressed();
+        }
+        else if (id == R.id.button_settings) {
             startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), SETTINGS_ACTIVITY_REQUEST_CODE);
         } else {
             final Intent intent = new Intent(MainActivity.this, BookingActivity.class);
