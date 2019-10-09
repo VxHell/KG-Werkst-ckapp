@@ -37,9 +37,12 @@
 
     <!--  Error Handling & error dialog messages  -->
     <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
-    <string name="empty_not_saved">Änderungen nicht gespeichert.</string>
-    <string name="no_service">Rest Endpunkt nicht verfügbar</string>
-    <string name="no_settings">Einstellungen konnten nicht geladen werden</string>
+    <string name="errEmpty_not_saved">Änderungen nicht gespeichert.</string>
+    <string name="errUnknown">Es ist ein unbekannter Fehler aufgetreten</string>
+    <string name="errUnauthorized">Es ist ein unbekannter Fehler aufgetreten</string>
+    <string name="errNotfound">Es ist ein unbekannter Fehler aufgetreten</string>
+    <string name="errNo_service">Rest Endpunkt nicht verfügbar</string>
+    <string name="errNo_settings">Einstellungen konnten nicht geladen werden</string>
 
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
     <string name="empty_port">Bitte geben Sie einen Port an.</string>

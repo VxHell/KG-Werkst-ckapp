@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.databinding.FragmentWsinfoBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
@@ -61,25 +62,44 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
                 model.initApi(model.getSetting().getValue());
 
                 model.fetchWorkpieceInfo(wst);
-                model.getWorkpieceInfoData().observe(this, new Observer<WorkpieceContainer>() {
-                    @Override
-                    public void onChanged(WorkpieceContainer workpiece) {
-                        if(workpiece != null) {
-                            List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
 
-                            for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
-                                wst_liste.add(new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
+                model.getWorkpieceInfoData().observe(this, new Observer<DataErrorWrapper<WorkpieceContainer>>() {
+                    @Override
+                    public void onChanged(DataErrorWrapper<WorkpieceContainer> dataWrapper) {
+                        if(dataWrapper != null) {
+                            final WorkpieceContainer workpiece = dataWrapper.getData();
+                            switch (dataWrapper.getStatus()) {
+                                case SUCCESS:
+                                    List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
+
+                                    for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
+                                        wst_liste.add(new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
+                                    }
+
+                                    workpieceAdapter.setWorkpieces(wst_liste);
+                                    model.setPK(workpiece.getPk());
+                                    break;
+                                case EXCEPTION:
+                                    Toast.makeText(getContext(), R.string.errUnknown, Toast.LENGTH_LONG).show();
+                                    break;
+                                case UNAUTHORIZED:
+                                    Toast.makeText(getContext(), R.string.errUnauthorized, Toast.LENGTH_LONG).show();
+                                    break;
+                                case NOTFOUND:
+                                    Toast.makeText(getContext(), R.string.errNotfound, Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(getContext(), R.string.errNo_service, Toast.LENGTH_LONG).show();
+                                    break;
                             }
 
-                            workpieceAdapter.setWorkpieces(wst_liste);
-                            model.setPK(workpiece.getPk());
                         } else {
-                            Toast.makeText(getContext(), R.string.no_service, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.errNo_service, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
             } else {
-                Toast.makeText(getContext(), R.string.no_settings, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.errNo_settings, Toast.LENGTH_LONG).show();
             }
 
         }

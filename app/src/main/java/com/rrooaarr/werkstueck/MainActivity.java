@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (requestCode == SETTINGS_ACTIVITY_REQUEST_CODE) {
 
-            int responseId = R.string.empty_not_saved;
+            int responseId = R.string.errEmpty_not_saved;
             if (resultCode == RESULT_OK) {
                 responseId = R.string.settings_saved;
             }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        R.string.empty_not_saved,
+                        R.string.errEmpty_not_saved,
                         Toast.LENGTH_LONG).show();
             }
         }

@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.AppDefaults;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
@@ -26,7 +27,7 @@ public class BookingViewModel extends AndroidViewModel {
 
     private BookingRepository mRepository;
 
-    private MutableLiveData<WorkpieceContainer> mutableLiveData;
+    private MutableLiveData<DataErrorWrapper<WorkpieceContainer>> mutableLiveData;
 
     private MutableLiveData<Boolean> bookresult;
 
@@ -59,7 +60,7 @@ public class BookingViewModel extends AndroidViewModel {
         bookresult = mRepository.bookWorkpieceAction(pk, action);
     }
 
-    public LiveData<WorkpieceContainer> getWorkpieceInfoData(){
+    public LiveData<DataErrorWrapper<WorkpieceContainer>> getWorkpieceInfoData(){
         return mutableLiveData;
     }
 

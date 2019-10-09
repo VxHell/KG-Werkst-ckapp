@@ -11,7 +11,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,13 +20,10 @@ import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.BookingActivity;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
 import com.rrooaarr.werkstueck.booking.model.Action;
-import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.databinding.ActivityWsinfoBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
@@ -57,19 +53,19 @@ public class WerkstückinfoActivity extends AppCompatActivity implements View.On
         ArrayList<String> settingsString = getIntent().getStringArrayListExtra(SETTINGS);
         model.initApi(settingsString);
         model.fetchWorkpieceInfo(wst);
-        model.getWorkpieceInfoData().observe(this, new Observer<WorkpieceContainer>() {
-            @Override
-            public void onChanged(WorkpieceContainer workpiece) {
-                List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
-
-                for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
-                    wst_liste.add( new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
-                }
-
-                workpieceAdapter.setWorkpieces(wst_liste);
-                model.setPK(workpiece.getPk());
-            }
-        });
+//        model.getWorkpieceInfoData().observe(this, new Observer<WorkpieceContainer>() {
+//            @Override
+//            public void onChanged(WorkpieceContainer workpiece) {
+//                List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
+//
+//                for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
+//                    wst_liste.add( new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
+//                }
+//
+//                workpieceAdapter.setWorkpieces(wst_liste);
+//                model.setPK(workpiece.getPk());
+//            }
+//        });
 
         // Note: ViewmodelProvider(this).get(class) gives per fragment/activity an own instance of ViewModel
         Action action = (Action) getIntent().getSerializableExtra(ACTION);

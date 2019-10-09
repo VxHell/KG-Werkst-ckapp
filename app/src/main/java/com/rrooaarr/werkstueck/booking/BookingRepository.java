@@ -4,12 +4,14 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.booking.api.BookingWebservice;
 import com.rrooaarr.werkstueck.booking.api.RetrofitServiceGenerator;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.setting.UserSetting;
@@ -54,17 +56,30 @@ public class BookingRepository {
         }
     }
 
-    public MutableLiveData<WorkpieceContainer> fetchWorkpieceInfo(String workpieceNumber) {
-        MutableLiveData<WorkpieceContainer> workpieceMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<DataErrorWrapper<WorkpieceContainer>> fetchWorkpieceInfo(String workpieceNumber) {
+        MutableLiveData<DataErrorWrapper<WorkpieceContainer>> workpieceMutableLiveData = new MutableLiveData<>();
 
         api.getWorkpieceInfo(workpieceNumber).enqueue(new Callback<WorkpieceContainer>() {
             @Override
-            public void onResponse(Call<WorkpieceContainer> call, Response<WorkpieceContainer> response) {
+            public void onResponse(@NonNull Call<WorkpieceContainer> call, @NonNull Response<WorkpieceContainer> response) {
                 if (response.isSuccessful()) {
-                    workpieceMutableLiveData.setValue(response.body());
+                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(response.body());
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
+                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+
+                } else if(response.code()== 404) {
+                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
+                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+
+                } else if(response.code()== 403){
+                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
+                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
                 } else {
-//                    TODO: add mutuable live data for error handling !
-                    workpieceMutableLiveData.setValue(null);
+                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.ERROR);
+                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
                     if (BuildConfig.DEBUG) {
                         logRetrofitError(TAG, response);
                     }
@@ -73,9 +88,14 @@ public class BookingRepository {
 
             @Override
             public void onFailure(Call<WorkpieceContainer> call, Throwable throwable) {
-                Log.e(TAG, "onFailure: " + throwable.getMessage());
-                workpieceMutableLiveData.setValue(null);
-//                TODO: add mutuable live data for error handling !
+                final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
+                workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.EXCEPTION);
+                workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "onFailure: " + throwable.getMessage());
+                    Log.e(TAG, "onFailure Stacktrace:" + Log.getStackTraceString(throwable));
+                }
             }
         });
 

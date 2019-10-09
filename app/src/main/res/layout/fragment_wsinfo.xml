@@ -44,7 +44,7 @@
                 android:id="@+id/button_book_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{"Buchen " + model.action.name()}'
+                android:text='@{"Buchen " + model.action.locale}'
                 android:textColor="@color/buttonLabel" />
 
             <Button
