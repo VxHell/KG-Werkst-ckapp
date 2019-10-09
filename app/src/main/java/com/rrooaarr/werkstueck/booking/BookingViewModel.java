@@ -53,7 +53,7 @@ public class BookingViewModel extends AndroidViewModel {
     }
 
     public void bookWorkpieceAction(String pk, Action action){
-        if (mutableLiveData != null){
+        if (bookresult != null){
             return;
         }
         bookresult = mRepository.bookWorkpieceAction(pk, action);
