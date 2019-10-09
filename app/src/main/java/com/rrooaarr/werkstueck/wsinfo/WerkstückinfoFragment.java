@@ -37,7 +37,6 @@ import java.util.Objects;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.PK;
-import static com.rrooaarr.werkstueck.booking.model.AppDefaults.SETTINGS;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
 public class WerkstückinfoFragment extends Fragment implements FragmentBase, View.OnClickListener{
@@ -46,6 +45,7 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
     private BookingViewModel model;
     WorkpieceListAdapter workpieceAdapter;
     RecyclerView recyclerView;
+    private View myRoot;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,8 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
         final Bundle arguments = getArguments();
         if(arguments != null ) {
             String wst = arguments.getString(WST);
-            ArrayList<String> settingsString = arguments.getStringArrayList(SETTINGS);
 
-            if (settingsString != null) {
+            if (model.getSetting().getValue() != null) {
                 model.initApi(model.getSetting().getValue());
 
                 model.fetchWorkpieceInfo(wst);
@@ -79,6 +78,8 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
                         }
                     }
                 });
+            } else {
+                Toast.makeText(getContext(), R.string.no_settings, Toast.LENGTH_LONG).show();
             }
 
         }
@@ -95,11 +96,15 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentWsinfoBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_wsinfo, container, false);
-        binding.setModel(model);
-        View fragmentView = binding.getRoot();
-        initViews(fragmentView);
-        return fragmentView;
+        if (myRoot == null) {
+            FragmentWsinfoBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_wsinfo, container, false);
+            binding.setModel(model);
+            View fragmentView = binding.getRoot();
+            initViews(fragmentView);
+            myRoot = fragmentView;
+        }
+
+        return myRoot;
     }
 
     private void initViews(View view) {

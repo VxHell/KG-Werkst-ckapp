@@ -48,9 +48,10 @@ public class BookingRepository {
     }
 
     public void initApi(String loadedUrl,String username, String password) {
-        final String crypted = sha512(password);
-
-        api = RetrofitServiceGenerator.createService(BookingWebservice.class, loadedUrl, username, crypted);
+        if(api == null) {
+            final String crypted = sha512(password);
+            api = RetrofitServiceGenerator.createService(BookingWebservice.class, loadedUrl, username, crypted);
+        }
     }
 
     public MutableLiveData<WorkpieceContainer> fetchWorkpieceInfo(String workpieceNumber) {
@@ -62,6 +63,7 @@ public class BookingRepository {
                 if (response.isSuccessful()) {
                     workpieceMutableLiveData.setValue(response.body());
                 } else {
+//                    TODO: add mutuable live data for error handling !
                     workpieceMutableLiveData.setValue(null);
                     if (BuildConfig.DEBUG) {
                         logRetrofitError(TAG, response);
@@ -73,6 +75,7 @@ public class BookingRepository {
             public void onFailure(Call<WorkpieceContainer> call, Throwable throwable) {
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
                 workpieceMutableLiveData.setValue(null);
+//                TODO: add mutuable live data for error handling !
             }
         });
 
@@ -106,6 +109,7 @@ public class BookingRepository {
                 if (response.isSuccessful()) {
                     bookresult.setValue(true);
                 } else {
+                    //                    TODO: add mutuable live data for error handling !
                     bookresult.setValue(false);
                     if (BuildConfig.DEBUG) {
                         logRetrofitError(TAG, response);
@@ -116,6 +120,7 @@ public class BookingRepository {
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
+                //                    TODO: add mutuable live data for error handling !
                 bookresult.setValue(false);
             }
         });

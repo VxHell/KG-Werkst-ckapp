@@ -39,6 +39,7 @@
     <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
     <string name="empty_not_saved">Änderungen nicht gespeichert.</string>
     <string name="no_service">Rest Endpunkt nicht verfügbar</string>
+    <string name="no_settings">Einstellungen konnten nicht geladen werden</string>
 
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
     <string name="empty_port">Bitte geben Sie einen Port an.</string>

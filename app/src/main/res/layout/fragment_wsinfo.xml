@@ -12,17 +12,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/frag_button_margin_top"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".booking.BookingActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wsinfo_list"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="@dimen/frag_button_margin"
+            android:layout_marginEnd="@dimen/frag_button_margin"
 
             app:layout_constraintHeight_default="spread"
-            app:layout_constraintHeight_max="800dp"
-            app:layout_constraintHeight_min="300dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navbar_container"
