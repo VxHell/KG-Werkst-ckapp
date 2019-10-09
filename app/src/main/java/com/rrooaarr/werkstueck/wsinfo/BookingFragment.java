@@ -239,12 +239,10 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
 
                 Fragment frag = WerkstückinfoFragment.newInstance();
                 Bundle bundle = new Bundle();
-
                 bundle.putSerializable(ACTION, model.getAction());
                 bundle.putString(WST, strings[1]);
 
                 frag.setArguments(bundle);
-
                 Utils.replaceFragment(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
 
             } else {

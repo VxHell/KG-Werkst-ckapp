@@ -13,15 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/frag_button_margin_top"
+        android:layout_marginBottom="@dimen/frag_button_margin_top"
+        android:layout_marginStart="@dimen/frag_button_margin"
+        android:layout_marginEnd="@dimen/frag_button_margin"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".booking.BookingActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wsinfo_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginStart="@dimen/frag_button_margin"
-            android:layout_marginEnd="@dimen/frag_button_margin"
 
             app:layout_constraintHeight_default="spread"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -34,10 +35,10 @@
             android:id="@+id/wsinfo_menu_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/frag_button_margin"
             android:layout_marginTop="@dimen/frag_button_margin_top"
-            android:layout_marginEnd="@dimen/frag_button_margin"
-            app:layout_constraintTop_toBottomOf="@+id/wsinfo_list">
+            app:layout_constraintTop_toBottomOf="@+id/wsinfo_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <Button
                 android:id="@+id/button_book_action"

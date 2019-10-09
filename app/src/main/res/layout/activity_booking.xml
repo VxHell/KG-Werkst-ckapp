@@ -21,16 +21,16 @@
             app:navtitle="@{model.navtitel}"
             app:title="@{model.titel}" />
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/master_booking_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/navbar_container"
-            >
-        </FrameLayout>
+            android:orientation="horizontal">
+        </LinearLayout>
 
         <include
-            android:id="@+id/toolbar3"
+            android:id="@+id/toolbar3_b"
             layout="@layout/navbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"

@@ -28,7 +28,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@{title}"
-                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/heading_text_size"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -46,7 +47,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@{navtitle}"
-                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/heading_text_size"
                     android:textStyle="bold" />
 
             </RelativeLayout>
