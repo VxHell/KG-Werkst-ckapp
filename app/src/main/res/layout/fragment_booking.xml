@@ -1,68 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context=".booking.BookingActivity"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:context=".booking.BookingActivity">
 
     <RelativeLayout
         android:id="@+id/booking_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/frag_button_margin"
-        android:layout_marginEnd="@dimen/frag_button_margin"
         android:layout_marginTop="@dimen/frag_button_margin_top"
+        android:layout_marginEnd="@dimen/frag_button_margin"
         app:layout_constraintTop_toBottomOf="@+id/master_booking_fragment">
 
         <me.dm7.barcodescanner.zxing.ZXingScannerView
             android:id="@+id/scanner_container_fragment"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/txt_plant_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scanner_container_fragment"
+            android:paddingStart="5dp"
+            android:text="@string/txt_plant" />
 
         <EditText
             android:id="@+id/plant_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/scanner_container_fragment"
+            android:layout_marginTop="@dimen/big_padding"
+            android:layout_marginBottom="@dimen/big_padding"
             android:fontFamily="sans-serif-light"
             android:hint="@string/hint_plantNumber"
-            android:text="@string/hint_plantNumber"
             android:inputType="numberDecimal"
             android:padding="@dimen/small_padding"
-            android:layout_marginBottom="@dimen/big_padding"
-            android:layout_marginTop="@dimen/big_padding"
+            android:text="@string/hint_plantNumber"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_subproject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/plant_number"
+            android:paddingStart="5dp"
+            android:text="@string/txt_subproject" />
 
         <EditText
             android:id="@+id/sub_project_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/plant_number"
+            android:layout_marginTop="@dimen/big_padding"
+            android:layout_marginBottom="@dimen/big_padding"
             android:fontFamily="sans-serif-light"
             android:hint="@string/hint_subProjectNumber"
-            android:text="@string/hint_subProjectNumber"
             android:inputType="numberDecimal"
             android:padding="@dimen/small_padding"
-            android:layout_marginBottom="@dimen/big_padding"
-            android:layout_marginTop="@dimen/big_padding"
+            android:text="@string/hint_subProjectNumber"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sub_project_number"
+            android:paddingStart="5dp"
+            android:text="@string/txt_number" />
 
         <EditText
             android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sub_project_number"
+            android:layout_marginTop="@dimen/big_padding"
+            android:layout_marginBottom="@dimen/big_padding"
             android:fontFamily="sans-serif-light"
             android:hint="@string/hint_number"
-            android:text="@string/hint_number"
             android:inputType="numberDecimal"
             android:padding="@dimen/small_padding"
-            android:layout_marginBottom="@dimen/big_padding"
-            android:layout_marginTop="@dimen/big_padding"
+            android:text="@string/hint_number"
             android:textSize="18sp" />
 
         <Button

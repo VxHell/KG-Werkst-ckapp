@@ -8,6 +8,9 @@
     <string name="txt_port">Port</string>
     <string name="txt_username">Benutzername</string>
     <string name="txt_passwort">Passwort</string>
+    <string name="txt_plant">AnlageNr</string>
+    <string name="txt_subproject">UnterprojektNr</string>
+    <string name="txt_number">Nummer</string>
 
     <!--   Hints  -->
     <string name="hint_server">Server</string>
