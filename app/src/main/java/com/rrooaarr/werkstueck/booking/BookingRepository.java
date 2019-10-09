@@ -18,7 +18,6 @@ import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
 import com.rrooaarr.werkstueck.setting.UserSettingsRoomDatabase;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,8 +48,8 @@ public class BookingRepository {
         return INSTANCE;
     }
 
-    public void initApi(String loadedUrl,String username, String password) {
-        if(api == null) {
+    public void initApi(String loadedUrl, String username, String password) {
+        if (api == null) {
             final String crypted = sha512(password);
             api = RetrofitServiceGenerator.createService(BookingWebservice.class, loadedUrl, username, crypted);
         }
@@ -62,28 +61,26 @@ public class BookingRepository {
         api.getWorkpieceInfo(workpieceNumber).enqueue(new Callback<WorkpieceContainer>() {
             @Override
             public void onResponse(@NonNull Call<WorkpieceContainer> call, @NonNull Response<WorkpieceContainer> response) {
+                final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>();
                 if (response.isSuccessful()) {
-                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(response.body());
+                    workpieceContainerDataErrorWrapper.setData(response.body());
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
-                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
 
-                } else if(response.code()== 404) {
-                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
+                } else if (response.code() == 404) {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
-                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+                    workpieceContainerDataErrorWrapper.setData(null);
 
-                } else if(response.code()== 403){
-                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
-                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
-                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+                } else if (response.code() == 403) {
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                    workpieceContainerDataErrorWrapper.setData(null);
                 } else {
-                    final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>(null);
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.ERROR);
-                    workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
+                    workpieceContainerDataErrorWrapper.setData(null);
                     if (BuildConfig.DEBUG) {
                         logRetrofitError(TAG, response);
                     }
                 }
+                workpieceMutableLiveData.setValue(workpieceContainerDataErrorWrapper);
             }
 
             @Override
@@ -108,9 +105,11 @@ public class BookingRepository {
         return workpieceMutableLiveData;
     }
 
-    public MutableLiveData<Boolean> bookWorkpieceAction(String pk, Action action) {
+
+    public MutableLiveData<DataErrorWrapper<Boolean>> bookWorkpieceAction(String pk, Action action) {
         String actionStr = "";
-        final MutableLiveData<Boolean> bookresult = new MutableLiveData<>();
+        final MutableLiveData<DataErrorWrapper<Boolean>> bookresult = new MutableLiveData<>();
+
         switch (action) {
             case FINISHING:
                 actionStr = "veredelung";
@@ -126,30 +125,41 @@ public class BookingRepository {
         api.bookWorkpieceAction(pk, actionStr).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                final DataErrorWrapper<Boolean> booleanDataErrorWrapper = new DataErrorWrapper<>();
                 if (response.isSuccessful()) {
-                    bookresult.setValue(true);
+                    booleanDataErrorWrapper.setData(true);
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
+                } else if (response.code() == 404) {
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
+                    booleanDataErrorWrapper.setData(null);
+
+                } else if (response.code() == 403) {
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                    booleanDataErrorWrapper.setData(null);
                 } else {
-                    //                    TODO: add mutuable live data for error handling !
-                    bookresult.setValue(false);
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.ERROR);
+                    booleanDataErrorWrapper.setData(null);
                     if (BuildConfig.DEBUG) {
                         logRetrofitError(TAG, response);
                     }
                 }
+                bookresult.setValue(booleanDataErrorWrapper);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
+                final DataErrorWrapper<Boolean> booleanDataErrorWrapper = new DataErrorWrapper<>(null);
+                booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.EXCEPTION);
+                bookresult.setValue(booleanDataErrorWrapper);
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
-                //                    TODO: add mutuable live data for error handling !
-                bookresult.setValue(false);
             }
         });
 
-        if (BuildConfig.DEBUG) {
-            if (bookresult.getValue() != null && bookresult.getValue()) {
-                Log.d("test", "fetchWorkpieceInfo: it worked!");
-            }
-        }
+//        if (BuildConfig.DEBUG) {
+//            if (bookresult.getValue() != null && bookresult.getValue()) {
+//                Log.d("test", "fetchWorkpieceInfo: it worked!");
+//            }
+//        }
 
         return bookresult;
     }

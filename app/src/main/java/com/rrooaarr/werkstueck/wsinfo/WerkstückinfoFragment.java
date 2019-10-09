@@ -22,8 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.booking.BookingFragment;
 import com.rrooaarr.werkstueck.booking.BookingViewModel;
 import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.ErrorHelper;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.databinding.FragmentWsinfoBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
@@ -40,7 +42,7 @@ import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.PK;
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 
-public class WerkstückinfoFragment extends Fragment implements FragmentBase, View.OnClickListener{
+public class WerkstückinfoFragment extends Fragment implements FragmentBase, View.OnClickListener {
 
     public static String TAG = WerkstückinfoFragment.class.getSimpleName();
     private BookingViewModel model;
@@ -55,7 +57,7 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
         model = ViewModelProviders.of(getActivity()).get(BookingViewModel.class);
         model.setNavtitel("Buchen");
         final Bundle arguments = getArguments();
-        if(arguments != null ) {
+        if (arguments != null) {
             String wst = arguments.getString(WST);
 
             if (model.getSetting().getValue() != null) {
@@ -66,31 +68,19 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
                 model.getWorkpieceInfoData().observe(this, new Observer<DataErrorWrapper<WorkpieceContainer>>() {
                     @Override
                     public void onChanged(DataErrorWrapper<WorkpieceContainer> dataWrapper) {
-                        if(dataWrapper != null) {
+                        if (dataWrapper != null) {
                             final WorkpieceContainer workpiece = dataWrapper.getData();
-                            switch (dataWrapper.getStatus()) {
-                                case SUCCESS:
-                                    List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
+                            if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.SUCCESS) {
+                                List<WorkpieceListElement> wst_liste = new ArrayList<>(workpiece.getWst_infos().size());
 
-                                    for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
-                                        wst_liste.add(new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
-                                    }
+                                for (Map.Entry<String, String> stringStringEntry : workpiece.getWst_infos().entrySet()) {
+                                    wst_liste.add(new WorkpieceListElement(stringStringEntry.getKey(), stringStringEntry.getValue()));
+                                }
 
-                                    workpieceAdapter.setWorkpieces(wst_liste);
-                                    model.setPK(workpiece.getPk());
-                                    break;
-                                case EXCEPTION:
-                                    Toast.makeText(getContext(), R.string.errUnknown, Toast.LENGTH_LONG).show();
-                                    break;
-                                case UNAUTHORIZED:
-                                    Toast.makeText(getContext(), R.string.errUnauthorized, Toast.LENGTH_LONG).show();
-                                    break;
-                                case NOTFOUND:
-                                    Toast.makeText(getContext(), R.string.errNotfound, Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    Toast.makeText(getContext(), R.string.errNo_service, Toast.LENGTH_LONG).show();
-                                    break;
+                                workpieceAdapter.setWorkpieces(wst_liste);
+                                model.setPK(workpiece.getPk());
+                            } else {
+                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             }
 
                         } else {
@@ -101,7 +91,6 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
             } else {
                 Toast.makeText(getContext(), R.string.errNo_settings, Toast.LENGTH_LONG).show();
             }
-
         }
     }
 
@@ -175,28 +164,28 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
         });
     }
 
-    private void onAction(){
+    private void onAction() {
 
         Fragment frag = BookingFragment.newInstance();
-        Bundle bundle = new Bundle();
 
+        Bundle bundle = new Bundle();
         bundle.putSerializable(ACTION, model.getAction());
         bundle.putBoolean(BOOK, true);
         bundle.putString(PK, model.getPk());
 
         frag.setArguments(bundle);
 
-        Utils.replaceFragment(frag,true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
+        Utils.replaceFragment(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
 
     }
 
-    private void onBack(){
+    private void onBack() {
         Objects.requireNonNull(getActivity()).onBackPressed();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.button_book_action:
                 onAction();
                 break;

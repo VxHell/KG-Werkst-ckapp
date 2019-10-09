@@ -18,9 +18,9 @@ import java.util.ArrayList;
  * Creating Instances of LiveData usually here
  * Views - Fragments and Activities - shouldn’t be able of updating LiveData and thus their own state because that’s the responsibility of ViewModels. Views should be able to only observe LiveData.
  * we should encapsulate access to MutableLiveData with eg. getters or backing properties:
- *
+ * <p>
  * Caution: A ViewModel must never reference a view, Lifecycle, or any class that may hold a reference to the activity context.
- *
+ * <p>
  * There should be no imports of anything from theandroid.view or android.widgetpackages.
  */
 public class BookingViewModel extends AndroidViewModel {
@@ -29,7 +29,7 @@ public class BookingViewModel extends AndroidViewModel {
 
     private MutableLiveData<DataErrorWrapper<WorkpieceContainer>> mutableLiveData;
 
-    private MutableLiveData<Boolean> bookresult;
+    private MutableLiveData<DataErrorWrapper<Boolean>> bookresult;
 
     private LiveData<UserSetting> setting;
 
@@ -46,21 +46,21 @@ public class BookingViewModel extends AndroidViewModel {
         setting = mRepository.getSetting();
     }
 
-    public void fetchWorkpieceInfo(String workpieceNumber){
-        if (mutableLiveData != null){
+    public void fetchWorkpieceInfo(String workpieceNumber) {
+        if (mutableLiveData != null) {
             return;
         }
         mutableLiveData = mRepository.fetchWorkpieceInfo(workpieceNumber);
     }
 
-    public void bookWorkpieceAction(String pk, Action action){
-        if (bookresult != null){
+    public void bookWorkpieceAction(String pk, Action action) {
+        if (bookresult != null) {
             return;
         }
         bookresult = mRepository.bookWorkpieceAction(pk, action);
     }
 
-    public LiveData<DataErrorWrapper<WorkpieceContainer>> getWorkpieceInfoData(){
+    public LiveData<DataErrorWrapper<WorkpieceContainer>> getWorkpieceInfoData() {
         return mutableLiveData;
     }
 
@@ -101,7 +101,7 @@ public class BookingViewModel extends AndroidViewModel {
         this.qrResult = qrResult;
     }
 
-    public MutableLiveData<Boolean> getBookresult() {
+    public MutableLiveData<DataErrorWrapper<Boolean>> getBookresult() {
         return bookresult;
     }
 
@@ -110,12 +110,12 @@ public class BookingViewModel extends AndroidViewModel {
     }
 
     @Deprecated
-    public void initApi(ArrayList<String> settings){
+    public void initApi(ArrayList<String> settings) {
 //        mRepository.initApi(new UserSetting(settings.get(0), settings.get(1), settings.get(2), settings.get(3)));
     }
 
-    public void initApi(UserSetting setting){
-        String loadedUrl = setting.getServer()+":"+setting.getPort();
+    public void initApi(UserSetting setting) {
+        String loadedUrl = setting.getServer() + ":" + setting.getPort();
         String baseUrl;
         if (!loadedUrl.equals(":")) {
             baseUrl = loadedUrl;

@@ -1,4 +1,4 @@
-package com.rrooaarr.werkstueck.wsinfo;
+package com.rrooaarr.werkstueck.booking;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,12 +23,14 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
-import com.rrooaarr.werkstueck.booking.BookingViewModel;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.ErrorHelper;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.FragmentBase;
+import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoFragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -105,14 +106,21 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
             String pk = (String) getArguments().getSerializable(PK);
             if (pk != null) {
                 model.bookWorkpieceAction(pk, model.getAction());
-                model.getBookresult().observe(this, new Observer<Boolean>() {
+
+                model.getBookresult().observe(this, new Observer<DataErrorWrapper<Boolean>>() {
                     @Override
-                    public void onChanged(Boolean bookresult) {
-                        if (bookresult) {
-                            Toast.makeText(
-                                    getContext(),
-                                    " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " erfolgreich",
-                                    Toast.LENGTH_LONG).show();
+                    public void onChanged(DataErrorWrapper<Boolean> dataWrapper) {
+                        if (dataWrapper != null) {
+                            final Boolean bookresult = dataWrapper.getData();
+                            if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.SUCCESS) {
+                                Toast.makeText(
+                                        getContext(),
+                                        " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " erfolgreich",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
+                            }
+
                         } else {
                             Toast.makeText(
                                     getContext(),
@@ -232,7 +240,6 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
         if (result != null) {
             final String resultText = result.getText();
             Log.d(getClass().getSimpleName(), resultText + " " + new String(result.getRawBytes()));
-            model.setQrResult(new MutableLiveData<>(resultText));
             if (resultText.contains("wst=")) {
                 final String[] strings = resultText.split("wst=");
                 Log.d(TAG, "handleResult:" + strings[1]);

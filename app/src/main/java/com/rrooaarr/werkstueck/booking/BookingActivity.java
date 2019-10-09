@@ -11,7 +11,6 @@ import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.util.Utils;
-import com.rrooaarr.werkstueck.wsinfo.BookingFragment;
 
 import java.io.Serializable;
 
@@ -34,7 +33,7 @@ public class BookingActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 //
         fragment.setArguments(bundle);
-        Utils.replaceFragment(fragment,false, getSupportFragmentManager(), R.id.master_booking_fragment);
+        Utils.replaceFragment(fragment, false, getSupportFragmentManager(), R.id.master_booking_fragment);
 
     }
 
