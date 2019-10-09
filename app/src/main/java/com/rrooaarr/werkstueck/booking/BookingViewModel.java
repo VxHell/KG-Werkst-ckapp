@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.rrooaarr.werkstueck.booking.model.Action;
+import com.rrooaarr.werkstueck.booking.model.AppDefaults;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 
@@ -107,12 +108,21 @@ public class BookingViewModel extends AndroidViewModel {
         return setting;
     }
 
+    @Deprecated
     public void initApi(ArrayList<String> settings){
-        mRepository.initApi(new UserSetting(settings.get(0), settings.get(1), settings.get(2), settings.get(3)));
+//        mRepository.initApi(new UserSetting(settings.get(0), settings.get(1), settings.get(2), settings.get(3)));
     }
 
     public void initApi(UserSetting setting){
-        mRepository.initApi(setting);
+        String loadedUrl = setting.getServer()+":"+setting.getPort();
+        String baseUrl;
+        if (!loadedUrl.equals(":")) {
+            baseUrl = loadedUrl;
+        } else {
+            baseUrl = AppDefaults.FALLBACK_URL;
+        }
+
+        mRepository.initApi(baseUrl, setting.getUsername(), setting.getPassword());
     }
 
     public void setNavtitel(String navtitel) {

@@ -47,10 +47,10 @@ public class BookingRepository {
         return INSTANCE;
     }
 
-    public void initApi(UserSetting setting) {
-        final String crypted = sha512(setting.getPassword());
+    public void initApi(String loadedUrl,String username, String password) {
+        final String crypted = sha512(password);
 
-        api = RetrofitServiceGenerator.createService(BookingWebservice.class, setting.getServer()+":"+setting.getPort(), setting.getUsername(), crypted);
+        api = RetrofitServiceGenerator.createService(BookingWebservice.class, loadedUrl, username, crypted);
     }
 
     public MutableLiveData<WorkpieceContainer> fetchWorkpieceInfo(String workpieceNumber) {
