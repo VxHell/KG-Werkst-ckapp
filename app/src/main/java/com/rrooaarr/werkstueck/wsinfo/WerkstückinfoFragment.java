@@ -16,7 +16,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,9 +53,7 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        model = ViewModelProviders.of(getActivity()).get(BookingViewModel.class);
-        model.setNavtitel("Buchen");
+        model = new ViewModelProvider(getActivity()).get(BookingViewModel.class);
         final Bundle arguments = getArguments();
         if (arguments != null) {
             String wst = arguments.getString(WST);
