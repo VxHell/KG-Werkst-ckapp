@@ -45,6 +45,7 @@
     <string name="errNo_settings">Einstellungen konnten nicht geladen werden.</string>
 
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
+    <string name="invalid_server">Bitte geben Sie eine Serveraddresse im Format "http(s)://" an.</string>
     <string name="empty_port">Bitte geben Sie einen Port an.</string>
     <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
     <string name="empty_password">Bitte geben Sie ein Passwort an.</string>
