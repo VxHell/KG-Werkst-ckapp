@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,10 +44,43 @@ import static com.rrooaarr.werkstueck.booking.model.AppDefaults.WST;
 public class WerkstückinfoFragment extends Fragment implements FragmentBase, View.OnClickListener {
 
     public static String TAG = WerkstückinfoFragment.class.getSimpleName();
-    private BookingViewModel model;
     WorkpieceListAdapter workpieceAdapter;
     RecyclerView recyclerView;
+    Button actionButton;
+    private BookingViewModel model;
     private View myRoot;
+
+    public WerkstückinfoFragment() {
+    }
+
+    public static WerkstückinfoFragment newInstance() {
+
+        return new WerkstückinfoFragment();
+    }
+
+    @BindingAdapter({"validation", "errorMsg"})
+    public static void setErrorEnable(EditText editText, StringValidationRules.StringRule stringRule, final String errorMsg) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (stringRule.validate(editText.getText())) {
+                    editText.setError(errorMsg);
+                } else {
+                    editText.setError(null);
+                }
+            }
+        });
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,28 +109,30 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
 
                                 workpieceAdapter.setWorkpieces(wst_liste);
                                 model.setPK(workpiece.getPk());
+                                if (actionButton != null) {
+                                    actionButton.setEnabled(true);
+                                    actionButton.setClickable(true);
+                                }
+                            } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.WSTNOTFOUND) {
+                                model.setPK(null);
+                                if (actionButton != null) {
+                                    actionButton.setEnabled(false);
+                                    actionButton.setClickable(false);
+                                }
+                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             } else {
                                 ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             }
 
                         } else {
-                            Toast.makeText(getContext(), R.string.errNo_service, Toast.LENGTH_LONG).show();
+                            ErrorHelper.makeToast(getContext(), R.string.errNo_service);
                         }
                     }
                 });
             } else {
-                Toast.makeText(getContext(), R.string.errNo_settings, Toast.LENGTH_LONG).show();
+                ErrorHelper.makeToast(getContext(), R.string.errNo_settings);
             }
         }
-    }
-
-    public WerkstückinfoFragment() {
-    }
-
-
-    public static WerkstückinfoFragment newInstance() {
-
-        return new WerkstückinfoFragment();
     }
 
     @Override
@@ -117,8 +151,8 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
     private void initViews(View view) {
         recyclerView = view.findViewById(R.id.wsinfo_list);
 
-        final Button button = view.findViewById(R.id.button_book_action);
-        button.setOnClickListener(this);
+        actionButton = view.findViewById(R.id.button_book_action);
+        actionButton.setOnClickListener(this);
 
         final Button button_cancel = view.findViewById(R.id.button_back);
         button_cancel.setOnClickListener(this);
@@ -136,30 +170,6 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
         } else {
             workpieceAdapter.notifyDataSetChanged();
         }
-    }
-
-    @BindingAdapter({"validation", "errorMsg"})
-    public static void setErrorEnable(EditText editText, StringValidationRules.StringRule stringRule, final String errorMsg) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (stringRule.validate(editText.getText())) {
-                    editText.setError(errorMsg);
-                } else {
-                    editText.setError(null);
-                }
-            }
-        });
     }
 
     private void onAction() {

@@ -110,27 +110,19 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
                     @Override
                     public void onChanged(DataErrorWrapper<Boolean> dataWrapper) {
                         if (dataWrapper != null) {
-                            final Boolean bookresult = dataWrapper.getData();
+//                            final Boolean bookresult = dataWrapper.getData();
                             if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.SUCCESS) {
-                                Toast.makeText(
-                                        getContext(),
-                                        " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " erfolgreich",
-                                        Toast.LENGTH_LONG).show();
+                                ErrorHelper.makeToast(getContext(), " Buchung: " + (model.getAction() != null ? model.getAction().getLocale() : "") + " erfolgreich");
                             } else {
                                 ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             }
-
                         } else {
-                            Toast.makeText(
-                                    getContext(),
-                                    " Buchung: " + (model.getAction() != null ? model.getAction().name() : "") + " nicht erfolgreich!",
-                                    Toast.LENGTH_LONG).show();
+                            ErrorHelper.makeToast(getContext(), " Buchung: " + (model.getAction() != null ? model.getAction().getLocale() : "") + " nicht erfolgreich!");
                         }
                     }
                 });
             } else {
-                Toast.makeText(
-                        getContext(), " Buchung nicht zuordbar.", Toast.LENGTH_LONG).show();
+                ErrorHelper.makeToast(getContext(), " Buchung nicht zuordbar.");
             }
         }
     }
