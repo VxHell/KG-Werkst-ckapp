@@ -42,8 +42,8 @@
     <string name="errUnauthorized">Der aktuelle Benutzer ist nicht authoriziert.</string>
     <string name="errWSTNotFound">Das angegebene Werkstück konnte nicht gefunden werden.</string>
     <string name="errNotfound">Der Service kann nicht gefunden werden.</string>
-    <string name="errNo_service">Der Endpunkt ist zur Zeit nicht verfügbar.</string>
-    <string name="errNo_settings">Einstellungen konnten nicht geladen werden.</string>
+    <string name="errNo_service">Der Endpunkt ist nicht verfügbar.</string>
+    <string name="errNo_settings">Einstellungen nicht gesetzt.</string>
 
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
     <string name="invalid_server">Bitte geben Sie eine Serveraddresse im Format "http(s)://" an.</string>

@@ -91,6 +91,7 @@ public class ApiTest {
 
     @Test
     public void testBookingOverPk() throws Exception {
+        // TODO make tests async
         MutableLiveData<Boolean> finishingBooking = doBookingAction("183565", Action.FINISHING);
         SystemClock.sleep(2000);
         assertNotNull(finishingBooking.getValue());
@@ -102,6 +103,30 @@ public class ApiTest {
         MutableLiveData<Boolean> packagingBooking = doBookingAction("183565", Action.PACKAGING);
         SystemClock.sleep(2000);
         assertNotNull(packagingBooking.getValue());
+    }
+
+    @Test
+    public void testBookingOverPkFailAction() throws Exception {
+        // TODO make tests async
+        MutableLiveData<Boolean> packagingBooking = doBookingAction("9999999999999999999", Action.PACKAGING);
+        SystemClock.sleep(2000);
+        assertNotNull(packagingBooking.getValue());
+
+        MutableLiveData<Boolean> packagingBooking3 = doBookingAction("0", Action.PACKAGING);
+        SystemClock.sleep(2000);
+        assertNotNull(packagingBooking3.getValue());
+
+        MutableLiveData<Boolean> packagingBooking2 = doBookingAction(null, Action.PACKAGING);
+        SystemClock.sleep(2000);
+        assertNotNull(packagingBooking2.getValue());
+
+        MutableLiveData<Boolean> finishingBooking = doBookingAction("alles", Action.FINISHING);
+        SystemClock.sleep(2500);
+        assertNotNull(finishingBooking.getValue());
+
+        MutableLiveData<Boolean> shippingBooking = doBookingAction("010101010", Action.SHIPPING);
+        SystemClock.sleep(2000);
+        assertNotNull(shippingBooking.getValue());
     }
 
     private MutableLiveData<Boolean> doBookingAction(String pk , Action action){

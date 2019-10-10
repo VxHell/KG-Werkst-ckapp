@@ -17,7 +17,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -54,7 +54,6 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
     private EditText plantNumber;
     private UserSetting setting;
 
-
     public BookingFragment() {
     }
 
@@ -90,7 +89,7 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final FragmentActivity fragmentActivity = getActivity();
-        model = ViewModelProviders.of(fragmentActivity).get(BookingViewModel.class);
+        model = new ViewModelProvider(fragmentActivity).get(BookingViewModel.class);
         model.setNavtitel("Werkstückauswahl");
 
         model.getSetting().observe(this, new Observer<UserSetting>() {
@@ -156,11 +155,7 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
 
     private void initScanner(View view) {
         RequestUserPermission requestUserPermission = new RequestUserPermission(BookingFragment.this.getActivity());
-        boolean alreadyPermitted = requestUserPermission.verifyCameraPermissionsActivity();
-
-        if (!alreadyPermitted) {
-            Toast.makeText(BookingFragment.this.getActivity(), R.string.no_camera_permisssion, Toast.LENGTH_SHORT).show();
-        }
+        requestUserPermission.verifyCameraPermissionsActivity();
 
         this.scannerView = view.findViewById(R.id.scanner_container_fragment);
 
@@ -225,7 +220,7 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
     @Override
     public void onPause() {
         super.onPause();
-        // stopping Camera takes 2 seconds
+        // stopping Camera takes 2 secondso
 //        this.scannerView.stopCamera();
         if (BuildConfig.DEBUG) {
             Log.d(getClass().getSimpleName(), "onPause()");

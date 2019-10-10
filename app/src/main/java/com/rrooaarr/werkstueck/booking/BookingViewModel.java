@@ -111,7 +111,7 @@ public class BookingViewModel extends AndroidViewModel {
     public void initApi(UserSetting setting) {
         String loadedUrl = setting.getServer() + ":" + setting.getPort();
         String baseUrl;
-        if (!loadedUrl.equals(":")) {
+        if (!loadedUrl.equals(":") && loadedUrl.contains("https://") || loadedUrl.contains("http://")) {
             baseUrl = loadedUrl;
         } else {
             baseUrl = AppDefaults.FALLBACK_URL;

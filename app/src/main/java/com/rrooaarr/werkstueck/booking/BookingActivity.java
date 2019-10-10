@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
+import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoFragment;
 
@@ -33,10 +34,9 @@ public class BookingActivity extends AppCompatActivity {
 
         final BookingFragment fragment = new BookingFragment();
         Bundle bundle = new Bundle();
-//
         fragment.setArguments(bundle);
-        Utils.replaceFragment(fragment, false, getSupportFragmentManager(), R.id.master_booking_fragment);
 
+        Utils.replaceFragment(fragment, false, getSupportFragmentManager(), R.id.master_booking_fragment);
     }
 
     @Override
@@ -61,6 +61,17 @@ public class BookingActivity extends AppCompatActivity {
         Serializable booking = getIntent().getSerializableExtra(BOOK);
 
         binding.setModel(model);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RequestUserPermission.REQUEST_CAMERA) {
+            if (grantResults.length != 1 ||
+                    grantResults[0] != RequestUserPermission.REQUEST_CAMERA) {
+//                            Toast.makeText(this, R.string.no_camera_permisssion, Toast.LENGTH_SHORT).show();
+                    }
+        }
     }
 
     public void initWSTIFragment() {

@@ -146,15 +146,31 @@ public class BookingRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 final DataErrorWrapper<Boolean> booleanDataErrorWrapper = new DataErrorWrapper<>();
-                if (response.isSuccessful()) {
+                if (response.code() == 200) {
                     booleanDataErrorWrapper.setData(true);
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
+                } else if (response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
+                        booleanDataErrorWrapper.setErrorDetails(jObjError.getString("ErrorDetails"));
+                        booleanDataErrorWrapper.setData(null);
+                    } catch (JSONException | IOException e) {
+                        if (BuildConfig.DEBUG) {
+                            Log.e(TAG, Log.getStackTraceString(e));
+                        }
+                    }
+                } else if (response.code() == 202 || response.body() == null) {
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTNOTFOUND);
+                    booleanDataErrorWrapper.setData(null);
                 } else if (response.code() == 404) {
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
                     booleanDataErrorWrapper.setData(null);
-
                 } else if (response.code() == 403) {
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                    booleanDataErrorWrapper.setData(null);
+                } else if (response.code() == 400) {
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
                     booleanDataErrorWrapper.setData(null);
                 } else {
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.ERROR);
@@ -174,12 +190,6 @@ public class BookingRepository {
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
             }
         });
-
-//        if (BuildConfig.DEBUG) {
-//            if (bookresult.getValue() != null && bookresult.getValue()) {
-//                Log.d("test", "fetchWorkpieceInfo: it worked!");
-//            }
-//        }
 
         return bookresult;
     }
