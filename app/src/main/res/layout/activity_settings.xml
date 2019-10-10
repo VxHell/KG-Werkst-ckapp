@@ -50,7 +50,7 @@
                     android:layout_marginBottom="@dimen/big_padding"
                     android:layout_marginTop="@dimen/big_padding"
                     android:text="@={model.setting.server}"
-                    app:validation="@{StringValidationRules.SERVER}"
+                    app:validation="@{StringValidationRules.NOT_EMPTY}"
                     app:errorMsg='@{@string/empty_server}'
                     android:textSize="18sp" />
 
