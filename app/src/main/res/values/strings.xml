@@ -1,6 +1,6 @@
 <resources>
     <!--    Basics  -->
-    <string name="app_name">KG Werkstück APP</string>
+    <string name="app_name">KG Werkstücke</string>
     <string name="action_settings">Einstellungen</string>
 
     <!--   labels  -->

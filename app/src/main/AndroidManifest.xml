@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/kglogo"
+        android:icon="@mipmap/ic_launcher_wasser"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_wasser_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity

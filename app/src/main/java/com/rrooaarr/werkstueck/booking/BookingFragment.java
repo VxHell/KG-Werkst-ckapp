@@ -215,7 +215,7 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
     @Override
     public void onResume() {
         super.onResume();
-//        this.scannerView.setResultHandler(this);
+        this.scannerView.setResultHandler(this);
         this.scannerView.startCamera();
         if (BuildConfig.DEBUG) {
             Log.d(getClass().getSimpleName(), "onStart()");

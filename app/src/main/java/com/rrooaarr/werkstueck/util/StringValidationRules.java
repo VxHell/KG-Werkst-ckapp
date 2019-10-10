@@ -12,6 +12,21 @@ public class StringValidationRules {
         }
     };
 
+    public static StringRule SERVER = new StringRule() {
+        @Override
+        public boolean validate(Editable s) {
+            boolean result = false;
+            final String string = s.toString();
+            if(TextUtils.isEmpty(string))
+                result = true;
+            if(!string.matches("^(http|https|ftp)://.*$")){
+                result = true;
+            }
+
+            return result;
+        }
+    };
+
     public static StringRule EMAIL = new StringRule() {
         @Override
         public boolean validate(Editable s) {
