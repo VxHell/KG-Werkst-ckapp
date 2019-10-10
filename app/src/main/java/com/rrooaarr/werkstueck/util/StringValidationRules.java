@@ -19,7 +19,7 @@ public class StringValidationRules {
             final String string = s.toString();
             if(TextUtils.isEmpty(string))
                 result = true;
-            if(!string.matches("^(http|https|ftp)://.*$")){
+            if(!string.matches("^(http|https|Http|Https|HTTP|HTTPS)://.*$")){
                 result = true;
             }
 
