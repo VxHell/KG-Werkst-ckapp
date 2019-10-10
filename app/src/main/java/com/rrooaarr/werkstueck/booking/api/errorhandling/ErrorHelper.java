@@ -10,6 +10,10 @@ public class ErrorHelper {
     public static void doDefaultApiErrorHandling(DataErrorWrapper dataWrapper, Context context){
         if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.EXCEPTION) {
             Toast.makeText(context, R.string.errUnknown, Toast.LENGTH_LONG).show();
+        } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.WSTNOTFOUND) {
+            Toast.makeText(context, R.string.errWSTNotFound, Toast.LENGTH_LONG).show();
+        } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.WSTERROR) {
+            Toast.makeText(context, dataWrapper.getErrorDetails(), Toast.LENGTH_LONG).show();
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.UNAUTHORIZED) {
             Toast.makeText(context, R.string.errUnauthorized, Toast.LENGTH_LONG).show();
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.NOTFOUND) {

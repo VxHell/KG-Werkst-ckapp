@@ -47,16 +47,10 @@ public class BookingViewModel extends AndroidViewModel {
     }
 
     public void fetchWorkpieceInfo(String workpieceNumber) {
-        if (mutableLiveData != null) {
-            return;
-        }
         mutableLiveData = mRepository.fetchWorkpieceInfo(workpieceNumber);
     }
 
     public void bookWorkpieceAction(String pk, Action action) {
-        if (bookresult != null) {
-            return;
-        }
         bookresult = mRepository.bookWorkpieceAction(pk, action);
     }
 

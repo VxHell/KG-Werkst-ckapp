@@ -18,6 +18,11 @@ import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.setting.UserSettingDao;
 import com.rrooaarr.werkstueck.setting.UserSettingsRoomDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,16 +67,31 @@ public class BookingRepository {
             @Override
             public void onResponse(@NonNull Call<WorkpieceContainer> call, @NonNull Response<WorkpieceContainer> response) {
                 final DataErrorWrapper<WorkpieceContainer> workpieceContainerDataErrorWrapper = new DataErrorWrapper<>();
-                if (response.isSuccessful()) {
+                if (response.code() == 200) {
                     workpieceContainerDataErrorWrapper.setData(response.body());
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
-
+                } else if (response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
+                        workpieceContainerDataErrorWrapper.setErrorDetails(jObjError.getString("ErrorDetails"));
+                        workpieceContainerDataErrorWrapper.setData(null);
+                    } catch (JSONException | IOException e) {
+                        if (BuildConfig.DEBUG) {
+                            Log.e(TAG, Log.getStackTraceString(e));
+                        }
+                    }
+                } else if (response.code() == 202 || response.body() == null) {
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTNOTFOUND);
+                    workpieceContainerDataErrorWrapper.setData(null);
                 } else if (response.code() == 404) {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
                     workpieceContainerDataErrorWrapper.setData(null);
-
                 } else if (response.code() == 403) {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                    workpieceContainerDataErrorWrapper.setData(null);
+                } else if (response.code() == 400) {
+                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
                     workpieceContainerDataErrorWrapper.setData(null);
                 } else {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.ERROR);

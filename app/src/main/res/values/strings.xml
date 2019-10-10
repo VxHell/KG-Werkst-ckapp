@@ -13,7 +13,7 @@
     <string name="txt_number">Nummer</string>
 
     <!--   Hints  -->
-    <string name="hint_server">Server</string>
+    <string name="hint_server">https://Serveraddresse</string>
     <string name="hint_port">Port</string>
     <string name="hint_username">Benutzername</string>
     <string name="hint_password">Passwort</string>
@@ -40,6 +40,7 @@
     <string name="errEmpty_not_saved">Änderungen nicht gespeichert.</string>
     <string name="errUnknown">Es ist ein unbekannter Fehler aufgetreten.</string>
     <string name="errUnauthorized">Der aktuelle Benutzer ist nicht authoriziert.</string>
+    <string name="errWSTNotFound">Das angegebene Werkstück konnte nicht gefunden werden.</string>
     <string name="errNotfound">Der Service kann nicht gefunden werden.</string>
     <string name="errNo_service">Der Endpunkt ist zur Zeit nicht verfügbar.</string>
     <string name="errNo_settings">Einstellungen konnten nicht geladen werden.</string>
