@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
@@ -17,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.R;
+import com.rrooaarr.werkstueck.booking.api.errorhandling.ErrorHelper;
 import com.rrooaarr.werkstueck.databinding.ActivitySettingsBinding;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
 
@@ -102,26 +102,18 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Intent replyIntent = new Intent();
 
         if (TextUtils.isEmpty(server.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_server,
-                    Toast.LENGTH_LONG).show();
+           ErrorHelper.makeToast(getApplicationContext(), R.string.empty_server);
         } else if (TextUtils.isEmpty(port.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_port,
-                    Toast.LENGTH_LONG).show();
+            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_port);
         } else if (TextUtils.isEmpty(username.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_username,
-                    Toast.LENGTH_LONG).show();
+            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_username);
         } else if (TextUtils.isEmpty(password.getText())) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_password,
-                    Toast.LENGTH_LONG).show();
-        } else {
+            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_password);
+        } else if(StringValidationRules.PASSWORD.validate(password.getText())) {
+            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_password);
+        } else if (StringValidationRules.SERVER.validate(server.getText())){
+            ErrorHelper.makeToast(getApplicationContext(), R.string.invalid_validation_server);
+        }  else{
 
             String mServer = server.getText().toString();
             String mPort = port.getText().toString();

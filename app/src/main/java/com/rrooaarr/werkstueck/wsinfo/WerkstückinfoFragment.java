@@ -28,6 +28,7 @@ import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
 import com.rrooaarr.werkstueck.booking.api.errorhandling.ErrorHelper;
 import com.rrooaarr.werkstueck.booking.model.WorkpieceContainer;
 import com.rrooaarr.werkstueck.databinding.FragmentWsinfoBinding;
+import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.FragmentBase;
@@ -50,6 +51,7 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
     Button actionButton;
     private BookingViewModel model;
     private View myRoot;
+    private UserSetting setting;
 
     public WerkstückinfoFragment() {
     }
@@ -87,16 +89,21 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         model = new ViewModelProvider(getActivity()).get(BookingViewModel.class);
-        final Bundle arguments = getArguments();
-        if (arguments != null) {
-            String wst = arguments.getString(WST);
 
-            if (model.getSetting().getValue() != null) {
-                model.initApi(model.getSetting().getValue());
+        model.getSetting().observe(this, new Observer<UserSetting>() {
+            @Override
+            public void onChanged(UserSetting settingLoaded) {
+                setting = settingLoaded;
+                model.initApi(setting);
+                final Bundle arguments = getArguments();
+                if (arguments != null) {
+                    String wst = arguments.getString(WST);
+                    model.fetchWorkpieceInfo(wst);
+                } else {
+                    ErrorHelper.makeToast(getContext(), R.string.errNo_settings);
+                }
 
-                model.fetchWorkpieceInfo(wst);
-
-                model.getWorkpieceInfoData().observe(this, new Observer<DataErrorWrapper<WorkpieceContainer>>() {
+                model.getWorkpieceInfoData().observe(getViewLifecycleOwner(), new Observer<DataErrorWrapper<WorkpieceContainer>>() {
                     @Override
                     public void onChanged(DataErrorWrapper<WorkpieceContainer> dataWrapper) {
                         if (dataWrapper != null) {
@@ -122,18 +129,17 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
                                 }
                                 ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             } else {
+                                model.setPK(null);
                                 ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
                             }
-
                         } else {
                             ErrorHelper.makeToast(getContext(), R.string.errNo_service);
                         }
                     }
                 });
-            } else {
-                ErrorHelper.makeToast(getContext(), R.string.errNo_settings);
             }
-        }
+        });
+
     }
 
     @Override

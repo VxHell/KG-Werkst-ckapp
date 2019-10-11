@@ -54,10 +54,10 @@ public class BookingRepository {
     }
 
     public void initApi(String loadedUrl, String username, String password) {
-        if (api == null) {
+//        if (api == null) {
             final String crypted = sha512(password);
             api = RetrofitServiceGenerator.createService(BookingWebservice.class, loadedUrl, username, crypted);
-        }
+//        }
     }
 
     public MutableLiveData<DataErrorWrapper<WorkpieceContainer>> fetchWorkpieceInfo(String workpieceNumber) {
@@ -70,7 +70,12 @@ public class BookingRepository {
                 if (response.code() == 200) {
                     workpieceContainerDataErrorWrapper.setData(response.body());
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
-                } else if (response.errorBody() != null) {
+// Since backend send us unauthorized messages with some strange errorbody we handle the error code first
+                } else if (response.code() == 401) {
+                        workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                        workpieceContainerDataErrorWrapper.setData(null);
+                    }
+                 else if (response.errorBody() != null && !response.errorBody().toString().isEmpty()) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
@@ -87,10 +92,7 @@ public class BookingRepository {
                 } else if (response.code() == 404) {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
                     workpieceContainerDataErrorWrapper.setData(null);
-                } else if (response.code() == 403) {
-                    workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
-                    workpieceContainerDataErrorWrapper.setData(null);
-                } else if (response.code() == 400) {
+                }  else if (response.code() == 400) {
                     workpieceContainerDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);
                     workpieceContainerDataErrorWrapper.setData(null);
                 } else {
@@ -149,6 +151,9 @@ public class BookingRepository {
                 if (response.code() == 200) {
                     booleanDataErrorWrapper.setData(true);
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.SUCCESS);
+                } else if (response.code() == 401) {
+                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
+                    booleanDataErrorWrapper.setData(null);
                 } else if (response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -165,9 +170,6 @@ public class BookingRepository {
                     booleanDataErrorWrapper.setData(null);
                 } else if (response.code() == 404) {
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.NOTFOUND);
-                    booleanDataErrorWrapper.setData(null);
-                } else if (response.code() == 403) {
-                    booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.UNAUTHORIZED);
                     booleanDataErrorWrapper.setData(null);
                 } else if (response.code() == 400) {
                     booleanDataErrorWrapper.setStatus(DataErrorWrapper.APIStatus.WSTERROR);

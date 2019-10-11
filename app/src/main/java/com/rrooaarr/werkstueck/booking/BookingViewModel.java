@@ -100,7 +100,7 @@ public class BookingViewModel extends AndroidViewModel {
     }
 
     public LiveData<UserSetting> getSetting() {
-        return setting;
+        return mRepository.getSetting();
     }
 
     @Deprecated

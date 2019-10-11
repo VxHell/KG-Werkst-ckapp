@@ -18,7 +18,7 @@ public class RetrofitServiceGenerator {
     private static Retrofit retrofit;
 
     public static <S> S createService(Class<S> serviceClass, String loadedUrl, String username, String password) {
-        if (retrofit == null) {
+//        if (retrofit == null) {
             OkHttpClient client;
             try {
                 // Create a trust manager that does not validate certificate chains
@@ -64,7 +64,7 @@ public class RetrofitServiceGenerator {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create()).build();
 
-        }
+//        }
         return retrofit.create(serviceClass);
     }
 }

@@ -50,6 +50,8 @@
     <string name="empty_port">Bitte geben Sie einen Port an.</string>
     <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
     <string name="empty_password">Bitte geben Sie ein Passwort an.</string>
+    <string name="toshort_password">Das Passwort ist zu kurz.</string>
+    <string name="invalid_validation_server">Bitte Server mit "https://" angeben.</string>
     <string name="error_format_invalid">Falsches Format, bitte Emailformat verwenden.</string>
     <string name="error_portformat_invalid">Falsches Format, bitte Emailformat verwenden.</string>
     <string name="error_too_short">Der Text ist zu kurz.</string>
