@@ -23,12 +23,23 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="vertical" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/booking_input_fields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/frag_button_margin"
+        android:layout_marginTop="@dimen/frag_button_margin_top"
+        android:layout_marginEnd="@dimen/frag_button_margin"
+        app:layout_constraintTop_toBottomOf="@+id/booking_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/txt_plant_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/scanner_container_fragment"
             android:paddingStart="5dp"
             android:text="@string/txt_plant" />
 
@@ -36,7 +47,6 @@
             android:id="@+id/plant_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/scanner_container_fragment"
             android:layout_marginTop="@dimen/big_padding"
             android:layout_marginBottom="@dimen/small_padding"
             android:fontFamily="sans-serif-light"
@@ -94,6 +104,5 @@
             android:layout_below="@+id/number"
             android:text="@string/button_select"
             android:textColor="@color/buttonLabel" />
-
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
