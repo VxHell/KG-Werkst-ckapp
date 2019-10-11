@@ -14,6 +14,7 @@ import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.util.Utils;
+import com.rrooaarr.werkstueck.view.FragmentBase;
 import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoFragment;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
@@ -74,10 +75,18 @@ public class BookingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
-            final FragmentManager.BackStackEntry backStackEntryAt = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
+
+        final Fragment visibleFragment = Utils.getVisibleFragment(this);
+        if (visibleFragment instanceof FragmentBase) {
+            FragmentBase currentActiveFragment = (FragmentBase) visibleFragment;
+            if (BookingFragment.TAG.equals(currentActiveFragment.getFragmentTag())) {
+                FragmentManager manager = getSupportFragmentManager();
+                if (manager.getBackStackEntryCount() > 0) {
+                   manager.popBackStack();
+                }
+            }
         }
+
         super.onBackPressed();
     }
 

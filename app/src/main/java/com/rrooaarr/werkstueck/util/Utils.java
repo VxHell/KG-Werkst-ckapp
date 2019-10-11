@@ -1,5 +1,6 @@
 package com.rrooaarr.werkstueck.util;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -101,7 +102,7 @@ public class Utils {
         return !isNullOrEmpty(s);
     }
 
-    public static Fragment getVisibleFragment(final FragmentActivity activity) {
+    public static Fragment getVisibleFragment(final AppCompatActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final List<Fragment> fragments = fragmentManager.getFragments();
         if (Utils.isNotNullOrEmpty(fragments)) {
