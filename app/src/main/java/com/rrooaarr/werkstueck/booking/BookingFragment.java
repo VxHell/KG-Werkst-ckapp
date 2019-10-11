@@ -247,17 +247,11 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
                 Utils.replaceFragmentBooking(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
 
             } else {
-                Toast.makeText(
-                        getContext(),
-                        "QR-Code beschädigt oder falsch",
-                        Toast.LENGTH_LONG).show();
+                ErrorHelper.makeToast(getContext(),"QR-Code beschädigt");
                 onResume();
             }
         } else {
-            Toast.makeText(
-                    getContext(),
-                    "QR-Code nicht lesbar",
-                    Toast.LENGTH_LONG).show();
+            ErrorHelper.makeToast(getContext(),"QR-Code nicht lesbar");
             onResume();
         }
     }
