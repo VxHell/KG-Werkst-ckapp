@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -188,8 +189,14 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
         bundle.putString(WST, sb.toString());
 
         frag.setArguments(bundle);
+        final FragmentManager manager = getActivity().getSupportFragmentManager();
 
-        Utils.replaceFragment(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
+        if (manager.getBackStackEntryCount() > 0) {
+            final FragmentManager.BackStackEntry backStackEntryAt = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
+            manager.popBackStack(backStackEntryAt.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        Utils.replaceFragmentBooking(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
     }
 
     @Override
@@ -237,7 +244,7 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
                 bundle.putString(WST, strings[1]);
 
                 frag.setArguments(bundle);
-                Utils.replaceFragment(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
+                Utils.replaceFragmentBooking(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
 
             } else {
                 Toast.makeText(

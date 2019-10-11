@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -183,8 +184,11 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
 
         frag.setArguments(bundle);
 
-        Utils.replaceFragment(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
+        final FragmentManager manager = getActivity().getSupportFragmentManager();
 
+        popDuplicatedFragmentAndUnderlyingActivityToNormalizeBackstackOrder(manager);
+
+        Utils.replaceFragmentBooking(frag, true, manager, R.id.master_booking_fragment);
     }
 
     private void onBack() {
@@ -200,6 +204,16 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
             case R.id.button_back:
                 onBack();
                 break;
+        }
+    }
+
+    private void popDuplicatedFragmentAndUnderlyingActivityToNormalizeBackstackOrder(FragmentManager manager){
+
+        if (manager.getBackStackEntryCount() > 0) {
+            manager.popBackStack();
+        }
+        if (manager.getBackStackEntryCount() > 0) {
+            manager.popBackStack();
         }
     }
 

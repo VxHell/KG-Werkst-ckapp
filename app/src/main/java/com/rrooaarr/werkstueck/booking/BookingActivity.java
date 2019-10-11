@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.rrooaarr.werkstueck.R;
@@ -15,10 +16,7 @@ import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoFragment;
 
-import java.io.Serializable;
-
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
-import static com.rrooaarr.werkstueck.booking.model.AppDefaults.BOOK;
 
 public class BookingActivity extends AppCompatActivity {
 
@@ -58,7 +56,7 @@ public class BookingActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking);
 
-        Serializable booking = getIntent().getSerializableExtra(BOOK);
+//        Serializable booking = getIntent().getSerializableExtra(BOOK);
 
         binding.setModel(model);
     }
@@ -72,6 +70,15 @@ public class BookingActivity extends AppCompatActivity {
 //                            Toast.makeText(this, R.string.no_camera_permisssion, Toast.LENGTH_SHORT).show();
                     }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            final FragmentManager.BackStackEntry backStackEntryAt = manager.getBackStackEntryAt(manager.getBackStackEntryCount() - 1);
+        }
+        super.onBackPressed();
     }
 
     public void initWSTIFragment() {

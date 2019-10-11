@@ -15,6 +15,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -100,7 +101,7 @@ public class Utils {
         return !isNullOrEmpty(s);
     }
 
-    public static Fragment getVisibleFragment(final AppCompatActivity activity) {
+    public static Fragment getVisibleFragment(final FragmentActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final List<Fragment> fragments = fragmentManager.getFragments();
         if (Utils.isNotNullOrEmpty(fragments)) {
@@ -202,6 +203,43 @@ public class Utils {
         }
 
         transaction.commit();
+        } catch (IllegalStateException ise) {
+            Log.e(fragmentTag, "Cannot replace fragment: " + frag.getTag());
+        }
+    }
+
+    public static FragmentBase findFragmentByTag(final String fragmentTag, final FragmentManager manager) {
+        if (manager != null) {
+            final List<Fragment> fragmentList = manager.getFragments();
+            FragmentBase result;
+            if (Utils.isNotNullOrEmpty(fragmentList)) {
+                for (int i = fragmentList.size() - 1; i >= 0; i--) {
+                    result = (FragmentBase) fragmentList.get(i);
+                    if (result != null && result.getFragmentTag() != null && result.getFragmentTag().equals(fragmentTag)) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void replaceFragmentBooking(final Fragment frag, final boolean addTOBackstack, final FragmentManager fragmentManager, final int replacementFrame) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        String fragmentTag = "replaceFragment";
+
+        try {
+            if (frag instanceof FragmentBase) {
+                fragmentTag = ((FragmentBase) frag).getFragmentTag();
+                transaction.replace(replacementFrame, frag, fragmentTag);
+                if (addTOBackstack) {
+                    transaction.addToBackStack(fragmentTag);
+                }
+            } else {
+                transaction.replace(replacementFrame, frag);
+            }
+
+            transaction.commit();
         } catch (IllegalStateException ise) {
             Log.e(fragmentTag, "Cannot replace fragment: " + frag.getTag());
         }
