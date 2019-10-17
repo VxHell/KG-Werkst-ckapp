@@ -16,6 +16,6 @@ public interface BookingWebservice {
     @GET("/rest/service/wst/{pk}")
     Call<WorkpieceContainer> getWorkpieceInfo(@Path("pk") String workpieceNumber);
 
-    @PUT("/rest/service/wst/{pk}/{action}")
+    @PUT("Rest/WSTService.svc/{pk}/{action}")
     Call<Void> bookWorkpieceAction(@Path("pk") String pk, @Path("action") String action);
 }

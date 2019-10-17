@@ -29,19 +29,19 @@ import static junit.framework.TestCase.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
-public class ApiTest {
+public class ApiTestKgDev {
 
         private BookingWebservice api;
 
         @Before
         public void setUp() throws Exception {
-            api = RetrofitServiceGenerator.createService(BookingWebservice.class, "https://kg-entwicklung:443", "Fertigung", "1e604b570f9466c5924bdb37cf3eb00d01fb49f11aecccd01a761e6c513465e823f0e1f7b9126965fa6a8e0a562773dbee4b6dd768f310af095ef63b17764638");
+            api = RetrofitServiceGenerator.createService(BookingWebservice.class, "https://pas-test.kg-nellingen.de:55443/", "pas2", "112a1a1691026b1f51a34482501d147b39a93f54c601a461cc677ff9a9cc201ad2fb78993994875c4c61112ce777ea79e7c1d9bd6ac521ed26d59aad42a4eec0");
 //            api = RetrofitServiceGenerator.createService(BookingWebservice.class, "https://192.168.2.104:443/rest/service/wst/", "Fertigung", "1e604b570f9466c5924bdb37cf3eb00d01fb49f11aecccd01a761e6c513465e823f0e1f7b9126965fa6a8e0a562773dbee4b6dd768f310af095ef63b17764638");
         }
 
         @Test
         public void testWorkpieceNumberSync() throws Exception {
-            final Response<WorkpieceContainer> workpieceInfo = api.getWorkpieceInfo("17935-11-719").execute();
+            final Response<Response<WorkpieceContainer>> workpieceInfo = api.getWorkpieceInfoNeu("183565").execute();
             JSONObject jsonObject = new JSONObject(new Gson().toJson(workpieceInfo.body()));
             assertTrue(workpieceInfo.isSuccessful());
         }
