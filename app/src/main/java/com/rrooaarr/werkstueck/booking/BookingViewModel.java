@@ -109,7 +109,7 @@ public class BookingViewModel extends AndroidViewModel {
     }
 
     public void initApi(UserSetting setting) {
-        String loadedUrl = setting.getServer() + ":" + setting.getPort()+ "/";
+        String loadedUrl = setting != null ? setting.getServer() + ":" + setting.getPort()+ "/" : "";
         String baseUrl;
         if (!loadedUrl.equals(":") && loadedUrl.contains("https://") || loadedUrl.contains("http://")) {
             baseUrl = loadedUrl;
@@ -117,7 +117,7 @@ public class BookingViewModel extends AndroidViewModel {
             baseUrl = AppDefaults.FALLBACK_URL;
         }
 
-        mRepository.initApi(baseUrl, setting.getUsername(), setting.getPassword());
+        mRepository.initApi(baseUrl, setting != null ? setting.getUsername() : "",  setting != null ? setting.getPassword() : "");
     }
 
     public void setNavtitel(String navtitel) {

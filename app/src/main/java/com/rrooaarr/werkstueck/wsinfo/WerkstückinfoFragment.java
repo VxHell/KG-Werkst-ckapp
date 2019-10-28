@@ -95,12 +95,16 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
             public void onChanged(UserSetting settingLoaded) {
                 setting = settingLoaded;
                 model.initApi(setting);
+
+                if(setting.getServer().isEmpty() && setting.getPort().isEmpty() && setting.getPassword().isEmpty() && setting.getUsername().isEmpty() )
+                    ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString(R.string.errNo_settings));
+
                 final Bundle arguments = getArguments();
                 if (arguments != null) {
                     String wst = arguments.getString(WST);
                     model.fetchWorkpieceInfo(wst);
                 } else {
-                    ErrorHelper.makeToast(getContext(), R.string.errNo_settings);
+                    ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString(R.string.errNo_settings));
                 }
 
                 model.getWorkpieceInfoData().observe(getViewLifecycleOwner(), new Observer<DataErrorWrapper<WorkpieceContainer>>() {

@@ -23,6 +23,7 @@
     <string name="hint_plantNumber">17935</string>
 
     <!--   Button Text  -->
+    <string name="button_ok">OK</string>
     <string name="button_save">Speichern</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_end">Programmende</string>
@@ -36,6 +37,7 @@
 
 
     <!--  Error Handling & error dialog messages  -->
+    <string name="errTitle">Fehler</string>
     <string name="errBackPressNavi">Zurück navigation nicht möglich.</string>
     <string name="errEmpty_not_saved">Änderungen nicht gespeichert.</string>
     <string name="errUnknown">Es ist ein unbekannter Fehler aufgetreten.</string>

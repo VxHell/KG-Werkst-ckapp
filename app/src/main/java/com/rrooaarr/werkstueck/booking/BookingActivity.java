@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.model.Action;
 import com.rrooaarr.werkstueck.databinding.ActivityBookingBinding;
+import com.rrooaarr.werkstueck.dialog.ErrorDialogFragment;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.util.Utils;
 import com.rrooaarr.werkstueck.view.FragmentBase;
@@ -19,7 +21,7 @@ import com.rrooaarr.werkstueck.wsinfo.WerkstückinfoFragment;
 
 import static com.rrooaarr.werkstueck.booking.model.AppDefaults.ACTION;
 
-public class BookingActivity extends AppCompatActivity {
+public class BookingActivity extends AppCompatActivity implements ErrorDialogFragment.ErrorDialogListener {
 
     private BookingViewModel model;
     private ActivityBookingBinding binding;
@@ -93,5 +95,15 @@ public class BookingActivity extends AppCompatActivity {
     public void initWSTIFragment() {
         model.setNavtitel("Werkstückinfo");
         binding.setModel(model);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
     }
 }
