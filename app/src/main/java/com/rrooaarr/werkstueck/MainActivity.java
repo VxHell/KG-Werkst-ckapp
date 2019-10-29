@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Toast toast;
                 if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
-                    toast = Toast.makeText(this, "Press back again to close this app", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(this, "Drücken Sie erneut zurück, um diese App zu schließen", Toast.LENGTH_SHORT);
                     toast.show();
                     this.lastBackPressTime = System.currentTimeMillis();
                 } else {
