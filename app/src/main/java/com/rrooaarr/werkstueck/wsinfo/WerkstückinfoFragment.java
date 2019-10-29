@@ -131,13 +131,13 @@ public class WerkstückinfoFragment extends Fragment implements FragmentBase, Vi
                                     actionButton.setEnabled(false);
                                     actionButton.setClickable(false);
                                 }
-                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
+                                ErrorHelper.doDefaultApiErrorHandling(getActivity(),dataWrapper);
                             } else {
                                 model.setPK(null);
-                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
+                                ErrorHelper.doDefaultApiErrorHandling(getActivity(),dataWrapper);
                             }
                         } else {
-                            ErrorHelper.makeToast(getContext(), R.string.errNo_service);
+                            ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(),getResources().getString(R.string.errTitle),getResources().getString( R.string.errNo_service));
                         }
                     }
                 });

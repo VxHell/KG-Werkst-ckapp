@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.rrooaarr.werkstueck.R;
@@ -12,28 +13,27 @@ import com.rrooaarr.werkstueck.dialog.ErrorDialogFragment;
 
 public class ErrorHelper {
 
-    public static void doDefaultApiErrorHandling(DataErrorWrapper dataWrapper, Context context) {
+    public static void doDefaultApiErrorHandling(FragmentActivity activity, DataErrorWrapper dataWrapper) {
         if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.EXCEPTION) {
-            Toast.makeText(context, R.string.errUnknown, Toast.LENGTH_LONG).show();
-            ErrorHelper.makeToast(context, R.string.errUnknown);
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), activity.getResources().getString(R.string.errUnknown));
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.WSTNOTFOUND) {
-            ErrorHelper.makeToast(context, R.string.errWSTNotFound);
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), activity.getResources().getString(R.string.errWSTNotFound));
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.WSTERROR) {
-            ErrorHelper.makeToast(context, dataWrapper.getErrorDetails());
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), dataWrapper.getErrorDetails());
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.UNAUTHORIZED) {
-            ErrorHelper.makeToast(context, R.string.errUnauthorized);
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), activity.getResources().getString(R.string.errUnauthorized));
         } else if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.NOTFOUND) {
-            ErrorHelper.makeToast(context, R.string.errNotfound);
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), activity.getResources().getString(R.string.errNotfound));
         } else {
-            ErrorHelper.makeToast(context, R.string.errNo_service);
+            onShowErrorDialog(activity.getSupportFragmentManager(), activity.getResources().getString(R.string.errTitle), activity.getResources().getString(R.string.errNo_service));
         }
     }
 
-    public static void makeToast(Context context, int messageId) {
-        Toast toast = Toast.makeText(context, messageId, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 250);
-        toast.show();
-    }
+//    public static void makeToast(Context context, int messageId) {
+//        Toast toast = Toast.makeText(context, messageId, Toast.LENGTH_LONG);
+//        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 250);
+//        toast.show();
+//    }
 
     public static void onShowErrorDialog(FragmentManager fragmentManager, String title, String message){
         ErrorDialogFragment dialog = new ErrorDialogFragment();

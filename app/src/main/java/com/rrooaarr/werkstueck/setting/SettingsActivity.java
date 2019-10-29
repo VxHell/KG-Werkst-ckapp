@@ -102,17 +102,17 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Intent replyIntent = new Intent();
 
         if (TextUtils.isEmpty(server.getText())) {
-           ErrorHelper.makeToast(getApplicationContext(), R.string.empty_server);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.empty_server));
         } else if (TextUtils.isEmpty(port.getText())) {
-            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_port);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.empty_port));
         } else if (TextUtils.isEmpty(username.getText())) {
-            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_username);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.empty_username));
         } else if (TextUtils.isEmpty(password.getText())) {
-            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_password);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.empty_password));
         } else if(StringValidationRules.PASSWORD.validate(password.getText())) {
-            ErrorHelper.makeToast(getApplicationContext(), R.string.empty_password);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.passwordNotMatching));
         } else if (StringValidationRules.SERVER.validate(server.getText())){
-            ErrorHelper.makeToast(getApplicationContext(), R.string.invalid_validation_server);
+            ErrorHelper.onShowErrorDialog(getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString( R.string.invalid_validation_server));
         }  else{
 
             String mServer = server.getText().toString();

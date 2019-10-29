@@ -46,12 +46,14 @@
     <string name="errNotfound">Der Service kann nicht gefunden werden.</string>
     <string name="errNo_service">Der Endpunkt ist nicht verfügbar.</string>
     <string name="errNo_settings">Einstellungen nicht gesetzt.</string>
+    <string name="errOrderUnassignable">Buchung nicht zuordbar.</string>
 
     <string name="empty_server">Bitte geben Sie einen Server an.</string>
     <string name="invalid_server">Bitte geben Sie eine Serveraddresse im Format "http(s)://" an.</string>
     <string name="empty_port">Bitte geben Sie einen Port an.</string>
     <string name="empty_username">Bitte geben Sie einen Benutzernamen an.</string>
     <string name="empty_password">Bitte geben Sie ein Passwort an.</string>
+    <string name="passwordNotMatching">Das Passwort ist nicht valide.</string>
     <string name="toshort_password">Das Passwort ist zu kurz.</string>
     <string name="invalid_validation_server">Bitte Server mit "https://" angeben.</string>
     <string name="error_format_invalid">Falsches Format, bitte Emailformat verwenden.</string>

@@ -26,6 +26,7 @@ import com.rrooaarr.werkstueck.BuildConfig;
 import com.rrooaarr.werkstueck.R;
 import com.rrooaarr.werkstueck.booking.api.errorhandling.DataErrorWrapper;
 import com.rrooaarr.werkstueck.booking.api.errorhandling.ErrorHelper;
+import com.rrooaarr.werkstueck.dialog.ErrorDialogFragment;
 import com.rrooaarr.werkstueck.permission.RequestUserPermission;
 import com.rrooaarr.werkstueck.setting.UserSetting;
 import com.rrooaarr.werkstueck.util.StringValidationRules;
@@ -111,19 +112,18 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
                     @Override
                     public void onChanged(DataErrorWrapper<Boolean> dataWrapper) {
                         if (dataWrapper != null) {
-//                            final Boolean bookresult = dataWrapper.getData();
                             if (dataWrapper.getStatus() == DataErrorWrapper.APIStatus.SUCCESS) {
                                 ErrorHelper.makeToast(getContext(), " Buchung: " + (model.getAction() != null ? model.getAction().getLocale() : "") + " erfolgreich");
                             } else {
-                                ErrorHelper.doDefaultApiErrorHandling(dataWrapper, getContext());
+                                ErrorHelper.doDefaultApiErrorHandling(getActivity(), dataWrapper);
                             }
                         } else {
-                            ErrorHelper.makeToast(getContext(), " Buchung: " + (model.getAction() != null ? model.getAction().getLocale() : "") + " nicht erfolgreich!");
+                            ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getResources().getString(R.string.errTitle), " Buchung: " + (model.getAction() != null ? model.getAction().getLocale() : "") + " nicht erfolgreich!" );
                         }
                     }
                 });
             } else {
-                ErrorHelper.makeToast(getContext(), " Buchung nicht zuordbar.");
+                ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getResources().getString(R.string.errTitle), getResources().getString(R.string.errOrderUnassignable));
             }
         }
     }
@@ -247,11 +247,11 @@ public class BookingFragment extends Fragment implements FragmentBase, ZXingScan
                 Utils.replaceFragmentBooking(frag, true, getActivity().getSupportFragmentManager(), R.id.master_booking_fragment);
 
             } else {
-                ErrorHelper.makeToast(getContext(),"QR-Code beschädigt");
+                ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getActivity().getResources().getString(R.string.errTitle), "QR-Code beschädigt");
                 onResume();
             }
         } else {
-            ErrorHelper.makeToast(getContext(),"QR-Code nicht lesbar");
+            ErrorHelper.onShowErrorDialog(getActivity().getSupportFragmentManager(), getActivity().getResources().getString(R.string.errTitle), "QR-Code nicht lesbar");
             onResume();
         }
     }
